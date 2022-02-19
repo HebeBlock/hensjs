@@ -26,7 +26,6 @@ browserify index.js -s hens.js > build/hens.js
 ```js
 // In Node.js
 const hensjs = require('hensjs');
-let web3 = new Web3('ws://localhost:8546');
 await hensjs.getNameOfOwner('0xA5a52D92ff302fCca9e5b060EC797F01311c66fF')
 > test.etc
 await hensjs.getNameOfOwner('0x8D54eb7CeCcdF901D452E81EB4B8686c61da5e67')
