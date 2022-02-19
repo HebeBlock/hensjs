@@ -1,0 +1,23 @@
+{
+  "name": "hensjs",
+  "version": "1.0.0",
+  "description": "Test",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/HebeBlock/hensjs.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/HebeBlock/hensjs/issues"
+  },
+  "homepage": "https://github.com/HebeBlock/hensjs#readme",
+  "dependencies": {
+    "axios": "^0.26.0",
+    "web3": "^1.7.0"
+  }
+}
