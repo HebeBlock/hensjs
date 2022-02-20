@@ -1,4 +1,6 @@
 const Hsn = '0x8474D3346441F85668C1dDAB46ff2D1Af1531698'
+const HsnResolver = '0x30BEF52d5ca70B445994C5Ee238E760342edA66D'
+
 const Web3 = require('web3')
 const rpc = 'https://ethercluster.com/etc'
 const axios = require('axios')
@@ -48,5 +50,57 @@ module.exports ={
         resolve(tt.substring(33))
       }
     })
+  },
+  async getOwner(name){
+    return new Promise(async (resolve, reject) => {
+      let web3 = new Web3()
+      let getOwnerabi = web3.eth.abi.encodeFunctionCall({
+        name: 'getOwner',
+        type: 'function',
+        inputs: [{
+          type: 'string',
+          name: 'name_'
+        }]
+      }, [name])
+      if (typeof (ethereum) !== 'undefined') {
+        ethereum.request({
+          'method': 'eth_call',
+          'params': [{
+            'to': HsnResolver,
+            'data': getOwnerabi
+          }, 'latest']
+        }).then(async (res) => {
+          if (res == '0x0000000000000000000000000000000000000000000000000000000000000000') {
+            resolve('')
+          } else {
+            let addr = '0x' + res.split('0x000000000000000000000000')[1]
+            resolve(addr)
+          }
+        })
+          .catch((err) => {
+            resolve('')
+          })
+      }else{
+        let res=await axios.post(rpc,{
+          "jsonrpc": "2.0",
+          "method": "eth_call",
+          "params": [
+            {
+              "to": HsnResolver,
+              "data": getOwnerabi
+            },
+            "latest"
+          ],
+          "id": 1
+        })
+        if (res.data.result == '0x0000000000000000000000000000000000000000000000000000000000000000') {
+          resolve('')
+        } else {
+          let addr = '0x' + res.data.result.toString().split('0x000000000000000000000000')[1]
+          resolve(addr)
+        }
+      }
+    })
+
   }
 }
