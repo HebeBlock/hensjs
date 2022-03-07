@@ -118,8 +118,8 @@ module.exports = {
           ethereum.request({
             'method': 'eth_call',
             'params': [{
-              'to': HsnResolver,
-              'data': getOwnerabi
+              'to': Hsn,
+              'data': getTokenIdOfNameabi
             }, 'latest']
           }).then(async (res) => {
             if (typeof res !== 'undefined') {
