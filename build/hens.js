@@ -7,7 +7,7 @@ const rpc = 'https://ethercluster.com/etc'
 const axios = require('axios')
 
 
-module.exports ={
+module.exports = {
   async getNameOfOwner(addr) {
     return new Promise(async (resolve, reject) => {
       let web3 = new Web3()
@@ -34,25 +34,25 @@ module.exports ={
           .catch((err) => {
             resolve('')
           })
-      }else{
-        let res=await axios.post(rpc,{
-          "jsonrpc": "2.0",
-          "method": "eth_call",
-          "params": [
+      } else {
+        let res = await axios.post(rpc, {
+          'jsonrpc': '2.0',
+          'method': 'eth_call',
+          'params': [
             {
-              "to": Hsn,
-              "data": getNameOfOwnerabi
+              'to': Hsn,
+              'data': getNameOfOwnerabi
             },
-            "latest"
+            'latest'
           ],
-          "id": 1
+          'id': 1
         })
         let tt = web3.utils.hexToString(res.data.result)
         resolve(tt.substring(33))
       }
     })
   },
-  async getOwner(name){
+  async getOwner(name) {
     return new Promise(async (resolve, reject) => {
       let web3 = new Web3()
       let getOwnerabi = web3.eth.abi.encodeFunctionCall({
@@ -81,18 +81,18 @@ module.exports ={
           .catch((err) => {
             resolve('')
           })
-      }else{
-        let res=await axios.post(rpc,{
-          "jsonrpc": "2.0",
-          "method": "eth_call",
-          "params": [
+      } else {
+        let res = await axios.post(rpc, {
+          'jsonrpc': '2.0',
+          'method': 'eth_call',
+          'params': [
             {
-              "to": HsnResolver,
-              "data": getOwnerabi
+              'to': HsnResolver,
+              'data': getOwnerabi
             },
-            "latest"
+            'latest'
           ],
-          "id": 1
+          'id': 1
         })
         if (res.data.result == '0x0000000000000000000000000000000000000000000000000000000000000000') {
           resolve('')
@@ -103,7 +103,61 @@ module.exports ={
       }
     })
 
+  },
+  async getTokenIdOfName(name) {
+    return new Promise(async (resolve, reject) => {
+        let web3 = new Web3()
+        let getTokenIdOfNameabi = web3.eth.abi.encodeFunctionCall({
+          name: 'getTokenIdOfName',
+          type: 'function',
+          inputs: [{
+            type: 'string',
+            name: 'name_'
+          }]
+        }, [name])
+        if (typeof (ethereum) !== 'undefined') {
+          ethereum.request({
+            'method': 'eth_call',
+            'params': [{
+              'to': HsnResolver,
+              'data': getOwnerabi
+            }, 'latest']
+          }).then(async (res) => {
+            if (typeof res !== 'undefined') {
+              let tt = web3.utils.hexToNumber(res)
+              resolve(tt)
+            }else{
+              resolve('')
+            }
+          })
+            .catch((err) => {
+              resolve('')
+            })
+        } else {
+          let res = await axios.post(rpc, {
+            'jsonrpc': '2.0',
+            'method': 'eth_call',
+            'params': [
+              {
+                'to': Hsn,
+                'data': getTokenIdOfNameabi
+              },
+              'latest'
+            ],
+            'id': 1
+          })
+          if (typeof res.data.result !== 'undefined') {
+            let tt = web3.utils.hexToNumber(res.data.result)
+            resolve(tt)
+          }else{
+            resolve('')
+          }
+        }
+      }
+    )
+
   }
+
 }
 
 },{"axios":122,"web3":434}],2:[function(require,module,exports){

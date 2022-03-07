@@ -36,7 +36,11 @@ await hensjs.getOwner('test.etc')
 > 0xa5a52d92ff302fcca9e5b060ec797f01311c66ff
 await hensjs.getOwner('t123456789.etc')
 > ''
-
+// getTokenIdOfName
+await hensjs.getTokenIdOfName('test')
+> 230
+await hensjs.getTokenIdOfName('t123456789')
+> ''
 ```
 
 
@@ -50,6 +54,9 @@ await hensjs.getOwner('t123456789.etc')
         
         console.log(await hens.js.getOwner('test.etc'))
         console.log(await hens.js.getOwner('t123456789.etc'))
+        
+        console.log(await hens.js.getTokenIdOfName('test'))
+        console.log(await hens.js.getTokenIdOfName('t123456789'))
       }
       test()
 </script>
