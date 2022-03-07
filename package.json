@@ -1,6 +1,6 @@
 {
   "name": "hensjs",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "Ethereum Classic Name Service Js",
   "main": "index.js",
   "scripts": {
