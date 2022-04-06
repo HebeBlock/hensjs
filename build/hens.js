@@ -6,7 +6,14 @@ const Web3 = require('web3')
 const rpc = 'https://ethercluster.com/etc'
 const axios = require('axios')
 
-
+function hex_to_ascii(str1) {
+  let hex = str1.toString()
+  let str = ''
+  for (let n = 0; n < hex.length; n += 2) {
+    str += String.fromCharCode(parseInt(hex.substr(n, 2), 16))
+  }
+  return str
+}
 module.exports = {
   async getNameOfOwner(addr) {
     return new Promise(async (resolve, reject) => {
@@ -28,8 +35,14 @@ module.exports = {
             'data': getNameOfOwnerabi
           }, 'latest']
         }).then(async (res) => {
-          let tt = web3.utils.hexToString(res)
-          resolve(tt.substring(33))
+          let tt = web3.eth.abi.decodeLog(['bytes'],res)
+          let name = hex_to_ascii(tt[0])
+          if (JSON.stringify(name).indexOf('u0000') != -1) {
+            name = JSON.stringify(name)
+            name = name.split('u0000')[1]
+            name = name.split('"')[0]
+          }
+          resolve(name)
         })
           .catch((err) => {
             resolve('')
@@ -47,8 +60,18 @@ module.exports = {
           ],
           'id': 1
         })
-        let tt = web3.utils.hexToString(res.data.result)
-        resolve(tt.substring(33))
+        try {
+          let tt = web3.eth.abi.decodeLog(['bytes'],res.data.result)
+          let name = hex_to_ascii(tt[0])
+          if (JSON.stringify(name).indexOf('u0000') != -1) {
+            name = JSON.stringify(name)
+            name = name.split('u0000')[1]
+            name = name.split('"')[0]
+          }
+          resolve(name)
+        }catch (e) {
+          resolve('')
+        }
       }
     })
   },

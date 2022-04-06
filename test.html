@@ -7,10 +7,12 @@
     <script>
       async function test() {
         console.log(await hens.js.getNameOfOwner('0xA5a52D92ff302fCca9e5b060EC797F01311c66fF'))
-        console.log(await hens.js.getNameOfOwner('0x8D54eb7CeCcdF901D452E81EB4B8686c61da5e67'))
+        console.log(await hens.js.getNameOfOwner('0x9B5fbEdAA0c2474b43e4f96F58E62f702614C8B8'))
 
         console.log(await hens.js.getOwner('test.etc'))
         console.log(await hens.js.getOwner('t123456789.etc'))
+        console.log(await hens.js.getTokenIdOfName('test'))
+        console.log(await hens.js.getTokenIdOfName('t123456789'))
       }
       test()
     </script>
