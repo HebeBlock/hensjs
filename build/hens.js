@@ -5,6 +5,7 @@ const HsnResolver = '0x925da8387c81e1b1d8aaBE4CfDb1BD0b873ba278'
 const Web3 = require('web3')
 const rpc = 'https://ethercluster.com/etc'
 const axios = require('axios')
+const { isConfusing, confusables, rectifyConfusion } = require('unicode-confusables')
 
 function hex_to_ascii(str1) {
   let hex = str1.toString()
@@ -36,8 +37,9 @@ module.exports = {
           }, 'latest']
         }).then(async (res) => {
           let tt = web3.eth.abi.decodeLog(['bytes'],res)
-          let name = hex_to_ascii(tt[0])
-          if (JSON.stringify(name).indexOf('u0000') != -1) {
+          let name = web3.utils.hexToString(tt[0])
+          if (isConfusing(name)) {
+            name = hex_to_ascii(tt[0])
             name = JSON.stringify(name)
             name = name.split('u0000')[1]
             name = name.split('"')[0]
@@ -62,8 +64,9 @@ module.exports = {
         })
         try {
           let tt = web3.eth.abi.decodeLog(['bytes'],res.data.result)
-          let name = hex_to_ascii(tt[0])
-          if (JSON.stringify(name).indexOf('u0000') != -1) {
+          let name = web3.utils.hexToString(tt[0])
+          if (isConfusing(name)) {
+            name = hex_to_ascii(tt[0])
             name = JSON.stringify(name)
             name = name.split('u0000')[1]
             name = name.split('"')[0]
@@ -183,7 +186,7 @@ module.exports = {
 
 }
 
-},{"axios":122,"web3":434}],2:[function(require,module,exports){
+},{"axios":122,"unicode-confusables":379,"web3":436}],2:[function(require,module,exports){
 module.exports={
     "name": "goerli",
     "chainId": 5,
@@ -13344,7 +13347,7 @@ var Common = /** @class */ (function (_super) {
 exports.default = Common;
 
 }).call(this)}).call(this,require("buffer").Buffer)
-},{"./chains":3,"./eips":24,"./genesisStates/goerli.json":25,"./genesisStates/kovan.json":26,"./genesisStates/mainnet.json":27,"./genesisStates/rinkeby.json":28,"./genesisStates/ropsten.json":29,"./genesisStates/sepolia.json":30,"./hardforks":38,"buffer":518,"crc-32":199,"ethereumjs-util":252,"events":559}],48:[function(require,module,exports){
+},{"./chains":3,"./eips":24,"./genesisStates/goerli.json":25,"./genesisStates/kovan.json":26,"./genesisStates/mainnet.json":27,"./genesisStates/rinkeby.json":28,"./genesisStates/ropsten.json":29,"./genesisStates/sepolia.json":30,"./hardforks":38,"buffer":520,"crc-32":199,"ethereumjs-util":252,"events":561}],48:[function(require,module,exports){
 "use strict";
 var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
     if (k2 === undefined) k2 = k;
@@ -14180,7 +14183,7 @@ var FeeMarketEIP1559Transaction = /** @class */ (function (_super) {
 exports.default = FeeMarketEIP1559Transaction;
 
 }).call(this)}).call(this,require("buffer").Buffer)
-},{"./baseTransaction":48,"./types":54,"./util":55,"buffer":518,"ethereumjs-util":252}],50:[function(require,module,exports){
+},{"./baseTransaction":48,"./types":54,"./util":55,"buffer":520,"ethereumjs-util":252}],50:[function(require,module,exports){
 (function (Buffer){(function (){
 "use strict";
 var __extends = (this && this.__extends) || (function () {
@@ -14605,7 +14608,7 @@ var AccessListEIP2930Transaction = /** @class */ (function (_super) {
 exports.default = AccessListEIP2930Transaction;
 
 }).call(this)}).call(this,require("buffer").Buffer)
-},{"./baseTransaction":48,"./types":54,"./util":55,"buffer":518,"ethereumjs-util":252}],51:[function(require,module,exports){
+},{"./baseTransaction":48,"./types":54,"./util":55,"buffer":520,"ethereumjs-util":252}],51:[function(require,module,exports){
 "use strict";
 var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
     if (k2 === undefined) k2 = k;
@@ -15053,7 +15056,7 @@ var Transaction = /** @class */ (function (_super) {
 exports.default = Transaction;
 
 }).call(this)}).call(this,require("buffer").Buffer)
-},{"./baseTransaction":48,"./types":54,"buffer":518,"ethereumjs-util":252}],53:[function(require,module,exports){
+},{"./baseTransaction":48,"./types":54,"buffer":520,"ethereumjs-util":252}],53:[function(require,module,exports){
 (function (Buffer){(function (){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
@@ -15173,7 +15176,7 @@ var TransactionFactory = /** @class */ (function () {
 exports.default = TransactionFactory;
 
 }).call(this)}).call(this,{"isBuffer":require("../../../../../../../../../../usr/local/lib/node_modules/browserify/node_modules/is-buffer/index.js")})
-},{".":51,"../../../../../../../../../../usr/local/lib/node_modules/browserify/node_modules/is-buffer/index.js":602,"ethereumjs-util":252}],54:[function(require,module,exports){
+},{".":51,"../../../../../../../../../../usr/local/lib/node_modules/browserify/node_modules/is-buffer/index.js":604,"ethereumjs-util":252}],54:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.N_DIV_2 = exports.isAccessList = exports.isAccessListBuffer = exports.Capability = void 0;
@@ -24118,7 +24121,7 @@ utils.forEach(['post', 'put', 'patch'], function forEachMethodWithData(method) {
 module.exports = defaults;
 
 }).call(this)}).call(this,require('_process'))
-},{"./adapters/http":123,"./adapters/xhr":123,"./core/enhanceError":133,"./helpers/normalizeHeaderName":146,"./utils":150,"_process":623}],138:[function(require,module,exports){
+},{"./adapters/http":123,"./adapters/xhr":123,"./core/enhanceError":133,"./helpers/normalizeHeaderName":146,"./utils":150,"_process":625}],138:[function(require,module,exports){
 module.exports = {
   "version": "0.26.0"
 };
@@ -28481,7 +28484,7 @@ module.exports = base
   };
 })(typeof module === 'undefined' || module, this);
 
-},{"buffer":474}],153:[function(require,module,exports){
+},{"buffer":476}],153:[function(require,module,exports){
 var r;
 
 module.exports = function rand(len) {
@@ -28548,7 +28551,7 @@ if (typeof self === 'object') {
   }
 }
 
-},{"crypto":474}],154:[function(require,module,exports){
+},{"crypto":476}],154:[function(require,module,exports){
 // based on the aes implimentation in triple sec
 // https://github.com/keybase/triplesec
 // which is in turn based on the one from crypto-js
@@ -29661,7 +29664,7 @@ exports.encrypt = function (self, chunk) {
 }
 
 }).call(this)}).call(this,require("buffer").Buffer)
-},{"buffer":518,"buffer-xor":183}],170:[function(require,module,exports){
+},{"buffer":520,"buffer-xor":183}],170:[function(require,module,exports){
 var aes = require('./aes')
 var Buffer = require('safe-buffer').Buffer
 var Transform = require('cipher-base')
@@ -29876,7 +29879,7 @@ crt.getr = getr
 module.exports = crt
 
 }).call(this)}).call(this,require("buffer").Buffer)
-},{"bn.js":175,"buffer":518,"randombytes":337}],175:[function(require,module,exports){
+},{"bn.js":175,"buffer":520,"randombytes":337}],175:[function(require,module,exports){
 (function (module, exports) {
   'use strict';
 
@@ -33425,7 +33428,7 @@ module.exports = crt
   };
 })(typeof module === 'undefined' || module, this);
 
-},{"buffer":474}],176:[function(require,module,exports){
+},{"buffer":476}],176:[function(require,module,exports){
 module.exports = require('./browser/algorithms.json')
 
 },{"./browser/algorithms.json":177}],177:[function(require,module,exports){
@@ -33919,7 +33922,7 @@ module.exports = verify
 
 },{"./curves.json":178,"bn.js":182,"elliptic":217,"parse-asn1":322,"safe-buffer":357}],182:[function(require,module,exports){
 arguments[4][175][0].apply(exports,arguments)
-},{"buffer":474,"dup":175}],183:[function(require,module,exports){
+},{"buffer":476,"dup":175}],183:[function(require,module,exports){
 (function (Buffer){(function (){
 module.exports = function xor (a, b) {
   var length = Math.min(a.length, b.length)
@@ -33933,7 +33936,7 @@ module.exports = function xor (a, b) {
 }
 
 }).call(this)}).call(this,require("buffer").Buffer)
-},{"buffer":518}],184:[function(require,module,exports){
+},{"buffer":520}],184:[function(require,module,exports){
 module.exports={
   "identity": 0,
   "ip4": 4,
@@ -34526,7 +34529,7 @@ Object.assign(exports, constants)
 // Human friendly names for printing, e.g. in error messages
 exports.print = require('./print')
 
-},{"./constants":185,"./int-table":187,"./print":188,"./util":189,"./varint-table":190,"buffer":518,"varint":383}],187:[function(require,module,exports){
+},{"./constants":185,"./int-table":187,"./print":188,"./util":189,"./varint-table":190,"buffer":520,"varint":385}],187:[function(require,module,exports){
 'use strict'
 const baseTable = require('./base-table.json')
 
@@ -34591,7 +34594,7 @@ function varintEncode (num) {
   return Buffer.from(varint.encode(num))
 }
 
-},{"buffer":518,"varint":383}],190:[function(require,module,exports){
+},{"buffer":520,"varint":385}],190:[function(require,module,exports){
 'use strict'
 
 const baseTable = require('./base-table.json')
@@ -34661,7 +34664,7 @@ var CIDUtil = {
 
 module.exports = CIDUtil
 
-},{"buffer":518,"multihashes":313}],192:[function(require,module,exports){
+},{"buffer":520,"multihashes":313}],192:[function(require,module,exports){
 'use strict'
 
 const { Buffer } = require('buffer')
@@ -34971,7 +34974,7 @@ _CID.codecs = codecs
 
 module.exports = _CID
 
-},{"./cid-util":191,"buffer":518,"class-is":194,"multibase":298,"multicodec":186,"multicodec/src/base-table.json":184,"multihashes":313}],193:[function(require,module,exports){
+},{"./cid-util":191,"buffer":520,"class-is":194,"multibase":298,"multicodec":186,"multicodec/src/base-table.json":184,"multihashes":313}],193:[function(require,module,exports){
 var Buffer = require('safe-buffer').Buffer
 var Transform = require('stream').Transform
 var StringDecoder = require('string_decoder').StringDecoder
@@ -35072,7 +35075,7 @@ CipherBase.prototype._toString = function (value, enc, fin) {
 
 module.exports = CipherBase
 
-},{"inherits":279,"safe-buffer":357,"stream":648,"string_decoder":682}],194:[function(require,module,exports){
+},{"inherits":279,"safe-buffer":357,"stream":650,"string_decoder":684}],194:[function(require,module,exports){
 'use strict';
 
 function withIs(Class, { className, symbolName }) {
@@ -35385,7 +35388,7 @@ const profiles = {
 exports.hexStringToBuffer = hexStringToBuffer;
 exports.profiles = profiles;
 }).call(this)}).call(this,require("buffer").Buffer)
-},{"buffer":518,"cids":192,"multihashes":313}],198:[function(require,module,exports){
+},{"buffer":520,"cids":192,"multihashes":313}],198:[function(require,module,exports){
 /* jshint node: true */
 (function () {
     "use strict";
@@ -35908,7 +35911,7 @@ function formatReturnValue (bn, enc, len) {
 }
 
 }).call(this)}).call(this,require("buffer").Buffer)
-},{"bn.js":152,"buffer":518,"elliptic":217}],201:[function(require,module,exports){
+},{"bn.js":152,"buffer":520,"elliptic":217}],201:[function(require,module,exports){
 'use strict'
 var inherits = require('inherits')
 var MD5 = require('md5.js')
@@ -36977,7 +36980,7 @@ exports.DiffieHellmanGroup = exports.createDiffieHellmanGroup = exports.getDiffi
 exports.createDiffieHellman = exports.DiffieHellman = createDiffieHellman
 
 }).call(this)}).call(this,require("buffer").Buffer)
-},{"./lib/dh":214,"./lib/generatePrime":215,"./lib/primes.json":216,"buffer":518}],214:[function(require,module,exports){
+},{"./lib/dh":214,"./lib/generatePrime":215,"./lib/primes.json":216,"buffer":520}],214:[function(require,module,exports){
 (function (Buffer){(function (){
 var BN = require('bn.js');
 var MillerRabin = require('miller-rabin');
@@ -37145,7 +37148,7 @@ function formatReturnValue(bn, enc) {
 }
 
 }).call(this)}).call(this,require("buffer").Buffer)
-},{"./generatePrime":215,"bn.js":152,"buffer":518,"miller-rabin":290,"randombytes":337}],215:[function(require,module,exports){
+},{"./generatePrime":215,"bn.js":152,"buffer":520,"miller-rabin":290,"randombytes":337}],215:[function(require,module,exports){
 var randomBytes = require('randombytes');
 module.exports = findPrime;
 findPrime.simpleSieve = simpleSieve;
@@ -41345,7 +41348,7 @@ exports.hash = namehash
 exports.normalize = normalize
 
 }).call(this)}).call(this,require("buffer").Buffer)
-},{"buffer":518,"idna-uts46-hx":278,"js-sha3":235}],235:[function(require,module,exports){
+},{"buffer":520,"idna-uts46-hx":278,"js-sha3":235}],235:[function(require,module,exports){
 (function (process,global){(function (){
 /**
  * [js-sha3]{@link https://github.com/emn178/js-sha3}
@@ -41824,7 +41827,7 @@ exports.normalize = normalize
 })();
 
 }).call(this)}).call(this,require('_process'),typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"_process":623}],236:[function(require,module,exports){
+},{"_process":625}],236:[function(require,module,exports){
 var generate = function generate(num, fn) {
   var a = [];
   for (var i = 0; i < num; ++i) {
@@ -42669,7 +42672,7 @@ function createHashFunction(hashConstructor) {
 exports.createHashFunction = createHashFunction;
 
 }).call(this)}).call(this,require("buffer").Buffer)
-},{"buffer":518}],242:[function(require,module,exports){
+},{"buffer":520}],242:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 var hash_utils_1 = require("./hash-utils");
@@ -43083,7 +43086,7 @@ var isZeroAddress = function (hexAddress) {
 exports.isZeroAddress = isZeroAddress;
 
 }).call(this)}).call(this,require("buffer").Buffer)
-},{"./bytes":247,"./constants":248,"./externals":249,"./hash":250,"./helpers":251,"./internal":253,"./types":256,"assert":466,"buffer":518,"ethereum-cryptography/secp256k1":244}],246:[function(require,module,exports){
+},{"./bytes":247,"./constants":248,"./externals":249,"./hash":250,"./helpers":251,"./internal":253,"./types":256,"assert":468,"buffer":520,"ethereum-cryptography/secp256k1":244}],246:[function(require,module,exports){
 (function (Buffer){(function (){
 "use strict";
 var __importDefault = (this && this.__importDefault) || function (mod) {
@@ -43191,7 +43194,7 @@ var Address = /** @class */ (function () {
 exports.Address = Address;
 
 }).call(this)}).call(this,require("buffer").Buffer)
-},{"./account":245,"./bytes":247,"./externals":249,"assert":466,"buffer":518}],247:[function(require,module,exports){
+},{"./account":245,"./bytes":247,"./externals":249,"assert":468,"buffer":520}],247:[function(require,module,exports){
 (function (Buffer){(function (){
 "use strict";
 var __values = (this && this.__values) || function(o) {
@@ -43527,7 +43530,7 @@ function bufArrToArr(arr) {
 exports.bufArrToArr = bufArrToArr;
 
 }).call(this)}).call(this,require("buffer").Buffer)
-},{"./externals":249,"./helpers":251,"./internal":253,"buffer":518}],248:[function(require,module,exports){
+},{"./externals":249,"./helpers":251,"./internal":253,"buffer":520}],248:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.KECCAK256_RLP = exports.KECCAK256_RLP_S = exports.KECCAK256_RLP_ARRAY = exports.KECCAK256_RLP_ARRAY_S = exports.KECCAK256_NULL = exports.KECCAK256_NULL_S = exports.TWO_POW256 = exports.MAX_INTEGER = exports.MAX_UINT64 = void 0;
@@ -43570,7 +43573,7 @@ exports.KECCAK256_RLP_S = '56e81f171bcc55a6ff8345e692c0f86e5b48e01b996cadc001622
  */
 exports.KECCAK256_RLP = buffer_1.Buffer.from(exports.KECCAK256_RLP_S, 'hex');
 
-},{"./externals":249,"buffer":518}],249:[function(require,module,exports){
+},{"./externals":249,"buffer":520}],249:[function(require,module,exports){
 "use strict";
 /**
  * Re-exports commonly used modules:
@@ -43775,7 +43778,7 @@ var rlphash = function (a) {
 exports.rlphash = rlphash;
 
 }).call(this)}).call(this,require("buffer").Buffer)
-},{"./bytes":247,"./externals":249,"./helpers":251,"buffer":518,"create-hash":201,"ethereum-cryptography/keccak":242}],251:[function(require,module,exports){
+},{"./bytes":247,"./externals":249,"./helpers":251,"buffer":520,"create-hash":201,"ethereum-cryptography/keccak":242}],251:[function(require,module,exports){
 (function (Buffer){(function (){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
@@ -43827,7 +43830,7 @@ var assertIsString = function (input) {
 exports.assertIsString = assertIsString;
 
 }).call(this)}).call(this,{"isBuffer":require("../../../../../../../../../usr/local/lib/node_modules/browserify/node_modules/is-buffer/index.js")})
-},{"../../../../../../../../../usr/local/lib/node_modules/browserify/node_modules/is-buffer/index.js":602,"./internal":253}],252:[function(require,module,exports){
+},{"../../../../../../../../../usr/local/lib/node_modules/browserify/node_modules/is-buffer/index.js":604,"./internal":253}],252:[function(require,module,exports){
 "use strict";
 var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
     if (k2 === undefined) k2 = k;
@@ -44086,7 +44089,7 @@ function isHexString(value, length) {
 exports.isHexString = isHexString;
 
 }).call(this)}).call(this,require("buffer").Buffer)
-},{"buffer":518}],254:[function(require,module,exports){
+},{"buffer":520}],254:[function(require,module,exports){
 (function (Buffer){(function (){
 "use strict";
 var __importDefault = (this && this.__importDefault) || function (mod) {
@@ -44199,7 +44202,7 @@ var defineProperties = function (self, fields, data) {
 exports.defineProperties = defineProperties;
 
 }).call(this)}).call(this,require("buffer").Buffer)
-},{"./bytes":247,"./externals":249,"./internal":253,"assert":466,"buffer":518}],255:[function(require,module,exports){
+},{"./bytes":247,"./externals":249,"./internal":253,"assert":468,"buffer":520}],255:[function(require,module,exports){
 (function (Buffer){(function (){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
@@ -44358,7 +44361,7 @@ var hashPersonalMessage = function (message) {
 exports.hashPersonalMessage = hashPersonalMessage;
 
 }).call(this)}).call(this,require("buffer").Buffer)
-},{"./bytes":247,"./externals":249,"./hash":250,"./helpers":251,"./types":256,"buffer":518,"ethereum-cryptography/secp256k1":244}],256:[function(require,module,exports){
+},{"./bytes":247,"./externals":249,"./hash":250,"./helpers":251,"./types":256,"buffer":520,"ethereum-cryptography/secp256k1":244}],256:[function(require,module,exports){
 (function (Buffer){(function (){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
@@ -44438,9 +44441,9 @@ function toType(input, outputType) {
 exports.toType = toType;
 
 }).call(this)}).call(this,require("buffer").Buffer)
-},{"./bytes":247,"./externals":249,"./internal":253,"buffer":518}],257:[function(require,module,exports){
+},{"./bytes":247,"./externals":249,"./internal":253,"buffer":520}],257:[function(require,module,exports){
 arguments[4][175][0].apply(exports,arguments)
-},{"buffer":474,"dup":175}],258:[function(require,module,exports){
+},{"buffer":476,"dup":175}],258:[function(require,module,exports){
 'use strict';
 
 var BN = require('bn.js');
@@ -50777,7 +50780,7 @@ return {
   };
 }));
 
-},{"./idna-map":277,"punycode":631}],279:[function(require,module,exports){
+},{"./idna-map":277,"punycode":633}],279:[function(require,module,exports){
 if (typeof Object.create === 'function') {
   // implementation from standard node.js 'util' module
   module.exports = function inherits(ctor, superCtor) {
@@ -51501,7 +51504,7 @@ module.exports = function isHexPrefixed(str) {
 })();
 
 }).call(this)}).call(this,require('_process'),typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"_process":623}],283:[function(require,module,exports){
+},{"_process":625}],283:[function(require,module,exports){
 module.exports = require('./lib/api')(require('./lib/keccak'))
 
 },{"./lib/api":284,"./lib/keccak":288}],284:[function(require,module,exports){
@@ -51614,7 +51617,7 @@ module.exports = (KeccakState) => class Keccak extends Transform {
 }
 
 }).call(this)}).call(this,require("buffer").Buffer)
-},{"buffer":518,"readable-stream":353}],286:[function(require,module,exports){
+},{"buffer":520,"readable-stream":353}],286:[function(require,module,exports){
 (function (Buffer){(function (){
 const { Transform } = require('readable-stream')
 
@@ -51686,7 +51689,7 @@ module.exports = (KeccakState) => class Shake extends Transform {
 }
 
 }).call(this)}).call(this,require("buffer").Buffer)
-},{"buffer":518,"readable-stream":353}],287:[function(require,module,exports){
+},{"buffer":520,"readable-stream":353}],287:[function(require,module,exports){
 const P1600_ROUND_CONSTANTS = [1, 0, 32898, 0, 32906, 2147483648, 2147516416, 2147483648, 32907, 0, 2147483649, 0, 2147516545, 2147483648, 32777, 2147483648, 138, 0, 136, 0, 2147516425, 0, 2147483658, 0, 2147516555, 0, 139, 2147483648, 32905, 2147483648, 32771, 2147483648, 32770, 2147483648, 128, 2147483648, 32778, 0, 2147483658, 2147483648, 2147516545, 2147483648, 32896, 2147483648, 2147483649, 0, 2147516424, 2147483648]
 
 exports.p1600 = function (s) {
@@ -51946,7 +51949,7 @@ Keccak.prototype.copy = function (dest) {
 module.exports = Keccak
 
 }).call(this)}).call(this,require("buffer").Buffer)
-},{"./keccak-state-unroll":287,"buffer":518}],289:[function(require,module,exports){
+},{"./keccak-state-unroll":287,"buffer":520}],289:[function(require,module,exports){
 'use strict'
 var inherits = require('inherits')
 var HashBase = require('hash-base')
@@ -52335,7 +52338,7 @@ module.exports = function base16 (alphabet) {
   }
 }
 
-},{"buffer":518}],295:[function(require,module,exports){
+},{"buffer":520}],295:[function(require,module,exports){
 'use strict'
 
 function decode (input, alphabet) {
@@ -52464,7 +52467,7 @@ module.exports = function base64 (alphabet) {
   }
 }
 
-},{"buffer":518}],297:[function(require,module,exports){
+},{"buffer":520}],297:[function(require,module,exports){
 'use strict'
 
 const Base = require('./base.js')
@@ -52642,7 +52645,7 @@ function getBase (nameOrCode) {
   return base
 }
 
-},{"./constants":297,"buffer":518}],299:[function(require,module,exports){
+},{"./constants":297,"buffer":520}],299:[function(require,module,exports){
 module.exports={
   "identity": 0,
   "ip4": 4,
@@ -53204,7 +53207,7 @@ Object.assign(exports, constants)
 exports.print = require('./print')
 
 }).call(this)}).call(this,require("buffer").Buffer)
-},{"./constants":300,"./int-table":302,"./print":303,"./util":304,"./varint-table":305,"buffer":518,"varint":383}],302:[function(require,module,exports){
+},{"./constants":300,"./int-table":302,"./print":303,"./util":304,"./varint-table":305,"buffer":520,"varint":385}],302:[function(require,module,exports){
 arguments[4][187][0].apply(exports,arguments)
 },{"./base-table.json":299,"dup":187}],303:[function(require,module,exports){
 arguments[4][188][0].apply(exports,arguments)
@@ -53246,17 +53249,17 @@ function varintEncode (num) {
 }
 
 }).call(this)}).call(this,require("buffer").Buffer)
-},{"buffer":518,"varint":383}],305:[function(require,module,exports){
+},{"buffer":520,"varint":385}],305:[function(require,module,exports){
 arguments[4][190][0].apply(exports,arguments)
 },{"./base-table.json":299,"./util":304,"dup":190}],306:[function(require,module,exports){
 arguments[4][293][0].apply(exports,arguments)
 },{"dup":293}],307:[function(require,module,exports){
 arguments[4][294][0].apply(exports,arguments)
-},{"buffer":518,"dup":294}],308:[function(require,module,exports){
+},{"buffer":520,"dup":294}],308:[function(require,module,exports){
 arguments[4][295][0].apply(exports,arguments)
 },{"dup":295}],309:[function(require,module,exports){
 arguments[4][296][0].apply(exports,arguments)
-},{"buffer":518,"dup":296}],310:[function(require,module,exports){
+},{"buffer":520,"dup":296}],310:[function(require,module,exports){
 arguments[4][297][0].apply(exports,arguments)
 },{"./base.js":306,"./base16":307,"./base32":308,"./base64":309,"base-x":151,"dup":297}],311:[function(require,module,exports){
 /**
@@ -53390,7 +53393,7 @@ function getBase (nameOrCode) {
   return base
 }
 
-},{"./constants":310,"buffer":518}],312:[function(require,module,exports){
+},{"./constants":310,"buffer":520}],312:[function(require,module,exports){
 /* eslint quote-props: off */
 /* eslint key-spacing: off */
 'use strict'
@@ -54652,7 +54655,7 @@ exports.prefix = function prefix (multihash) {
   return multihash.slice(0, 2)
 }
 
-},{"./constants":312,"buffer":518,"multibase":311,"varint":383}],314:[function(require,module,exports){
+},{"./constants":312,"buffer":520,"multibase":311,"varint":385}],314:[function(require,module,exports){
 arguments[4][259][0].apply(exports,arguments)
 },{"dup":259}],315:[function(require,module,exports){
 var BN = require('bn.js');
@@ -58242,7 +58245,7 @@ if (global.process && global.process.browser) {
 module.exports = defaultEncoding
 
 }).call(this)}).call(this,require('_process'),typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"_process":623}],327:[function(require,module,exports){
+},{"_process":625}],327:[function(require,module,exports){
 var MAX_ALLOC = Math.pow(2, 30) - 1 // default in iojs
 
 module.exports = function (iterations, keylen) {
@@ -58919,7 +58922,7 @@ function randomBytes (size, cb) {
 }
 
 }).call(this)}).call(this,require('_process'),typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"_process":623,"safe-buffer":357}],338:[function(require,module,exports){
+},{"_process":625,"safe-buffer":357}],338:[function(require,module,exports){
 (function (process,global){(function (){
 'use strict'
 
@@ -59031,7 +59034,7 @@ function randomFillSync (buf, offset, size) {
 }
 
 }).call(this)}).call(this,require('_process'),typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"_process":623,"randombytes":337,"safe-buffer":357}],339:[function(require,module,exports){
+},{"_process":625,"randombytes":337,"safe-buffer":357}],339:[function(require,module,exports){
 'use strict';
 
 function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
@@ -59302,7 +59305,7 @@ Object.defineProperty(Duplex.prototype, 'destroyed', {
   }
 });
 }).call(this)}).call(this,require('_process'))
-},{"./_stream_readable":342,"./_stream_writable":344,"_process":623,"inherits":279}],341:[function(require,module,exports){
+},{"./_stream_readable":342,"./_stream_writable":344,"_process":625,"inherits":279}],341:[function(require,module,exports){
 // Copyright Joyent, Inc. and other Node contributors.
 //
 // Permission is hereby granted, free of charge, to any person obtaining a
@@ -60469,7 +60472,7 @@ function indexOf(xs, x) {
   return -1;
 }
 }).call(this)}).call(this,require('_process'),typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"../errors":339,"./_stream_duplex":340,"./internal/streams/async_iterator":345,"./internal/streams/buffer_list":346,"./internal/streams/destroy":347,"./internal/streams/from":349,"./internal/streams/state":351,"./internal/streams/stream":352,"_process":623,"buffer":518,"events":559,"inherits":279,"string_decoder/":372,"util":474}],343:[function(require,module,exports){
+},{"../errors":339,"./_stream_duplex":340,"./internal/streams/async_iterator":345,"./internal/streams/buffer_list":346,"./internal/streams/destroy":347,"./internal/streams/from":349,"./internal/streams/state":351,"./internal/streams/stream":352,"_process":625,"buffer":520,"events":561,"inherits":279,"string_decoder/":372,"util":476}],343:[function(require,module,exports){
 // Copyright Joyent, Inc. and other Node contributors.
 //
 // Permission is hereby granted, free of charge, to any person obtaining a
@@ -61371,7 +61374,7 @@ Writable.prototype._destroy = function (err, cb) {
   cb(err);
 };
 }).call(this)}).call(this,require('_process'),typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"../errors":339,"./_stream_duplex":340,"./internal/streams/destroy":347,"./internal/streams/state":351,"./internal/streams/stream":352,"_process":623,"buffer":518,"inherits":279,"util-deprecate":380}],345:[function(require,module,exports){
+},{"../errors":339,"./_stream_duplex":340,"./internal/streams/destroy":347,"./internal/streams/state":351,"./internal/streams/stream":352,"_process":625,"buffer":520,"inherits":279,"util-deprecate":382}],345:[function(require,module,exports){
 (function (process){(function (){
 'use strict';
 
@@ -61581,7 +61584,7 @@ var createReadableStreamAsyncIterator = function createReadableStreamAsyncIterat
 
 module.exports = createReadableStreamAsyncIterator;
 }).call(this)}).call(this,require('_process'))
-},{"./end-of-stream":348,"_process":623}],346:[function(require,module,exports){
+},{"./end-of-stream":348,"_process":625}],346:[function(require,module,exports){
 'use strict';
 
 function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
@@ -61792,7 +61795,7 @@ function () {
 
   return BufferList;
 }();
-},{"buffer":518,"util":474}],347:[function(require,module,exports){
+},{"buffer":520,"util":476}],347:[function(require,module,exports){
 (function (process){(function (){
 'use strict'; // undocumented cb() API, needed for core, not for public API
 
@@ -61900,7 +61903,7 @@ module.exports = {
   errorOrDestroy: errorOrDestroy
 };
 }).call(this)}).call(this,require('_process'))
-},{"_process":623}],348:[function(require,module,exports){
+},{"_process":625}],348:[function(require,module,exports){
 // Ported from https://github.com/mafintosh/end-of-stream with
 // permission from the author, Mathias Buus (@mafintosh).
 'use strict';
@@ -62139,7 +62142,7 @@ module.exports = {
 },{"../../../errors":339}],352:[function(require,module,exports){
 module.exports = require('events').EventEmitter;
 
-},{"events":559}],353:[function(require,module,exports){
+},{"events":561}],353:[function(require,module,exports){
 exports = module.exports = require('./lib/_stream_readable.js');
 exports.Stream = exports;
 exports.Readable = exports;
@@ -62315,7 +62318,7 @@ function fn5 (a, b, c, d, e, m, k, s) {
 
 module.exports = RIPEMD160
 
-},{"buffer":518,"hash-base":263,"inherits":279}],355:[function(require,module,exports){
+},{"buffer":520,"hash-base":263,"inherits":279}],355:[function(require,module,exports){
 (function (Buffer){(function (){
 "use strict";
 var __importDefault = (this && this.__importDefault) || function (mod) {
@@ -62570,9 +62573,9 @@ function toBuffer(v) {
 }
 
 }).call(this)}).call(this,require("buffer").Buffer)
-},{"bn.js":356,"buffer":518}],356:[function(require,module,exports){
+},{"bn.js":356,"buffer":520}],356:[function(require,module,exports){
 arguments[4][175][0].apply(exports,arguments)
-},{"buffer":474,"dup":175}],357:[function(require,module,exports){
+},{"buffer":476,"dup":175}],357:[function(require,module,exports){
 /*! safe-buffer. MIT License. Feross Aboukhadijeh <https://feross.org/opensource> */
 /* eslint-disable node/no-deprecated-api */
 var buffer = require('buffer')
@@ -62639,7 +62642,7 @@ SafeBuffer.allocUnsafeSlow = function (size) {
   return buffer.SlowBuffer(size)
 }
 
-},{"buffer":518}],358:[function(require,module,exports){
+},{"buffer":520}],358:[function(require,module,exports){
 (function (process){(function (){
 /* eslint-disable node/no-deprecated-api */
 
@@ -62720,7 +62723,7 @@ if (!safer.constants) {
 module.exports = safer
 
 }).call(this)}).call(this,require('_process'))
-},{"_process":623,"buffer":518}],359:[function(require,module,exports){
+},{"_process":625,"buffer":520}],359:[function(require,module,exports){
 (function (setImmediate){(function (){
 "use strict";
 
@@ -63212,7 +63215,7 @@ module.exports = safer
 })(this);
 
 }).call(this)}).call(this,require("timers").setImmediate)
-},{"timers":683}],360:[function(require,module,exports){
+},{"timers":685}],360:[function(require,module,exports){
 module.exports = require('./lib')(require('./lib/elliptic'))
 
 },{"./lib":362,"./lib/elliptic":361}],361:[function(require,module,exports){
@@ -65142,7 +65145,7 @@ module.exports = swarm({
   hash: hash,
   pick: pick
 });
-},{"./pick.js":375,"./swarm":377,"./swarm-hash.js":376,"eth-lib/lib/bytes":237,"xhr-request":439}],375:[function(require,module,exports){
+},{"./pick.js":375,"./swarm":377,"./swarm-hash.js":376,"eth-lib/lib/bytes":237,"xhr-request":441}],375:[function(require,module,exports){
 var picker = function picker(type) {
   return function () {
     return new Promise(function (resolve, reject) {
@@ -65926,6 +65929,6366 @@ module.exports = function (_ref) {
   };
 };
 },{}],378:[function(require,module,exports){
+module.exports={
+ "0": "O",
+ "1": "l",
+ "֭": "֖",
+ "֮": "֘",
+ "֨": "֙",
+ "֤": "֚",
+ "᪴": "ۛ",
+ "⃛": "ۛ",
+ "ؙ": "̓",
+ "ࣳ": "̓",
+ "̓": "̓",
+ "̕": "̓",
+ "ُ": "̓",
+ "ٝ": "̔",
+ "֜": "́",
+ "֝": "́",
+ "ؘ": "́",
+ "݇": "́",
+ "́": "́",
+ "॔": "́",
+ "َ": "́",
+ "̀": "̀",
+ "॓": "̀",
+ "̌": "̆",
+ "꙼": "̆",
+ "٘": "̆",
+ "ٚ": "̆",
+ "ͮ": "̆",
+ "ۨ": "̆̇",
+ "̐": "̆̇",
+ "ँ": "̆̇",
+ "ঁ": "̆̇",
+ "ઁ": "̆̇",
+ "ଁ": "̆̇",
+ "ఀ": "̆̇",
+ "ಁ": "̆̇",
+ "ഁ": "̆̇",
+ "𑒿": "̆̇",
+ "᳐": "̂",
+ "̑": "̂",
+ "ٛ": "̂",
+ "߮": "̂",
+ "꛰": "̂",
+ "֯": "̊",
+ "۟": "̊",
+ "៓": "̊",
+ "゚": "̊",
+ "ْ": "̊",
+ "ஂ": "̊",
+ "ံ": "̊",
+ "ំ": "̊",
+ "𑌀": "̊",
+ "ํ": "̊",
+ "ໍ": "̊",
+ "ͦ": "̊",
+ "ⷪ": "̊",
+ "࣫": "̈",
+ "߳": "̈",
+ "ً": "̋",
+ "ࣰ": "̋",
+ "͂": "̃",
+ "ٓ": "̃",
+ "ׄ": "̇",
+ "۬": "̇",
+ "݀": "̇",
+ "࣪": "̇",
+ "݁": "̇",
+ "͘": "̇",
+ "ֹ": "̇",
+ "ֺ": "̇",
+ "ׂ": "̇",
+ "ׁ": "̇",
+ "߭": "̇",
+ "ं": "̇",
+ "ਂ": "̇",
+ "ં": "̇",
+ "்": "̇",
+ "̷": "̸",
+ "᪷": "̨",
+ "̢": "̨",
+ "ͅ": "̨",
+ "᳒": "̄",
+ "̅": "̄",
+ "ٙ": "̄",
+ "߫": "̄",
+ "꛱": "̄",
+ "᳚": "̎",
+ "ٗ": "̒",
+ "͗": "͐",
+ "ࣿ": "͐",
+ "ࣸ": "͐",
+ "ऀ": "͒",
+ "᳭": "̖",
+ "᳜": "̩",
+ "ٖ": "̩",
+ "᳕": "̫",
+ "͇": "̳",
+ "ࣹ": "͔",
+ "ࣺ": "͕",
+ "゛": "ﾞ",
+ "゜": "ﾟ",
+ "̶": "̵",
+ "〬": "̉",
+ "ׅ": "̣",
+ "࣭": "̣",
+ "᳝": "̣",
+ "ִ": "̣",
+ "ٜ": "̣",
+ "़": "̣",
+ "়": "̣",
+ "਼": "̣",
+ "઼": "̣",
+ "଼": "̣",
+ "𑇊": "̣",
+ "𑓃": "̣",
+ "𐨺": "̣",
+ "࣮": "̤",
+ "᳞": "̤",
+ "༷": "̥",
+ "〭": "̥",
+ "̧": "̦",
+ "̡": "̦",
+ "̹": "̦",
+ "᳙": "̭",
+ "᳘": "̮",
+ "॒": "̱",
+ "̠": "̱",
+ "ࣱ": "ٌ",
+ "ࣨ": "ٌ",
+ "ࣥ": "ٌ",
+ "ﱞ": "ﹲّ",
+ "ࣲ": "ٍ",
+ "ﱟ": "ﹴّ",
+ "ﳲ": "ﹷّ",
+ "ﱠ": "ﹶّ",
+ "ﳳ": "ﹹّ",
+ "ﱡ": "ﹸّ",
+ "ؚ": "ِ",
+ "̗": "ِ",
+ "ﳴ": "ﹻّ",
+ "ﱢ": "ﹺّ",
+ "ﱣ": "ﹼٰ",
+ "ٟ": "ٕ",
+ "̍": "ٰ",
+ "݂": "ܼ",
+ "ਃ": "ঃ",
+ "ః": "ঃ",
+ "ಃ": "ঃ",
+ "ഃ": "ঃ",
+ "ඃ": "ঃ",
+ "း": "ঃ",
+ "𑓁": "ঃ",
+ "់": "่",
+ "່": "่",
+ "້": "้",
+ "໊": "๊",
+ "໋": "๋",
+ "꙯": "⃩",
+ "\u2028": " ",
+ "\u2029": " ",
+ " ": " ",
+ " ": " ",
+ " ": " ",
+ " ": " ",
+ " ": " ",
+ " ": " ",
+ " ": " ",
+ " ": " ",
+ " ": " ",
+ " ": " ",
+ " ": " ",
+ " ": " ",
+ " ": " ",
+ " ": " ",
+ " ": " ",
+ "ߺ": "_",
+ "﹍": "_",
+ "﹎": "_",
+ "﹏": "_",
+ "‐": "-",
+ "‑": "-",
+ "‒": "-",
+ "–": "-",
+ "﹘": "-",
+ "۔": "-",
+ "⁃": "-",
+ "˗": "-",
+ "−": "-",
+ "➖": "-",
+ "Ⲻ": "-",
+ "⨩": "-̓",
+ "⸚": "-̈",
+ "﬩": "-̇",
+ "∸": "-̇",
+ "⨪": "-̣",
+ "꓾": "-.",
+ "～": "〜",
+ "؍": ",",
+ "٫": ",",
+ "‚": ",",
+ "¸": ",",
+ "ꓹ": ",",
+ "⸲": "،",
+ "٬": "،",
+ ";": ";",
+ "⸵": "؛",
+ "ः": ":",
+ "ઃ": ":",
+ "：": ":",
+ "։": ":",
+ "܃": ":",
+ "܄": ":",
+ "᛬": ":",
+ "︰": ":",
+ "᠃": ":",
+ "᠉": ":",
+ "⁚": ":",
+ "׃": ":",
+ "˸": ":",
+ "꞉": ":",
+ "∶": ":",
+ "ː": ":",
+ "ꓽ": ":",
+ "⩴": "::=",
+ "⧴": ":→",
+ "！": "!",
+ "ǃ": "!",
+ "ⵑ": "!",
+ "‼": "!!",
+ "⁉": "!?",
+ "ʔ": "?",
+ "Ɂ": "?",
+ "ॽ": "?",
+ "Ꭾ": "?",
+ "ꛫ": "?",
+ "⁈": "?!",
+ "⁇": "??",
+ "⸮": "؟",
+ "𝅭": ".",
+ "․": ".",
+ "܁": ".",
+ "܂": ".",
+ "꘎": ".",
+ "𐩐": ".",
+ "٠": ".",
+ "۰": ".",
+ "ꓸ": ".",
+ "ꓻ": ".,",
+ "‥": "..",
+ "ꓺ": "..",
+ "…": "...",
+ "꛴": "꛳꛳",
+ "・": "·",
+ "･": "·",
+ "᛫": "·",
+ "·": "·",
+ "⸱": "·",
+ "𐄁": "·",
+ "•": "·",
+ "‧": "·",
+ "∙": "·",
+ "⋅": "·",
+ "ꞏ": "·",
+ "ᐧ": "·",
+ "⋯": "···",
+ "ⵈ": "···",
+ "ᑄ": "·<",
+ "⋗": "·>",
+ "ᐷ": "·>",
+ "ᑀ": "·>",
+ "ᔯ": "·4",
+ "ᑺ": "·d",
+ "ᒘ": "·J",
+ "ᒶ": "·L",
+ "ᑶ": "·P",
+ "ᑗ": "·U",
+ "ᐺ": "·V",
+ "ᐼ": "·Ʌ",
+ "ᒮ": "·Γ",
+ "ᐎ": "·Δ",
+ "ᑙ": "·Ո",
+ "ᐌ": "·ᐁ",
+ "ᐐ": "·ᐄ",
+ "ᐒ": "·ᐅ",
+ "ᐔ": "·ᐆ",
+ "ᐗ": "·ᐊ",
+ "ᐙ": "·ᐋ",
+ "ᐾ": "·ᐲ",
+ "ᑂ": "·ᐴ",
+ "ᑆ": "·ᐹ",
+ "ᑛ": "·ᑏ",
+ "ᑔ": "·ᑐ",
+ "ᑝ": "·ᑐ",
+ "ᑟ": "·ᑑ",
+ "ᑡ": "·ᑕ",
+ "ᑣ": "·ᑖ",
+ "ᑴ": "·ᑫ",
+ "ᑸ": "·ᑮ",
+ "ᑼ": "·ᑰ",
+ "ᑾ": "·ᑲ",
+ "ᒀ": "·ᑳ",
+ "ᒒ": "·ᒉ",
+ "ᒔ": "·ᒋ",
+ "ᒖ": "·ᒌ",
+ "ᒚ": "·ᒎ",
+ "ᒜ": "·ᒐ",
+ "ᒞ": "·ᒑ",
+ "ᒬ": "·ᒣ",
+ "ᒰ": "·ᒦ",
+ "ᒲ": "·ᒧ",
+ "ᒴ": "·ᒨ",
+ "ᒸ": "·ᒫ",
+ "ᓉ": "·ᓀ",
+ "ᣆ": "·ᓂ",
+ "ᣈ": "·ᓃ",
+ "ᣊ": "·ᓄ",
+ "ᣌ": "·ᓅ",
+ "ᓋ": "·ᓇ",
+ "ᓍ": "·ᓈ",
+ "ᓜ": "·ᓓ",
+ "ᓞ": "·ᓕ",
+ "ᓠ": "·ᓖ",
+ "ᓢ": "·ᓗ",
+ "ᓤ": "·ᓘ",
+ "ᓦ": "·ᓚ",
+ "ᓨ": "·ᓛ",
+ "ᓶ": "·ᓭ",
+ "ᓸ": "·ᓯ",
+ "ᓺ": "·ᓰ",
+ "ᓼ": "·ᓱ",
+ "ᓾ": "·ᓲ",
+ "ᔀ": "·ᓴ",
+ "ᔂ": "·ᓵ",
+ "ᔗ": "·ᔐ",
+ "ᔙ": "·ᔑ",
+ "ᔛ": "·ᔒ",
+ "ᔝ": "·ᔓ",
+ "ᔟ": "·ᔔ",
+ "ᔡ": "·ᔕ",
+ "ᔣ": "·ᔖ",
+ "ᔱ": "·ᔨ",
+ "ᔳ": "·ᔩ",
+ "ᔵ": "·ᔪ",
+ "ᔷ": "·ᔫ",
+ "ᔹ": "·ᔭ",
+ "ᔻ": "·ᔮ",
+ "ᣎ": "·ᕃ",
+ "ᣏ": "·ᕆ",
+ "ᣐ": "·ᕇ",
+ "ᣑ": "·ᕈ",
+ "ᣒ": "·ᕉ",
+ "ᣓ": "·ᕋ",
+ "ᕎ": "·ᕌ",
+ "ᕛ": "·ᕚ",
+ "ᕨ": "·ᕧ",
+ "ᢳ": "·ᢱ",
+ "ᢶ": "·ᢴ",
+ "ᢹ": "·ᢸ",
+ "ᣂ": "·ᣀ",
+ "꠰": "।",
+ "॥": "।।",
+ "᰼": "᰻᰻",
+ "။": "၊၊",
+ "᪩": "᪨᪨",
+ "᪫": "᪪᪨",
+ "᭟": "᭞᭞",
+ "𐩗": "𐩖𐩖",
+ "𑑌": "𑑋𑑋",
+ "𑙂": "𑙁𑙁",
+ "𑱂": "𑱁𑱁",
+ "᱿": "᱾᱾",
+ "՝": "'",
+ "＇": "'",
+ "‘": "'",
+ "’": "'",
+ "‛": "'",
+ "′": "'",
+ "‵": "'",
+ "՚": "'",
+ "׳": "'",
+ "`": "'",
+ "`": "'",
+ "｀": "'",
+ "´": "'",
+ "΄": "'",
+ "´": "'",
+ "᾽": "'",
+ "᾿": "'",
+ "῾": "'",
+ "ʹ": "'",
+ "ʹ": "'",
+ "ˈ": "'",
+ "ˊ": "'",
+ "ˋ": "'",
+ "˴": "'",
+ "ʻ": "'",
+ "ʽ": "'",
+ "ʼ": "'",
+ "ʾ": "'",
+ "ꞌ": "'",
+ "י": "'",
+ "ߴ": "'",
+ "ߵ": "'",
+ "ᑊ": "'",
+ "ᛌ": "'",
+ "𖽑": "'",
+ "𖽒": "'",
+ "᳓": "''",
+ "\"": "''",
+ "＂": "''",
+ "“": "''",
+ "”": "''",
+ "‟": "''",
+ "″": "''",
+ "‶": "''",
+ "〃": "''",
+ "״": "''",
+ "˝": "''",
+ "ʺ": "''",
+ "˶": "''",
+ "ˮ": "''",
+ "ײ": "''",
+ "‴": "'''",
+ "‷": "'''",
+ "⁗": "''''",
+ "Ɓ": "'B",
+ "Ɗ": "'D",
+ "ŉ": "'n",
+ "Ƥ": "'P",
+ "Ƭ": "'T",
+ "Ƴ": "'Y",
+ "［": "(",
+ "❨": "(",
+ "❲": "(",
+ "〔": "(",
+ "﴾": "(",
+ "⸨": "((",
+ "㈠": "(ー)",
+ "⑵": "(2)",
+ "⒇": "(2O)",
+ "⑶": "(3)",
+ "⑷": "(4)",
+ "⑸": "(5)",
+ "⑹": "(6)",
+ "⑺": "(7)",
+ "⑻": "(8)",
+ "⑼": "(9)",
+ "⒜": "(a)",
+ "🄐": "(A)",
+ "⒝": "(b)",
+ "🄑": "(B)",
+ "⒞": "(c)",
+ "🄒": "(C)",
+ "⒟": "(d)",
+ "🄓": "(D)",
+ "⒠": "(e)",
+ "🄔": "(E)",
+ "⒡": "(f)",
+ "🄕": "(F)",
+ "⒢": "(g)",
+ "🄖": "(G)",
+ "⒣": "(h)",
+ "🄗": "(H)",
+ "⒤": "(i)",
+ "⒥": "(j)",
+ "🄙": "(J)",
+ "⒦": "(k)",
+ "🄚": "(K)",
+ "⑴": "(l)",
+ "🄘": "(l)",
+ "⒧": "(l)",
+ "🄛": "(L)",
+ "⑿": "(l2)",
+ "⒀": "(l3)",
+ "⒁": "(l4)",
+ "⒂": "(l5)",
+ "⒃": "(l6)",
+ "⒄": "(l7)",
+ "⒅": "(l8)",
+ "⒆": "(l9)",
+ "⑾": "(ll)",
+ "⑽": "(lO)",
+ "🄜": "(M)",
+ "⒩": "(n)",
+ "🄝": "(N)",
+ "⒪": "(o)",
+ "🄞": "(O)",
+ "⒫": "(p)",
+ "🄟": "(P)",
+ "⒬": "(q)",
+ "🄠": "(Q)",
+ "⒭": "(r)",
+ "🄡": "(R)",
+ "⒨": "(rn)",
+ "⒮": "(s)",
+ "🄢": "(S)",
+ "🄪": "(S)",
+ "⒯": "(t)",
+ "🄣": "(T)",
+ "⒰": "(u)",
+ "🄤": "(U)",
+ "⒱": "(v)",
+ "🄥": "(V)",
+ "⒲": "(w)",
+ "🄦": "(W)",
+ "⒳": "(x)",
+ "🄧": "(X)",
+ "⒴": "(y)",
+ "🄨": "(Y)",
+ "⒵": "(z)",
+ "🄩": "(Z)",
+ "㈀": "(ᄀ)",
+ "㈎": "(가)",
+ "㈁": "(ᄂ)",
+ "㈏": "(나)",
+ "㈂": "(ᄃ)",
+ "㈐": "(다)",
+ "㈃": "(ᄅ)",
+ "㈑": "(라)",
+ "㈄": "(ᄆ)",
+ "㈒": "(마)",
+ "㈅": "(ᄇ)",
+ "㈓": "(바)",
+ "㈆": "(ᄉ)",
+ "㈔": "(사)",
+ "㈇": "(ᄋ)",
+ "㈕": "(아)",
+ "㈝": "(오전)",
+ "㈞": "(오후)",
+ "㈈": "(ᄌ)",
+ "㈖": "(자)",
+ "㈜": "(주)",
+ "㈉": "(ᄎ)",
+ "㈗": "(차)",
+ "㈊": "(ᄏ)",
+ "㈘": "(카)",
+ "㈋": "(ᄐ)",
+ "㈙": "(타)",
+ "㈌": "(ᄑ)",
+ "㈚": "(파)",
+ "㈍": "(ᄒ)",
+ "㈛": "(하)",
+ "㈦": "(七)",
+ "㈢": "(三)",
+ "🉁": "(三)",
+ "㈨": "(九)",
+ "㈡": "(二)",
+ "🉂": "(二)",
+ "㈤": "(五)",
+ "㈹": "(代)",
+ "㈽": "(企)",
+ "㉁": "(休)",
+ "㈧": "(八)",
+ "㈥": "(六)",
+ "㈸": "(労)",
+ "🉇": "(勝)",
+ "㈩": "(十)",
+ "㈿": "(協)",
+ "㈴": "(名)",
+ "㈺": "(呼)",
+ "㈣": "(四)",
+ "㈯": "(土)",
+ "㈻": "(学)",
+ "🉃": "(安)",
+ "🉅": "(打)",
+ "🉈": "(敗)",
+ "㈰": "(日)",
+ "㈪": "(月)",
+ "㈲": "(有)",
+ "㈭": "(木)",
+ "🉀": "(本)",
+ "㈱": "(株)",
+ "㈬": "(水)",
+ "㈫": "(火)",
+ "🉄": "(点)",
+ "㈵": "(特)",
+ "🉆": "(盗)",
+ "㈼": "(監)",
+ "㈳": "(社)",
+ "㈷": "(祝)",
+ "㉀": "(祭)",
+ "㉂": "(自)",
+ "㉃": "(至)",
+ "㈶": "(財)",
+ "㈾": "(資)",
+ "㈮": "(金)",
+ "］": ")",
+ "❩": ")",
+ "❳": ")",
+ "〕": ")",
+ "﴿": ")",
+ "⸩": "))",
+ "❴": "{",
+ "𝄔": "{",
+ "❵": "}",
+ "〚": "⟦",
+ "〛": "⟧",
+ "⟨": "❬",
+ "〈": "❬",
+ "〈": "❬",
+ "㇛": "❬",
+ "く": "❬",
+ "𡿨": "❬",
+ "⟩": "❭",
+ "〉": "❭",
+ "〉": "❭",
+ "＾": "︿",
+ "⸿": "¶",
+ "⁎": "*",
+ "٭": "*",
+ "∗": "*",
+ "𐌟": "*",
+ "᜵": "/",
+ "⁁": "/",
+ "∕": "/",
+ "⁄": "/",
+ "╱": "/",
+ "⟋": "/",
+ "⧸": "/",
+ "𝈺": "/",
+ "㇓": "/",
+ "〳": "/",
+ "Ⳇ": "/",
+ "ノ": "/",
+ "丿": "/",
+ "⼃": "/",
+ "⧶": "/̄",
+ "⫽": "//",
+ "⫻": "///",
+ "＼": "\\",
+ "﹨": "\\",
+ "∖": "\\",
+ "⟍": "\\",
+ "⧵": "\\",
+ "⧹": "\\",
+ "𝈏": "\\",
+ "𝈻": "\\",
+ "㇔": "\\",
+ "丶": "\\",
+ "⼂": "\\",
+ "⳹": "\\\\",
+ "⑊": "\\\\",
+ "⟈": "\\ᑕ",
+ "ꝸ": "&",
+ "૰": "॰",
+ "𑂻": "॰",
+ "𑇇": "॰",
+ "⚬": "॰",
+ "𑇛": "꣼",
+ "៙": "๏",
+ "៕": "๚",
+ "៚": "๛",
+ "༌": "་",
+ "༎": "།།",
+ "˄": "^",
+ "ˆ": "^",
+ "꙾": "ˇ",
+ "˘": "ˇ",
+ "‾": "ˉ",
+ "﹉": "ˉ",
+ "﹊": "ˉ",
+ "﹋": "ˉ",
+ "﹌": "ˉ",
+ "¯": "ˉ",
+ "￣": "ˉ",
+ "▔": "ˉ",
+ "ъ": "ˉb",
+ "ꙑ": "ˉbi",
+ "͵": "ˏ",
+ "˻": "˪",
+ "꜖": "˪",
+ "꜔": "˫",
+ "。": "˳",
+ "⸰": "°",
+ "˚": "°",
+ "∘": "°",
+ "○": "°",
+ "◦": "°",
+ "⍜": "°̲",
+ "⍤": "°̈",
+ "℃": "°C",
+ "℉": "°F",
+ "௵": "௳",
+ "༛": "༚༚",
+ "༟": "༚༝",
+ "࿎": "༝༚",
+ "༞": "༝༝",
+ "Ⓒ": "©",
+ "Ⓡ": "®",
+ "Ⓟ": "℗",
+ "𝈛": "⅄",
+ "⯬": "↞",
+ "⯭": "↟",
+ "⯮": "↠",
+ "⯯": "↡",
+ "↵": "↲",
+ "⥥": "⇃⇂",
+ "⥯": "⇃ᛚ",
+ "𝛛": "∂",
+ "𝜕": "∂",
+ "𝝏": "∂",
+ "𝞉": "∂",
+ "𝟃": "∂",
+ "𞣌": "∂",
+ "𞣍": "∂̵",
+ "ð": "∂̵",
+ "⌀": "∅",
+ "𝛁": "∇",
+ "𝛻": "∇",
+ "𝜵": "∇",
+ "𝝯": "∇",
+ "𝞩": "∇",
+ "𑢨": "∇",
+ "⍢": "∇̈",
+ "⍫": "∇̴",
+ "█": "∎",
+ "■": "∎",
+ "⨿": "∐",
+ "᛭": "+",
+ "➕": "+",
+ "𐊛": "+",
+ "⨣": "+̂",
+ "⨢": "+̊",
+ "⨤": "+̃",
+ "∔": "+̇",
+ "⨥": "+̣",
+ "⨦": "+̰",
+ "⨧": "+₂",
+ "➗": "÷",
+ "‹": "<",
+ "❮": "<",
+ "˂": "<",
+ "𝈶": "<",
+ "ᐸ": "<",
+ "ᚲ": "<",
+ "⋖": "<·",
+ "Ⲵ": "<·",
+ "ᑅ": "<·",
+ "≪": "<<",
+ "⋘": "<<<",
+ "᐀": "=",
+ "⹀": "=",
+ "゠": "=",
+ "꓿": "=",
+ "≚": "=̆",
+ "≙": "=̂",
+ "≗": "=̊",
+ "≐": "=̇",
+ "≑": "=̣̇",
+ "⩮": "=⃰",
+ "⩵": "==",
+ "⩶": "===",
+ "≞": "=ͫ",
+ "›": ">",
+ "❯": ">",
+ "˃": ">",
+ "𝈷": ">",
+ "ᐳ": ">",
+ "𖼿": ">",
+ "ᑁ": ">·",
+ "⪥": "><",
+ "≫": ">>",
+ "⨠": ">>",
+ "⋙": ">>>",
+ "⁓": "~",
+ "˜": "~",
+ "῀": "~",
+ "∼": "~",
+ "⍨": "~̈",
+ "⸞": "~̇",
+ "⩪": "~̇",
+ "⸟": "~̣",
+ "𞣈": "∠",
+ "⋀": "∧",
+ "∯": "∮∮",
+ "∰": "∮∮∮",
+ "⸫": "∴",
+ "⸪": "∵",
+ "⸬": "∷",
+ "𑇞": "≈",
+ "♎": "≏",
+ "🝞": "≏",
+ "≣": "≡",
+ "⨃": "⊍",
+ "⨄": "⊎",
+ "𝈸": "⊏",
+ "𝈹": "⊐",
+ "⨅": "⊓",
+ "⨆": "⊔",
+ "⨂": "⊗",
+ "⍟": "⊛",
+ "🝱": "⊠",
+ "🝕": "⊡",
+ "◁": "⊲",
+ "▷": "⊳",
+ "⍣": "⋆̈",
+ "︴": "⌇",
+ "◠": "⌒",
+ "⨽": "⌙",
+ "⌥": "⌤",
+ "⧇": "⌻",
+ "◎": "⌾",
+ "⦾": "⌾",
+ "⧅": "⍂",
+ "⦰": "⍉",
+ "⏃": "⍋",
+ "⏂": "⍎",
+ "⏁": "⍕",
+ "Ö": "⍥",
+ "Ő": "⍥",
+ "⏆": "⍭",
+ "☸": "⎈",
+ "︵": "⏜",
+ "︶": "⏝",
+ "︷": "⏞",
+ "︸": "⏟",
+ "︹": "⏠",
+ "︺": "⏡",
+ "▱": "⏥",
+ "⏼": "⏻",
+ "︱": "│",
+ "｜": "│",
+ "┃": "│",
+ "┏": "┌",
+ "┣": "├",
+ "▐": "▌",
+ "▗": "▖",
+ "▝": "▘",
+ "☐": "□",
+ "￭": "▪",
+ "▸": "▶",
+ "►": "▶",
+ "⳩": "☧",
+ "🜊": "☩",
+ "🌒": "☽",
+ "🌙": "☽",
+ "⏾": "☾",
+ "🌘": "☾",
+ "⧙": "⦚",
+ "🜺": "⧟",
+ "⨾": "⨟",
+ "𐆠": "⳨",
+ "♩": "𝅘𝅥",
+ "♪": "𝅘𝅥𝅮",
+ "˙": "ॱ",
+ "ൎ": "ॱ",
+ "－": "ー",
+ "—": "ー",
+ "―": "ー",
+ "─": "ー",
+ "━": "ー",
+ "㇐": "ー",
+ "ꟷ": "ー",
+ "ᅳ": "ー",
+ "ㅡ": "ー",
+ "一": "ー",
+ "⼀": "ー",
+ "ᆖ": "ーー",
+ "ힹ": "ーᅡ",
+ "ힺ": "ーᅥ",
+ "ힻ": "ーᅥ丨",
+ "ힼ": "ーᅩ",
+ "ᆕ": "ーᅮ",
+ "ᅴ": "ー丨",
+ "ㅢ": "ー丨",
+ "ᆗ": "ー丨ᅮ",
+ "₤": "£",
+ "〒": "₸",
+ "〶": "₸",
+ "᭜": "᭐",
+ "꧆": "꧐",
+ "𑓑": "১",
+ "೧": "౧",
+ "ၥ": "၁",
+ "①": "➀",
+ "⑩": "➉",
+ "⏨": "₁₀",
+ "𝟐": "2",
+ "𝟚": "2",
+ "𝟤": "2",
+ "𝟮": "2",
+ "𝟸": "2",
+ "Ꝛ": "2",
+ "Ƨ": "2",
+ "Ϩ": "2",
+ "Ꙅ": "2",
+ "ᒿ": "2",
+ "ꛯ": "2",
+ "ꧏ": "٢",
+ "۲": "٢",
+ "૨": "२",
+ "𑓒": "২",
+ "೨": "౨",
+ "②": "➁",
+ "ƻ": "2̵",
+ "🄃": "2,",
+ "⒉": "2.",
+ "㏵": "22日",
+ "㍮": "22点",
+ "㏶": "23日",
+ "㍯": "23点",
+ "㏷": "24日",
+ "㍰": "24点",
+ "㏸": "25日",
+ "㏹": "26日",
+ "㏺": "27日",
+ "㏻": "28日",
+ "㏼": "29日",
+ "㏴": "2l日",
+ "㍭": "2l点",
+ "⒛": "2O.",
+ "㏳": "2O日",
+ "㍬": "2O点",
+ "෩": "෨ා",
+ "෯": "෨ී",
+ "㏡": "2日",
+ "㋁": "2月",
+ "㍚": "2点",
+ "𝈆": "3",
+ "𝟑": "3",
+ "𝟛": "3",
+ "𝟥": "3",
+ "𝟯": "3",
+ "𝟹": "3",
+ "Ɜ": "3",
+ "Ȝ": "3",
+ "Ʒ": "3",
+ "Ꝫ": "3",
+ "Ⳍ": "3",
+ "З": "3",
+ "Ӡ": "3",
+ "𖼻": "3",
+ "𑣊": "3",
+ "۳": "٣",
+ "𞣉": "٣",
+ "૩": "३",
+ "③": "➂",
+ "Ҙ": "3̦",
+ "🄄": "3,",
+ "⒊": "3.",
+ "㏾": "3l日",
+ "㏽": "3O日",
+ "㏢": "3日",
+ "㋂": "3月",
+ "㍛": "3点",
+ "𝟒": "4",
+ "𝟜": "4",
+ "𝟦": "4",
+ "𝟰": "4",
+ "𝟺": "4",
+ "Ꮞ": "4",
+ "𑢯": "4",
+ "۴": "٤",
+ "૪": "४",
+ "④": "➃",
+ "🄅": "4,",
+ "⒋": "4.",
+ "ᔰ": "4·",
+ "㏣": "4日",
+ "㋃": "4月",
+ "㍜": "4点",
+ "𝟓": "5",
+ "𝟝": "5",
+ "𝟧": "5",
+ "𝟱": "5",
+ "𝟻": "5",
+ "Ƽ": "5",
+ "𑢻": "5",
+ "⑤": "➄",
+ "🄆": "5,",
+ "⒌": "5.",
+ "㏤": "5日",
+ "㋄": "5月",
+ "㍝": "5点",
+ "𝟔": "6",
+ "𝟞": "6",
+ "𝟨": "6",
+ "𝟲": "6",
+ "𝟼": "6",
+ "Ⳓ": "6",
+ "б": "6",
+ "Ꮾ": "6",
+ "𑣕": "6",
+ "۶": "٦",
+ "𑓖": "৬",
+ "⑥": "➅",
+ "🄇": "6,",
+ "⒍": "6.",
+ "㏥": "6日",
+ "㋅": "6月",
+ "㍞": "6点",
+ "𝈒": "7",
+ "𝟕": "7",
+ "𝟟": "7",
+ "𝟩": "7",
+ "𝟳": "7",
+ "𝟽": "7",
+ "𐓒": "7",
+ "𑣆": "7",
+ "⑦": "➆",
+ "🄈": "7,",
+ "⒎": "7.",
+ "㏦": "7日",
+ "㋆": "7月",
+ "㍟": "7点",
+ "ଃ": "8",
+ "৪": "8",
+ "੪": "8",
+ "𞣋": "8",
+ "𝟖": "8",
+ "𝟠": "8",
+ "𝟪": "8",
+ "𝟴": "8",
+ "𝟾": "8",
+ "ȣ": "8",
+ "Ȣ": "8",
+ "𐌚": "8",
+ "૮": "८",
+ "⑧": "➇",
+ "🄉": "8,",
+ "⒏": "8.",
+ "㏧": "8日",
+ "㋇": "8月",
+ "㍠": "8点",
+ "੧": "9",
+ "୨": "9",
+ "৭": "9",
+ "൭": "9",
+ "𝟗": "9",
+ "𝟡": "9",
+ "𝟫": "9",
+ "𝟵": "9",
+ "𝟿": "9",
+ "Ꝯ": "9",
+ "Ⳋ": "9",
+ "𑣌": "9",
+ "𑢬": "9",
+ "𑣖": "9",
+ "१": "٩",
+ "𑣤": "٩",
+ "۹": "٩",
+ "೯": "౯",
+ "⑨": "➈",
+ "🄊": "9,",
+ "⒐": "9.",
+ "㏨": "9日",
+ "㋈": "9月",
+ "㍡": "9点",
+ "⍺": "a",
+ "ａ": "a",
+ "𝐚": "a",
+ "𝑎": "a",
+ "𝒂": "a",
+ "𝒶": "a",
+ "𝓪": "a",
+ "𝔞": "a",
+ "𝕒": "a",
+ "𝖆": "a",
+ "𝖺": "a",
+ "𝗮": "a",
+ "𝘢": "a",
+ "𝙖": "a",
+ "𝚊": "a",
+ "ɑ": "a",
+ "α": "a",
+ "𝛂": "a",
+ "𝛼": "a",
+ "𝜶": "a",
+ "𝝰": "a",
+ "𝞪": "a",
+ "а": "a",
+ "ⷶ": "ͣ",
+ "Ａ": "A",
+ "𝐀": "A",
+ "𝐴": "A",
+ "𝑨": "A",
+ "𝒜": "A",
+ "𝓐": "A",
+ "𝔄": "A",
+ "𝔸": "A",
+ "𝕬": "A",
+ "𝖠": "A",
+ "𝗔": "A",
+ "𝘈": "A",
+ "𝘼": "A",
+ "𝙰": "A",
+ "Α": "A",
+ "𝚨": "A",
+ "𝛢": "A",
+ "𝜜": "A",
+ "𝝖": "A",
+ "𝞐": "A",
+ "А": "A",
+ "Ꭺ": "A",
+ "ᗅ": "A",
+ "ꓮ": "A",
+ "𖽀": "A",
+ "𐊠": "A",
+ "⍶": "a̲",
+ "ǎ": "ă",
+ "Ǎ": "Ă",
+ "ȧ": "å",
+ "Ȧ": "Å",
+ "ẚ": "ả",
+ "℀": "a/c",
+ "℁": "a/s",
+ "ꜳ": "aa",
+ "Ꜳ": "AA",
+ "æ": "ae",
+ "ӕ": "ae",
+ "Æ": "AE",
+ "Ӕ": "AE",
+ "ꜵ": "ao",
+ "Ꜵ": "AO",
+ "🜇": "AR",
+ "ꜷ": "au",
+ "Ꜷ": "AU",
+ "ꜹ": "av",
+ "ꜻ": "av",
+ "Ꜹ": "AV",
+ "Ꜻ": "AV",
+ "ꜽ": "ay",
+ "Ꜽ": "AY",
+ "ꭺ": "ᴀ",
+ "∀": "Ɐ",
+ "𝈗": "Ɐ",
+ "ᗄ": "Ɐ",
+ "ꓯ": "Ɐ",
+ "𐐟": "Ɒ",
+ "𝐛": "b",
+ "𝑏": "b",
+ "𝒃": "b",
+ "𝒷": "b",
+ "𝓫": "b",
+ "𝔟": "b",
+ "𝕓": "b",
+ "𝖇": "b",
+ "𝖻": "b",
+ "𝗯": "b",
+ "𝘣": "b",
+ "𝙗": "b",
+ "𝚋": "b",
+ "Ƅ": "b",
+ "Ь": "b",
+ "Ꮟ": "b",
+ "ᖯ": "b",
+ "Ｂ": "B",
+ "ℬ": "B",
+ "𝐁": "B",
+ "𝐵": "B",
+ "𝑩": "B",
+ "𝓑": "B",
+ "𝔅": "B",
+ "𝔹": "B",
+ "𝕭": "B",
+ "𝖡": "B",
+ "𝗕": "B",
+ "𝘉": "B",
+ "𝘽": "B",
+ "𝙱": "B",
+ "Ꞵ": "B",
+ "Β": "B",
+ "𝚩": "B",
+ "𝛣": "B",
+ "𝜝": "B",
+ "𝝗": "B",
+ "𝞑": "B",
+ "В": "B",
+ "Ᏼ": "B",
+ "ᗷ": "B",
+ "ꓐ": "B",
+ "𐊂": "B",
+ "𐊡": "B",
+ "𐌁": "B",
+ "ɓ": "b̔",
+ "ƃ": "b̄",
+ "Ƃ": "b̄",
+ "Б": "b̄",
+ "ƀ": "b̵",
+ "ҍ": "b̵",
+ "Ҍ": "b̵",
+ "ѣ": "b̵",
+ "Ѣ": "b̵",
+ "Ы": "bl",
+ "в": "ʙ",
+ "ᏼ": "ʙ",
+ "ｃ": "c",
+ "ⅽ": "c",
+ "𝐜": "c",
+ "𝑐": "c",
+ "𝒄": "c",
+ "𝒸": "c",
+ "𝓬": "c",
+ "𝔠": "c",
+ "𝕔": "c",
+ "𝖈": "c",
+ "𝖼": "c",
+ "𝗰": "c",
+ "𝘤": "c",
+ "𝙘": "c",
+ "𝚌": "c",
+ "ᴄ": "c",
+ "ϲ": "c",
+ "ⲥ": "c",
+ "с": "c",
+ "ꮯ": "c",
+ "𐐽": "c",
+ "ⷭ": "ͨ",
+ "🝌": "C",
+ "𑣲": "C",
+ "𑣩": "C",
+ "Ｃ": "C",
+ "Ⅽ": "C",
+ "ℂ": "C",
+ "ℭ": "C",
+ "𝐂": "C",
+ "𝐶": "C",
+ "𝑪": "C",
+ "𝒞": "C",
+ "𝓒": "C",
+ "𝕮": "C",
+ "𝖢": "C",
+ "𝗖": "C",
+ "𝘊": "C",
+ "𝘾": "C",
+ "𝙲": "C",
+ "Ϲ": "C",
+ "Ⲥ": "C",
+ "С": "C",
+ "Ꮯ": "C",
+ "ꓚ": "C",
+ "𐊢": "C",
+ "𐌂": "C",
+ "𐐕": "C",
+ "𐔜": "C",
+ "¢": "c̸",
+ "ȼ": "c̸",
+ "₡": "C⃫",
+ "ç": "c̦",
+ "ҫ": "c̦",
+ "Ç": "C̦",
+ "Ҫ": "C̦",
+ "Ƈ": "C'",
+ "℅": "c/o",
+ "℆": "c/u",
+ "⋴": "ꞓ",
+ "ɛ": "ꞓ",
+ "ε": "ꞓ",
+ "ϵ": "ꞓ",
+ "𝛆": "ꞓ",
+ "𝛜": "ꞓ",
+ "𝜀": "ꞓ",
+ "𝜖": "ꞓ",
+ "𝜺": "ꞓ",
+ "𝝐": "ꞓ",
+ "𝝴": "ꞓ",
+ "𝞊": "ꞓ",
+ "𝞮": "ꞓ",
+ "𝟄": "ꞓ",
+ "ⲉ": "ꞓ",
+ "є": "ꞓ",
+ "ԑ": "ꞓ",
+ "ꮛ": "ꞓ",
+ "𑣎": "ꞓ",
+ "𐐩": "ꞓ",
+ "€": "Ꞓ",
+ "Ⲉ": "Ꞓ",
+ "Є": "Ꞓ",
+ "⍷": "ꞓ̲",
+ "ͽ": "ꜿ",
+ "Ͽ": "Ꜿ",
+ "ⅾ": "d",
+ "ⅆ": "d",
+ "𝐝": "d",
+ "𝑑": "d",
+ "𝒅": "d",
+ "𝒹": "d",
+ "𝓭": "d",
+ "𝔡": "d",
+ "𝕕": "d",
+ "𝖉": "d",
+ "𝖽": "d",
+ "𝗱": "d",
+ "𝘥": "d",
+ "𝙙": "d",
+ "𝚍": "d",
+ "ԁ": "d",
+ "Ꮷ": "d",
+ "ᑯ": "d",
+ "ꓒ": "d",
+ "Ⅾ": "D",
+ "ⅅ": "D",
+ "𝐃": "D",
+ "𝐷": "D",
+ "𝑫": "D",
+ "𝒟": "D",
+ "𝓓": "D",
+ "𝔇": "D",
+ "𝔻": "D",
+ "𝕯": "D",
+ "𝖣": "D",
+ "𝗗": "D",
+ "𝘋": "D",
+ "𝘿": "D",
+ "𝙳": "D",
+ "Ꭰ": "D",
+ "ᗞ": "D",
+ "ᗪ": "D",
+ "ꓓ": "D",
+ "ɗ": "d̔",
+ "ɖ": "d̨",
+ "ƌ": "d̄",
+ "đ": "d̵",
+ "Đ": "D̵",
+ "Ð": "D̵",
+ "Ɖ": "D̵",
+ "₫": "ḏ̵",
+ "ꝺ": "Ꝺ",
+ "ᑻ": "d·",
+ "ᒇ": "d'",
+ "ʤ": "dȝ",
+ "ǳ": "dz",
+ "ʣ": "dz",
+ "ǲ": "Dz",
+ "Ǳ": "DZ",
+ "ǆ": "dž",
+ "ǅ": "Dž",
+ "Ǆ": "DŽ",
+ "ʥ": "dʑ",
+ "ꭰ": "ᴅ",
+ "⸹": "ẟ",
+ "δ": "ẟ",
+ "𝛅": "ẟ",
+ "𝛿": "ẟ",
+ "𝜹": "ẟ",
+ "𝝳": "ẟ",
+ "𝞭": "ẟ",
+ "ծ": "ẟ",
+ "ᕷ": "ẟ",
+ "℮": "e",
+ "ｅ": "e",
+ "ℯ": "e",
+ "ⅇ": "e",
+ "𝐞": "e",
+ "𝑒": "e",
+ "𝒆": "e",
+ "𝓮": "e",
+ "𝔢": "e",
+ "𝕖": "e",
+ "𝖊": "e",
+ "𝖾": "e",
+ "𝗲": "e",
+ "𝘦": "e",
+ "𝙚": "e",
+ "𝚎": "e",
+ "ꬲ": "e",
+ "е": "e",
+ "ҽ": "e",
+ "ⷷ": "ͤ",
+ "⋿": "E",
+ "Ｅ": "E",
+ "ℰ": "E",
+ "𝐄": "E",
+ "𝐸": "E",
+ "𝑬": "E",
+ "𝓔": "E",
+ "𝔈": "E",
+ "𝔼": "E",
+ "𝕰": "E",
+ "𝖤": "E",
+ "𝗘": "E",
+ "𝘌": "E",
+ "𝙀": "E",
+ "𝙴": "E",
+ "Ε": "E",
+ "𝚬": "E",
+ "𝛦": "E",
+ "𝜠": "E",
+ "𝝚": "E",
+ "𝞔": "E",
+ "Е": "E",
+ "ⴹ": "E",
+ "Ꭼ": "E",
+ "ꓰ": "E",
+ "𑢦": "E",
+ "𑢮": "E",
+ "𐊆": "E",
+ "ě": "ĕ",
+ "Ě": "Ĕ",
+ "ɇ": "e̸",
+ "Ɇ": "E̸",
+ "ҿ": "ę",
+ "ꭼ": "ᴇ",
+ "ə": "ǝ",
+ "ә": "ǝ",
+ "∃": "Ǝ",
+ "ⴺ": "Ǝ",
+ "ꓱ": "Ǝ",
+ "ɚ": "ǝ˞",
+ "ᴔ": "ǝo",
+ "ꭁ": "ǝo̸",
+ "ꭂ": "ǝo̵",
+ "Ә": "Ə",
+ "𝈡": "Ɛ",
+ "ℇ": "Ɛ",
+ "Ԑ": "Ɛ",
+ "Ꮛ": "Ɛ",
+ "𖼭": "Ɛ",
+ "𐐁": "Ɛ",
+ "ᶟ": "ᵋ",
+ "ᴈ": "ɜ",
+ "з": "ɜ",
+ "ҙ": "ɜ̦",
+ "𐑂": "ɞ",
+ "ꞝ": "ʚ",
+ "𐐪": "ʚ",
+ "𝐟": "f",
+ "𝑓": "f",
+ "𝒇": "f",
+ "𝒻": "f",
+ "𝓯": "f",
+ "𝔣": "f",
+ "𝕗": "f",
+ "𝖋": "f",
+ "𝖿": "f",
+ "𝗳": "f",
+ "𝘧": "f",
+ "𝙛": "f",
+ "𝚏": "f",
+ "ꬵ": "f",
+ "ꞙ": "f",
+ "ſ": "f",
+ "ẝ": "f",
+ "ք": "f",
+ "𝈓": "F",
+ "ℱ": "F",
+ "𝐅": "F",
+ "𝐹": "F",
+ "𝑭": "F",
+ "𝓕": "F",
+ "𝔉": "F",
+ "𝔽": "F",
+ "𝕱": "F",
+ "𝖥": "F",
+ "𝗙": "F",
+ "𝘍": "F",
+ "𝙁": "F",
+ "𝙵": "F",
+ "Ꞙ": "F",
+ "Ϝ": "F",
+ "𝟊": "F",
+ "ᖴ": "F",
+ "ꓝ": "F",
+ "𑣂": "F",
+ "𑢢": "F",
+ "𐊇": "F",
+ "𐊥": "F",
+ "𐔥": "F",
+ "ƒ": "f̦",
+ "Ƒ": "F̦",
+ "ᵮ": "f̴",
+ "℻": "FAX",
+ "ﬀ": "ff",
+ "ﬃ": "ffi",
+ "ﬄ": "ffl",
+ "ﬁ": "fi",
+ "ﬂ": "fl",
+ "ʩ": "fŋ",
+ "ᖵ": "Ⅎ",
+ "ꓞ": "Ⅎ",
+ "𝈰": "ꟻ",
+ "ᖷ": "ꟻ",
+ "ｇ": "g",
+ "ℊ": "g",
+ "𝐠": "g",
+ "𝑔": "g",
+ "𝒈": "g",
+ "𝓰": "g",
+ "𝔤": "g",
+ "𝕘": "g",
+ "𝖌": "g",
+ "𝗀": "g",
+ "𝗴": "g",
+ "𝘨": "g",
+ "𝙜": "g",
+ "𝚐": "g",
+ "ɡ": "g",
+ "ᶃ": "g",
+ "ƍ": "g",
+ "ց": "g",
+ "𝐆": "G",
+ "𝐺": "G",
+ "𝑮": "G",
+ "𝒢": "G",
+ "𝓖": "G",
+ "𝔊": "G",
+ "𝔾": "G",
+ "𝕲": "G",
+ "𝖦": "G",
+ "𝗚": "G",
+ "𝘎": "G",
+ "𝙂": "G",
+ "𝙶": "G",
+ "Ԍ": "G",
+ "Ꮐ": "G",
+ "Ᏻ": "G",
+ "ꓖ": "G",
+ "ᶢ": "ᵍ",
+ "ɠ": "g̔",
+ "ǧ": "ğ",
+ "Ǧ": "Ğ",
+ "ǵ": "ģ",
+ "ǥ": "g̵",
+ "Ǥ": "G̵",
+ "Ɠ": "G'",
+ "ԍ": "ɢ",
+ "ꮐ": "ɢ",
+ "ᏻ": "ɢ",
+ "ｈ": "h",
+ "ℎ": "h",
+ "𝐡": "h",
+ "𝒉": "h",
+ "𝒽": "h",
+ "𝓱": "h",
+ "𝔥": "h",
+ "𝕙": "h",
+ "𝖍": "h",
+ "𝗁": "h",
+ "𝗵": "h",
+ "𝘩": "h",
+ "𝙝": "h",
+ "𝚑": "h",
+ "һ": "h",
+ "հ": "h",
+ "Ꮒ": "h",
+ "Ｈ": "H",
+ "ℋ": "H",
+ "ℌ": "H",
+ "ℍ": "H",
+ "𝐇": "H",
+ "𝐻": "H",
+ "𝑯": "H",
+ "𝓗": "H",
+ "𝕳": "H",
+ "𝖧": "H",
+ "𝗛": "H",
+ "𝘏": "H",
+ "𝙃": "H",
+ "𝙷": "H",
+ "Η": "H",
+ "𝚮": "H",
+ "𝛨": "H",
+ "𝜢": "H",
+ "𝝜": "H",
+ "𝞖": "H",
+ "Ⲏ": "H",
+ "Н": "H",
+ "Ꮋ": "H",
+ "ᕼ": "H",
+ "ꓧ": "H",
+ "𐋏": "H",
+ "ᵸ": "ᴴ",
+ "ɦ": "h̔",
+ "ꚕ": "h̔",
+ "Ᏺ": "h̔",
+ "Ⱨ": "H̩",
+ "Ң": "H̩",
+ "ħ": "h̵",
+ "ℏ": "h̵",
+ "ћ": "h̵",
+ "Ħ": "H̵",
+ "Ӊ": "H̦",
+ "Ӈ": "H̦",
+ "н": "ʜ",
+ "ꮋ": "ʜ",
+ "ң": "ʜ̩",
+ "ӊ": "ʜ̦",
+ "ӈ": "ʜ̦",
+ "Ԋ": "Ƕ",
+ "ꮀ": "ⱶ",
+ "Ͱ": "Ⱶ",
+ "Ꭸ": "Ⱶ",
+ "Ꮀ": "Ⱶ",
+ "ꚱ": "Ⱶ",
+ "ꞕ": "ꜧ",
+ "˛": "i",
+ "⍳": "i",
+ "ｉ": "i",
+ "ⅰ": "i",
+ "ℹ": "i",
+ "ⅈ": "i",
+ "𝐢": "i",
+ "𝑖": "i",
+ "𝒊": "i",
+ "𝒾": "i",
+ "𝓲": "i",
+ "𝔦": "i",
+ "𝕚": "i",
+ "𝖎": "i",
+ "𝗂": "i",
+ "𝗶": "i",
+ "𝘪": "i",
+ "𝙞": "i",
+ "𝚒": "i",
+ "ı": "i",
+ "𝚤": "i",
+ "ɪ": "i",
+ "ɩ": "i",
+ "ι": "i",
+ "ι": "i",
+ "ͺ": "i",
+ "𝛊": "i",
+ "𝜄": "i",
+ "𝜾": "i",
+ "𝝸": "i",
+ "𝞲": "i",
+ "і": "i",
+ "ꙇ": "i",
+ "ӏ": "i",
+ "ꭵ": "i",
+ "Ꭵ": "i",
+ "𑣃": "i",
+ "ⓛ": "Ⓘ",
+ "⍸": "i̲",
+ "ǐ": "ĭ",
+ "Ǐ": "Ĭ",
+ "ɨ": "i̵",
+ "ᵻ": "i̵",
+ "ᵼ": "i̵",
+ "ⅱ": "ii",
+ "ⅲ": "iii",
+ "ĳ": "ij",
+ "ⅳ": "iv",
+ "ⅸ": "ix",
+ "ｊ": "j",
+ "ⅉ": "j",
+ "𝐣": "j",
+ "𝑗": "j",
+ "𝒋": "j",
+ "𝒿": "j",
+ "𝓳": "j",
+ "𝔧": "j",
+ "𝕛": "j",
+ "𝖏": "j",
+ "𝗃": "j",
+ "𝗷": "j",
+ "𝘫": "j",
+ "𝙟": "j",
+ "𝚓": "j",
+ "ϳ": "j",
+ "ј": "j",
+ "Ｊ": "J",
+ "𝐉": "J",
+ "𝐽": "J",
+ "𝑱": "J",
+ "𝒥": "J",
+ "𝓙": "J",
+ "𝔍": "J",
+ "𝕁": "J",
+ "𝕵": "J",
+ "𝖩": "J",
+ "𝗝": "J",
+ "𝘑": "J",
+ "𝙅": "J",
+ "𝙹": "J",
+ "Ʝ": "J",
+ "Ϳ": "J",
+ "Ј": "J",
+ "Ꭻ": "J",
+ "ᒍ": "J",
+ "ꓙ": "J",
+ "ɉ": "j̵",
+ "Ɉ": "J̵",
+ "ᒙ": "J·",
+ "𝚥": "ȷ",
+ "յ": "ȷ",
+ "ꭻ": "ᴊ",
+ "𝐤": "k",
+ "𝑘": "k",
+ "𝒌": "k",
+ "𝓀": "k",
+ "𝓴": "k",
+ "𝔨": "k",
+ "𝕜": "k",
+ "𝖐": "k",
+ "𝗄": "k",
+ "𝗸": "k",
+ "𝘬": "k",
+ "𝙠": "k",
+ "𝚔": "k",
+ "K": "K",
+ "Ｋ": "K",
+ "𝐊": "K",
+ "𝐾": "K",
+ "𝑲": "K",
+ "𝒦": "K",
+ "𝓚": "K",
+ "𝔎": "K",
+ "𝕂": "K",
+ "𝕶": "K",
+ "𝖪": "K",
+ "𝗞": "K",
+ "𝘒": "K",
+ "𝙆": "K",
+ "𝙺": "K",
+ "Κ": "K",
+ "𝚱": "K",
+ "𝛫": "K",
+ "𝜥": "K",
+ "𝝟": "K",
+ "𝞙": "K",
+ "Ⲕ": "K",
+ "К": "K",
+ "Ꮶ": "K",
+ "ᛕ": "K",
+ "ꓗ": "K",
+ "𐔘": "K",
+ "ƙ": "k̔",
+ "Ⱪ": "K̩",
+ "Қ": "K̩",
+ "₭": "K̵",
+ "Ꝁ": "K̵",
+ "Ҟ": "K̵",
+ "Ƙ": "K'",
+ "׀": "l",
+ "|": "l",
+ "∣": "l",
+ "⏽": "l",
+ "￨": "l",
+ "١": "l",
+ "۱": "l",
+ "𐌠": "l",
+ "𞣇": "l",
+ "𝟏": "l",
+ "𝟙": "l",
+ "𝟣": "l",
+ "𝟭": "l",
+ "𝟷": "l",
+ "I": "l",
+ "Ｉ": "l",
+ "Ⅰ": "l",
+ "ℐ": "l",
+ "ℑ": "l",
+ "𝐈": "l",
+ "𝐼": "l",
+ "𝑰": "l",
+ "𝓘": "l",
+ "𝕀": "l",
+ "𝕴": "l",
+ "𝖨": "l",
+ "𝗜": "l",
+ "𝘐": "l",
+ "𝙄": "l",
+ "𝙸": "l",
+ "Ɩ": "l",
+ "ｌ": "l",
+ "ⅼ": "l",
+ "ℓ": "l",
+ "𝐥": "l",
+ "𝑙": "l",
+ "𝒍": "l",
+ "𝓁": "l",
+ "𝓵": "l",
+ "𝔩": "l",
+ "𝕝": "l",
+ "𝖑": "l",
+ "𝗅": "l",
+ "𝗹": "l",
+ "𝘭": "l",
+ "𝙡": "l",
+ "𝚕": "l",
+ "ǀ": "l",
+ "Ι": "l",
+ "𝚰": "l",
+ "𝛪": "l",
+ "𝜤": "l",
+ "𝝞": "l",
+ "𝞘": "l",
+ "Ⲓ": "l",
+ "І": "l",
+ "Ӏ": "l",
+ "ו": "l",
+ "ן": "l",
+ "ا": "l",
+ "𞸀": "l",
+ "𞺀": "l",
+ "ﺎ": "l",
+ "ﺍ": "l",
+ "ߊ": "l",
+ "ⵏ": "l",
+ "ᛁ": "l",
+ "ꓲ": "l",
+ "𖼨": "l",
+ "𐊊": "l",
+ "𐌉": "l",
+ "𝈪": "L",
+ "Ⅼ": "L",
+ "ℒ": "L",
+ "𝐋": "L",
+ "𝐿": "L",
+ "𝑳": "L",
+ "𝓛": "L",
+ "𝔏": "L",
+ "𝕃": "L",
+ "𝕷": "L",
+ "𝖫": "L",
+ "𝗟": "L",
+ "𝘓": "L",
+ "𝙇": "L",
+ "𝙻": "L",
+ "Ⳑ": "L",
+ "Ꮮ": "L",
+ "ᒪ": "L",
+ "ꓡ": "L",
+ "𖼖": "L",
+ "𑢣": "L",
+ "𑢲": "L",
+ "𐐛": "L",
+ "𐔦": "L",
+ "ﴼ": "l̋",
+ "ﴽ": "l̋",
+ "ł": "l̸",
+ "Ł": "L̸",
+ "ɭ": "l̨",
+ "Ɨ": "l̵",
+ "ƚ": "l̵",
+ "ɫ": "l̴",
+ "إ": "lٕ",
+ "ﺈ": "lٕ",
+ "ﺇ": "lٕ",
+ "ٳ": "lٕ",
+ "ŀ": "l·",
+ "Ŀ": "l·",
+ "ᒷ": "l·",
+ "🄂": "l,",
+ "⒈": "l.",
+ "ױ": "l'",
+ "⒓": "l2.",
+ "㏫": "l2日",
+ "㋋": "l2月",
+ "㍤": "l2点",
+ "⒔": "l3.",
+ "㏬": "l3日",
+ "㍥": "l3点",
+ "⒕": "l4.",
+ "㏭": "l4日",
+ "㍦": "l4点",
+ "⒖": "l5.",
+ "㏮": "l5日",
+ "㍧": "l5点",
+ "⒗": "l6.",
+ "㏯": "l6日",
+ "㍨": "l6点",
+ "⒘": "l7.",
+ "㏰": "l7日",
+ "㍩": "l7点",
+ "⒙": "l8.",
+ "㏱": "l8日",
+ "㍪": "l8点",
+ "⒚": "l9.",
+ "㏲": "l9日",
+ "㍫": "l9点",
+ "ǉ": "lj",
+ "Ĳ": "lJ",
+ "ǈ": "Lj",
+ "Ǉ": "LJ",
+ "‖": "ll",
+ "∥": "ll",
+ "Ⅱ": "ll",
+ "ǁ": "ll",
+ "װ": "ll",
+ "𐆙": "l̵l̵",
+ "⒒": "ll.",
+ "Ⅲ": "lll",
+ "𐆘": "l̵l̵S̵",
+ "㏪": "ll日",
+ "㋊": "ll月",
+ "㍣": "ll点",
+ "Ю": "lO",
+ "⒑": "lO.",
+ "㏩": "lO日",
+ "㋉": "lO月",
+ "㍢": "lO点",
+ "ʪ": "ls",
+ "₶": "lt",
+ "Ⅳ": "lV",
+ "Ⅸ": "lX",
+ "ɮ": "lȝ",
+ "ʫ": "lz",
+ "أ": "lٴ",
+ "ﺄ": "lٴ",
+ "ﺃ": "lٴ",
+ "ٲ": "lٴ",
+ "ٵ": "lٴ",
+ "ﷳ": "lكبر",
+ "ﷲ": "lللّٰo",
+ "㏠": "l日",
+ "㋀": "l月",
+ "㍙": "l点",
+ "ⳑ": "ʟ",
+ "ꮮ": "ʟ",
+ "𐑃": "ʟ",
+ "Ｍ": "M",
+ "Ⅿ": "M",
+ "ℳ": "M",
+ "𝐌": "M",
+ "𝑀": "M",
+ "𝑴": "M",
+ "𝓜": "M",
+ "𝔐": "M",
+ "𝕄": "M",
+ "𝕸": "M",
+ "𝖬": "M",
+ "𝗠": "M",
+ "𝘔": "M",
+ "𝙈": "M",
+ "𝙼": "M",
+ "Μ": "M",
+ "𝚳": "M",
+ "𝛭": "M",
+ "𝜧": "M",
+ "𝝡": "M",
+ "𝞛": "M",
+ "Ϻ": "M",
+ "Ⲙ": "M",
+ "М": "M",
+ "Ꮇ": "M",
+ "ᗰ": "M",
+ "ᛖ": "M",
+ "ꓟ": "M",
+ "𐊰": "M",
+ "𐌑": "M",
+ "Ӎ": "M̦",
+ "🝫": "MB",
+ "ⷨ": "ᷟ",
+ "𝐧": "n",
+ "𝑛": "n",
+ "𝒏": "n",
+ "𝓃": "n",
+ "𝓷": "n",
+ "𝔫": "n",
+ "𝕟": "n",
+ "𝖓": "n",
+ "𝗇": "n",
+ "𝗻": "n",
+ "𝘯": "n",
+ "𝙣": "n",
+ "𝚗": "n",
+ "ո": "n",
+ "ռ": "n",
+ "Ｎ": "N",
+ "ℕ": "N",
+ "𝐍": "N",
+ "𝑁": "N",
+ "𝑵": "N",
+ "𝒩": "N",
+ "𝓝": "N",
+ "𝔑": "N",
+ "𝕹": "N",
+ "𝖭": "N",
+ "𝗡": "N",
+ "𝘕": "N",
+ "𝙉": "N",
+ "𝙽": "N",
+ "Ν": "N",
+ "𝚴": "N",
+ "𝛮": "N",
+ "𝜨": "N",
+ "𝝢": "N",
+ "𝞜": "N",
+ "Ⲛ": "N",
+ "ꓠ": "N",
+ "𐔓": "N",
+ "𐆎": "N̊",
+ "ɳ": "n̨",
+ "ƞ": "n̩",
+ "η": "n̩",
+ "𝛈": "n̩",
+ "𝜂": "n̩",
+ "𝜼": "n̩",
+ "𝝶": "n̩",
+ "𝞰": "n̩",
+ "Ɲ": "N̦",
+ "ᵰ": "n̴",
+ "ǌ": "nj",
+ "ǋ": "Nj",
+ "Ǌ": "NJ",
+ "№": "No",
+ "ͷ": "ᴎ",
+ "и": "ᴎ",
+ "𐑍": "ᴎ",
+ "ņ": "ɲ",
+ "ం": "o",
+ "ಂ": "o",
+ "ം": "o",
+ "ං": "o",
+ "०": "o",
+ "੦": "o",
+ "૦": "o",
+ "௦": "o",
+ "౦": "o",
+ "೦": "o",
+ "൦": "o",
+ "๐": "o",
+ "໐": "o",
+ "၀": "o",
+ "٥": "o",
+ "۵": "o",
+ "ｏ": "o",
+ "ℴ": "o",
+ "𝐨": "o",
+ "𝑜": "o",
+ "𝒐": "o",
+ "𝓸": "o",
+ "𝔬": "o",
+ "𝕠": "o",
+ "𝖔": "o",
+ "𝗈": "o",
+ "𝗼": "o",
+ "𝘰": "o",
+ "𝙤": "o",
+ "𝚘": "o",
+ "ᴏ": "o",
+ "ᴑ": "o",
+ "ꬽ": "o",
+ "ο": "o",
+ "𝛐": "o",
+ "𝜊": "o",
+ "𝝄": "o",
+ "𝝾": "o",
+ "𝞸": "o",
+ "σ": "o",
+ "𝛔": "o",
+ "𝜎": "o",
+ "𝝈": "o",
+ "𝞂": "o",
+ "𝞼": "o",
+ "ⲟ": "o",
+ "о": "o",
+ "ჿ": "o",
+ "օ": "o",
+ "ס": "o",
+ "ه": "o",
+ "𞸤": "o",
+ "𞹤": "o",
+ "𞺄": "o",
+ "ﻫ": "o",
+ "ﻬ": "o",
+ "ﻪ": "o",
+ "ﻩ": "o",
+ "ھ": "o",
+ "ﮬ": "o",
+ "ﮭ": "o",
+ "ﮫ": "o",
+ "ﮪ": "o",
+ "ہ": "o",
+ "ﮨ": "o",
+ "ﮩ": "o",
+ "ﮧ": "o",
+ "ﮦ": "o",
+ "ە": "o",
+ "ഠ": "o",
+ "ဝ": "o",
+ "𐓪": "o",
+ "𑣈": "o",
+ "𑣗": "o",
+ "𐐬": "o",
+ "߀": "O",
+ "০": "O",
+ "୦": "O",
+ "〇": "O",
+ "𑓐": "O",
+ "𑣠": "O",
+ "𝟎": "O",
+ "𝟘": "O",
+ "𝟢": "O",
+ "𝟬": "O",
+ "𝟶": "O",
+ "Ｏ": "O",
+ "𝐎": "O",
+ "𝑂": "O",
+ "𝑶": "O",
+ "𝒪": "O",
+ "𝓞": "O",
+ "𝔒": "O",
+ "𝕆": "O",
+ "𝕺": "O",
+ "𝖮": "O",
+ "𝗢": "O",
+ "𝘖": "O",
+ "𝙊": "O",
+ "𝙾": "O",
+ "Ο": "O",
+ "𝚶": "O",
+ "𝛰": "O",
+ "𝜪": "O",
+ "𝝤": "O",
+ "𝞞": "O",
+ "Ⲟ": "O",
+ "О": "O",
+ "Օ": "O",
+ "ⵔ": "O",
+ "ዐ": "O",
+ "ଠ": "O",
+ "𐓂": "O",
+ "ꓳ": "O",
+ "𑢵": "O",
+ "𐊒": "O",
+ "𐊫": "O",
+ "𐐄": "O",
+ "𐔖": "O",
+ "⁰": "º",
+ "ᵒ": "º",
+ "ǒ": "ŏ",
+ "Ǒ": "Ŏ",
+ "ۿ": "ô",
+ "ø": "o̸",
+ "ꬾ": "o̸",
+ "Ø": "O̸",
+ "ⵁ": "O̸",
+ "Ǿ": "Ó̸",
+ "ɵ": "o̵",
+ "ꝋ": "o̵",
+ "ө": "o̵",
+ "ѳ": "o̵",
+ "ꮎ": "o̵",
+ "ꮻ": "o̵",
+ "⊖": "O̵",
+ "⊝": "O̵",
+ "⍬": "O̵",
+ "𝈚": "O̵",
+ "🜔": "O̵",
+ "Ɵ": "O̵",
+ "Ꝋ": "O̵",
+ "θ": "O̵",
+ "ϑ": "O̵",
+ "𝛉": "O̵",
+ "𝛝": "O̵",
+ "𝜃": "O̵",
+ "𝜗": "O̵",
+ "𝜽": "O̵",
+ "𝝑": "O̵",
+ "𝝷": "O̵",
+ "𝞋": "O̵",
+ "𝞱": "O̵",
+ "𝟅": "O̵",
+ "Θ": "O̵",
+ "ϴ": "O̵",
+ "𝚯": "O̵",
+ "𝚹": "O̵",
+ "𝛩": "O̵",
+ "𝛳": "O̵",
+ "𝜣": "O̵",
+ "𝜭": "O̵",
+ "𝝝": "O̵",
+ "𝝧": "O̵",
+ "𝞗": "O̵",
+ "𝞡": "O̵",
+ "Ө": "O̵",
+ "Ѳ": "O̵",
+ "ⴱ": "O̵",
+ "Ꮎ": "O̵",
+ "Ꮻ": "O̵",
+ "ꭴ": "ơ",
+ "ﳙ": "oٰ",
+ "🄁": "O,",
+ "🄀": "O.",
+ "ơ": "o'",
+ "Ơ": "O'",
+ "Ꭴ": "O'",
+ "%": "º/₀",
+ "٪": "º/₀",
+ "⁒": "º/₀",
+ "‰": "º/₀₀",
+ "؉": "º/₀₀",
+ "‱": "º/₀₀₀",
+ "؊": "º/₀₀₀",
+ "œ": "oe",
+ "Œ": "OE",
+ "ɶ": "oᴇ",
+ "∞": "oo",
+ "ꝏ": "oo",
+ "ꚙ": "oo",
+ "Ꝏ": "OO",
+ "Ꚙ": "OO",
+ "ﳗ": "oج",
+ "ﱑ": "oج",
+ "ﳘ": "oم",
+ "ﱒ": "oم",
+ "ﶓ": "oمج",
+ "ﶔ": "oمم",
+ "ﱓ": "oى",
+ "ﱔ": "oى",
+ "ൟ": "oരo",
+ "တ": "oာ",
+ "㍘": "O点",
+ "ↄ": "ɔ",
+ "ᴐ": "ɔ",
+ "ͻ": "ɔ",
+ "𐑋": "ɔ",
+ "Ↄ": "Ɔ",
+ "Ͻ": "Ɔ",
+ "ꓛ": "Ɔ",
+ "𐐣": "Ɔ",
+ "ꬿ": "ɔ̸",
+ "ꭢ": "ɔe",
+ "𐐿": "ɷ",
+ "⍴": "p",
+ "ｐ": "p",
+ "𝐩": "p",
+ "𝑝": "p",
+ "𝒑": "p",
+ "𝓅": "p",
+ "𝓹": "p",
+ "𝔭": "p",
+ "𝕡": "p",
+ "𝖕": "p",
+ "𝗉": "p",
+ "𝗽": "p",
+ "𝘱": "p",
+ "𝙥": "p",
+ "𝚙": "p",
+ "ρ": "p",
+ "ϱ": "p",
+ "𝛒": "p",
+ "𝛠": "p",
+ "𝜌": "p",
+ "𝜚": "p",
+ "𝝆": "p",
+ "𝝔": "p",
+ "𝞀": "p",
+ "𝞎": "p",
+ "𝞺": "p",
+ "𝟈": "p",
+ "ⲣ": "p",
+ "р": "p",
+ "Ｐ": "P",
+ "ℙ": "P",
+ "𝐏": "P",
+ "𝑃": "P",
+ "𝑷": "P",
+ "𝒫": "P",
+ "𝓟": "P",
+ "𝔓": "P",
+ "𝕻": "P",
+ "𝖯": "P",
+ "𝗣": "P",
+ "𝘗": "P",
+ "𝙋": "P",
+ "𝙿": "P",
+ "Ρ": "P",
+ "𝚸": "P",
+ "𝛲": "P",
+ "𝜬": "P",
+ "𝝦": "P",
+ "𝞠": "P",
+ "Ⲣ": "P",
+ "Р": "P",
+ "Ꮲ": "P",
+ "ᑭ": "P",
+ "ꓑ": "P",
+ "𐊕": "P",
+ "ƥ": "p̔",
+ "ᵽ": "p̵",
+ "ᑷ": "p·",
+ "ᒆ": "P'",
+ "ᴩ": "ᴘ",
+ "ꮲ": "ᴘ",
+ "φ": "ɸ",
+ "ϕ": "ɸ",
+ "𝛗": "ɸ",
+ "𝛟": "ɸ",
+ "𝜑": "ɸ",
+ "𝜙": "ɸ",
+ "𝝋": "ɸ",
+ "𝝓": "ɸ",
+ "𝞅": "ɸ",
+ "𝞍": "ɸ",
+ "𝞿": "ɸ",
+ "𝟇": "ɸ",
+ "ⲫ": "ɸ",
+ "ф": "ɸ",
+ "𝐪": "q",
+ "𝑞": "q",
+ "𝒒": "q",
+ "𝓆": "q",
+ "𝓺": "q",
+ "𝔮": "q",
+ "𝕢": "q",
+ "𝖖": "q",
+ "𝗊": "q",
+ "𝗾": "q",
+ "𝘲": "q",
+ "𝙦": "q",
+ "𝚚": "q",
+ "ԛ": "q",
+ "գ": "q",
+ "զ": "q",
+ "ℚ": "Q",
+ "𝐐": "Q",
+ "𝑄": "Q",
+ "𝑸": "Q",
+ "𝒬": "Q",
+ "𝓠": "Q",
+ "𝔔": "Q",
+ "𝕼": "Q",
+ "𝖰": "Q",
+ "𝗤": "Q",
+ "𝘘": "Q",
+ "𝙌": "Q",
+ "𝚀": "Q",
+ "ⵕ": "Q",
+ "ʠ": "q̔",
+ "🜀": "QE",
+ "ᶐ": "ɋ",
+ "ᴋ": "ĸ",
+ "κ": "ĸ",
+ "ϰ": "ĸ",
+ "𝛋": "ĸ",
+ "𝛞": "ĸ",
+ "𝜅": "ĸ",
+ "𝜘": "ĸ",
+ "𝜿": "ĸ",
+ "𝝒": "ĸ",
+ "𝝹": "ĸ",
+ "𝞌": "ĸ",
+ "𝞳": "ĸ",
+ "𝟆": "ĸ",
+ "ⲕ": "ĸ",
+ "к": "ĸ",
+ "ꮶ": "ĸ",
+ "қ": "ĸ̩",
+ "ҟ": "ĸ̵",
+ "𝐫": "r",
+ "𝑟": "r",
+ "𝒓": "r",
+ "𝓇": "r",
+ "𝓻": "r",
+ "𝔯": "r",
+ "𝕣": "r",
+ "𝖗": "r",
+ "𝗋": "r",
+ "𝗿": "r",
+ "𝘳": "r",
+ "𝙧": "r",
+ "𝚛": "r",
+ "ꭇ": "r",
+ "ꭈ": "r",
+ "ᴦ": "r",
+ "ⲅ": "r",
+ "г": "r",
+ "ꮁ": "r",
+ "𝈖": "R",
+ "ℛ": "R",
+ "ℜ": "R",
+ "ℝ": "R",
+ "𝐑": "R",
+ "𝑅": "R",
+ "𝑹": "R",
+ "𝓡": "R",
+ "𝕽": "R",
+ "𝖱": "R",
+ "𝗥": "R",
+ "𝘙": "R",
+ "𝙍": "R",
+ "𝚁": "R",
+ "Ʀ": "R",
+ "Ꭱ": "R",
+ "Ꮢ": "R",
+ "𐒴": "R",
+ "ᖇ": "R",
+ "ꓣ": "R",
+ "𖼵": "R",
+ "ɽ": "r̨",
+ "ɼ": "r̩",
+ "ɍ": "r̵",
+ "ғ": "r̵",
+ "ᵲ": "r̴",
+ "ґ": "r'",
+ "𑣣": "rn",
+ "m": "rn",
+ "ⅿ": "rn",
+ "𝐦": "rn",
+ "𝑚": "rn",
+ "𝒎": "rn",
+ "𝓂": "rn",
+ "𝓶": "rn",
+ "𝔪": "rn",
+ "𝕞": "rn",
+ "𝖒": "rn",
+ "𝗆": "rn",
+ "𝗺": "rn",
+ "𝘮": "rn",
+ "𝙢": "rn",
+ "𝚖": "rn",
+ "𑜀": "rn",
+ "₥": "rn̸",
+ "ɱ": "rn̦",
+ "ᵯ": "rn̴",
+ "₨": "Rs",
+ "ꭱ": "ʀ",
+ "ꮢ": "ʀ",
+ "я": "ᴙ",
+ "ᵳ": "ɾ̴",
+ "℩": "ɿ",
+ "ｓ": "s",
+ "𝐬": "s",
+ "𝑠": "s",
+ "𝒔": "s",
+ "𝓈": "s",
+ "𝓼": "s",
+ "𝔰": "s",
+ "𝕤": "s",
+ "𝖘": "s",
+ "𝗌": "s",
+ "𝘀": "s",
+ "𝘴": "s",
+ "𝙨": "s",
+ "𝚜": "s",
+ "ꜱ": "s",
+ "ƽ": "s",
+ "ѕ": "s",
+ "ꮪ": "s",
+ "𑣁": "s",
+ "𐑈": "s",
+ "Ｓ": "S",
+ "𝐒": "S",
+ "𝑆": "S",
+ "𝑺": "S",
+ "𝒮": "S",
+ "𝓢": "S",
+ "𝔖": "S",
+ "𝕊": "S",
+ "𝕾": "S",
+ "𝖲": "S",
+ "𝗦": "S",
+ "𝘚": "S",
+ "𝙎": "S",
+ "𝚂": "S",
+ "Ѕ": "S",
+ "Տ": "S",
+ "Ꮥ": "S",
+ "Ꮪ": "S",
+ "ꓢ": "S",
+ "𖼺": "S",
+ "𐊖": "S",
+ "𐐠": "S",
+ "ʂ": "s̨",
+ "ᵴ": "s̴",
+ "ꞵ": "ß",
+ "β": "ß",
+ "ϐ": "ß",
+ "𝛃": "ß",
+ "𝛽": "ß",
+ "𝜷": "ß",
+ "𝝱": "ß",
+ "𝞫": "ß",
+ "Ᏸ": "ß",
+ "🝜": "sss",
+ "ﬆ": "st",
+ "∫": "ʃ",
+ "ꭍ": "ʃ",
+ "∑": "Ʃ",
+ "⅀": "Ʃ",
+ "Σ": "Ʃ",
+ "𝚺": "Ʃ",
+ "𝛴": "Ʃ",
+ "𝜮": "Ʃ",
+ "𝝨": "Ʃ",
+ "𝞢": "Ʃ",
+ "ⵉ": "Ʃ",
+ "∬": "ʃʃ",
+ "∭": "ʃʃʃ",
+ "⨌": "ʃʃʃʃ",
+ "𝐭": "t",
+ "𝑡": "t",
+ "𝒕": "t",
+ "𝓉": "t",
+ "𝓽": "t",
+ "𝔱": "t",
+ "𝕥": "t",
+ "𝖙": "t",
+ "𝗍": "t",
+ "𝘁": "t",
+ "𝘵": "t",
+ "𝙩": "t",
+ "𝚝": "t",
+ "⊤": "T",
+ "⟙": "T",
+ "🝨": "T",
+ "Ｔ": "T",
+ "𝐓": "T",
+ "𝑇": "T",
+ "𝑻": "T",
+ "𝒯": "T",
+ "𝓣": "T",
+ "𝔗": "T",
+ "𝕋": "T",
+ "𝕿": "T",
+ "𝖳": "T",
+ "𝗧": "T",
+ "𝘛": "T",
+ "𝙏": "T",
+ "𝚃": "T",
+ "Τ": "T",
+ "𝚻": "T",
+ "𝛵": "T",
+ "𝜯": "T",
+ "𝝩": "T",
+ "𝞣": "T",
+ "Ⲧ": "T",
+ "Т": "T",
+ "Ꭲ": "T",
+ "ꓔ": "T",
+ "𖼊": "T",
+ "𑢼": "T",
+ "𐊗": "T",
+ "𐊱": "T",
+ "𐌕": "T",
+ "ƭ": "t̔",
+ "⍡": "T̈",
+ "Ⱦ": "T̸",
+ "Ț": "Ţ",
+ "Ʈ": "T̨",
+ "Ҭ": "T̩",
+ "₮": "T⃫",
+ "ŧ": "t̵",
+ "Ŧ": "T̵",
+ "ᵵ": "t̴",
+ "Ⴀ": "Ꞇ",
+ "Ꜩ": "T3",
+ "ʨ": "tɕ",
+ "℡": "TEL",
+ "ꝷ": "tf",
+ "ʦ": "ts",
+ "ʧ": "tʃ",
+ "ꜩ": "tȝ",
+ "τ": "ᴛ",
+ "𝛕": "ᴛ",
+ "𝜏": "ᴛ",
+ "𝝉": "ᴛ",
+ "𝞃": "ᴛ",
+ "𝞽": "ᴛ",
+ "т": "ᴛ",
+ "ꭲ": "ᴛ",
+ "ҭ": "ᴛ̩",
+ "ţ": "ƫ",
+ "ț": "ƫ",
+ "Ꮏ": "ƫ",
+ "𝐮": "u",
+ "𝑢": "u",
+ "𝒖": "u",
+ "𝓊": "u",
+ "𝓾": "u",
+ "𝔲": "u",
+ "𝕦": "u",
+ "𝖚": "u",
+ "𝗎": "u",
+ "𝘂": "u",
+ "𝘶": "u",
+ "𝙪": "u",
+ "𝚞": "u",
+ "ꞟ": "u",
+ "ᴜ": "u",
+ "ꭎ": "u",
+ "ꭒ": "u",
+ "ʋ": "u",
+ "υ": "u",
+ "𝛖": "u",
+ "𝜐": "u",
+ "𝝊": "u",
+ "𝞄": "u",
+ "𝞾": "u",
+ "ս": "u",
+ "𐓶": "u",
+ "𑣘": "u",
+ "∪": "U",
+ "⋃": "U",
+ "𝐔": "U",
+ "𝑈": "U",
+ "𝑼": "U",
+ "𝒰": "U",
+ "𝓤": "U",
+ "𝔘": "U",
+ "𝕌": "U",
+ "𝖀": "U",
+ "𝖴": "U",
+ "𝗨": "U",
+ "𝘜": "U",
+ "𝙐": "U",
+ "𝚄": "U",
+ "Ս": "U",
+ "ሀ": "U",
+ "𐓎": "U",
+ "ᑌ": "U",
+ "ꓴ": "U",
+ "𖽂": "U",
+ "𑢸": "U",
+ "ǔ": "ŭ",
+ "Ǔ": "Ŭ",
+ "ᵾ": "u̵",
+ "ꮜ": "u̵",
+ "Ʉ": "U̵",
+ "Ꮜ": "U̵",
+ "ᑘ": "U·",
+ "ᑧ": "U'",
+ "ᵫ": "ue",
+ "ꭣ": "uo",
+ "ṃ": "ꭑ",
+ "պ": "ɰ",
+ "ሣ": "ɰ",
+ "℧": "Ʊ",
+ "ᘮ": "Ʊ",
+ "ᘴ": "Ʊ",
+ "ᵿ": "ʊ̵",
+ "∨": "v",
+ "⋁": "v",
+ "ｖ": "v",
+ "ⅴ": "v",
+ "𝐯": "v",
+ "𝑣": "v",
+ "𝒗": "v",
+ "𝓋": "v",
+ "𝓿": "v",
+ "𝔳": "v",
+ "𝕧": "v",
+ "𝖛": "v",
+ "𝗏": "v",
+ "𝘃": "v",
+ "𝘷": "v",
+ "𝙫": "v",
+ "𝚟": "v",
+ "ᴠ": "v",
+ "ν": "v",
+ "𝛎": "v",
+ "𝜈": "v",
+ "𝝂": "v",
+ "𝝼": "v",
+ "𝞶": "v",
+ "ѵ": "v",
+ "ט": "v",
+ "𑜆": "v",
+ "ꮩ": "v",
+ "𑣀": "v",
+ "𝈍": "V",
+ "٧": "V",
+ "۷": "V",
+ "Ⅴ": "V",
+ "𝐕": "V",
+ "𝑉": "V",
+ "𝑽": "V",
+ "𝒱": "V",
+ "𝓥": "V",
+ "𝔙": "V",
+ "𝕍": "V",
+ "𝖁": "V",
+ "𝖵": "V",
+ "𝗩": "V",
+ "𝘝": "V",
+ "𝙑": "V",
+ "𝚅": "V",
+ "Ѵ": "V",
+ "ⴸ": "V",
+ "Ꮩ": "V",
+ "ᐯ": "V",
+ "ꛟ": "V",
+ "ꓦ": "V",
+ "𖼈": "V",
+ "𑢠": "V",
+ "𐔝": "V",
+ "𐆗": "V̵",
+ "ᐻ": "V·",
+ "🝬": "VB",
+ "ⅵ": "vi",
+ "ⅶ": "vii",
+ "ⅷ": "viii",
+ "Ⅵ": "Vl",
+ "Ⅶ": "Vll",
+ "Ⅷ": "Vlll",
+ "🜈": "Vᷤ",
+ "ᴧ": "ʌ",
+ "𐓘": "ʌ",
+ "٨": "Ʌ",
+ "۸": "Ʌ",
+ "Λ": "Ʌ",
+ "𝚲": "Ʌ",
+ "𝛬": "Ʌ",
+ "𝜦": "Ʌ",
+ "𝝠": "Ʌ",
+ "𝞚": "Ʌ",
+ "Л": "Ʌ",
+ "ⴷ": "Ʌ",
+ "𐒰": "Ʌ",
+ "ᐱ": "Ʌ",
+ "ꛎ": "Ʌ",
+ "ꓥ": "Ʌ",
+ "𖼽": "Ʌ",
+ "𐊍": "Ʌ",
+ "Ӆ": "Ʌ̦",
+ "ᐽ": "Ʌ·",
+ "ɯ": "w",
+ "𝐰": "w",
+ "𝑤": "w",
+ "𝒘": "w",
+ "𝓌": "w",
+ "𝔀": "w",
+ "𝔴": "w",
+ "𝕨": "w",
+ "𝖜": "w",
+ "𝗐": "w",
+ "𝘄": "w",
+ "𝘸": "w",
+ "𝙬": "w",
+ "𝚠": "w",
+ "ᴡ": "w",
+ "ѡ": "w",
+ "ԝ": "w",
+ "ա": "w",
+ "𑜊": "w",
+ "𑜎": "w",
+ "𑜏": "w",
+ "ꮃ": "w",
+ "𑣯": "W",
+ "𑣦": "W",
+ "𝐖": "W",
+ "𝑊": "W",
+ "𝑾": "W",
+ "𝒲": "W",
+ "𝓦": "W",
+ "𝔚": "W",
+ "𝕎": "W",
+ "𝖂": "W",
+ "𝖶": "W",
+ "𝗪": "W",
+ "𝘞": "W",
+ "𝙒": "W",
+ "𝚆": "W",
+ "Ԝ": "W",
+ "Ꮃ": "W",
+ "Ꮤ": "W",
+ "ꓪ": "W",
+ "ѽ": "w҆҇",
+ "𑓅": "ẇ",
+ "₩": "W̵",
+ "ꝡ": "w̦",
+ "ᴍ": "ʍ",
+ "м": "ʍ",
+ "ꮇ": "ʍ",
+ "ӎ": "ʍ̦",
+ "᙮": "x",
+ "×": "x",
+ "⤫": "x",
+ "⤬": "x",
+ "⨯": "x",
+ "ｘ": "x",
+ "ⅹ": "x",
+ "𝐱": "x",
+ "𝑥": "x",
+ "𝒙": "x",
+ "𝓍": "x",
+ "𝔁": "x",
+ "𝔵": "x",
+ "𝕩": "x",
+ "𝖝": "x",
+ "𝗑": "x",
+ "𝘅": "x",
+ "𝘹": "x",
+ "𝙭": "x",
+ "𝚡": "x",
+ "х": "x",
+ "ᕁ": "x",
+ "ᕽ": "x",
+ "ⷯ": "ͯ",
+ "᙭": "X",
+ "╳": "X",
+ "𐌢": "X",
+ "𑣬": "X",
+ "Ｘ": "X",
+ "Ⅹ": "X",
+ "𝐗": "X",
+ "𝑋": "X",
+ "𝑿": "X",
+ "𝒳": "X",
+ "𝓧": "X",
+ "𝔛": "X",
+ "𝕏": "X",
+ "𝖃": "X",
+ "𝖷": "X",
+ "𝗫": "X",
+ "𝘟": "X",
+ "𝙓": "X",
+ "𝚇": "X",
+ "Ꭓ": "X",
+ "Χ": "X",
+ "𝚾": "X",
+ "𝛸": "X",
+ "𝜲": "X",
+ "𝝬": "X",
+ "𝞦": "X",
+ "Ⲭ": "X",
+ "Х": "X",
+ "ⵝ": "X",
+ "ᚷ": "X",
+ "ꓫ": "X",
+ "𐊐": "X",
+ "𐊴": "X",
+ "𐌗": "X",
+ "𐔧": "X",
+ "⨰": "ẋ",
+ "Ҳ": "X̩",
+ "𐆖": "X̵",
+ "ⅺ": "xi",
+ "ⅻ": "xii",
+ "Ⅺ": "Xl",
+ "Ⅻ": "Xll",
+ "ɣ": "y",
+ "ᶌ": "y",
+ "ｙ": "y",
+ "𝐲": "y",
+ "𝑦": "y",
+ "𝒚": "y",
+ "𝓎": "y",
+ "𝔂": "y",
+ "𝔶": "y",
+ "𝕪": "y",
+ "𝖞": "y",
+ "𝗒": "y",
+ "𝘆": "y",
+ "𝘺": "y",
+ "𝙮": "y",
+ "𝚢": "y",
+ "ʏ": "y",
+ "ỿ": "y",
+ "ꭚ": "y",
+ "γ": "y",
+ "ℽ": "y",
+ "𝛄": "y",
+ "𝛾": "y",
+ "𝜸": "y",
+ "𝝲": "y",
+ "𝞬": "y",
+ "у": "y",
+ "ү": "y",
+ "ყ": "y",
+ "𑣜": "y",
+ "Ｙ": "Y",
+ "𝐘": "Y",
+ "𝑌": "Y",
+ "𝒀": "Y",
+ "𝒴": "Y",
+ "𝓨": "Y",
+ "𝔜": "Y",
+ "𝕐": "Y",
+ "𝖄": "Y",
+ "𝖸": "Y",
+ "𝗬": "Y",
+ "𝘠": "Y",
+ "𝙔": "Y",
+ "𝚈": "Y",
+ "Υ": "Y",
+ "ϒ": "Y",
+ "𝚼": "Y",
+ "𝛶": "Y",
+ "𝜰": "Y",
+ "𝝪": "Y",
+ "𝞤": "Y",
+ "Ⲩ": "Y",
+ "У": "Y",
+ "Ү": "Y",
+ "Ꭹ": "Y",
+ "Ꮍ": "Y",
+ "ꓬ": "Y",
+ "𖽃": "Y",
+ "𑢤": "Y",
+ "𐊲": "Y",
+ "ƴ": "y̔",
+ "ɏ": "y̵",
+ "ұ": "y̵",
+ "¥": "Y̵",
+ "Ɏ": "Y̵",
+ "Ұ": "Y̵",
+ "ʒ": "ȝ",
+ "ꝫ": "ȝ",
+ "ⳍ": "ȝ",
+ "ӡ": "ȝ",
+ "ჳ": "ȝ",
+ "𝐳": "z",
+ "𝑧": "z",
+ "𝒛": "z",
+ "𝓏": "z",
+ "𝔃": "z",
+ "𝔷": "z",
+ "𝕫": "z",
+ "𝖟": "z",
+ "𝗓": "z",
+ "𝘇": "z",
+ "𝘻": "z",
+ "𝙯": "z",
+ "𝚣": "z",
+ "ᴢ": "z",
+ "ꮓ": "z",
+ "𑣄": "z",
+ "𐋵": "Z",
+ "𑣥": "Z",
+ "Ｚ": "Z",
+ "ℤ": "Z",
+ "ℨ": "Z",
+ "𝐙": "Z",
+ "𝑍": "Z",
+ "𝒁": "Z",
+ "𝒵": "Z",
+ "𝓩": "Z",
+ "𝖅": "Z",
+ "𝖹": "Z",
+ "𝗭": "Z",
+ "𝘡": "Z",
+ "𝙕": "Z",
+ "𝚉": "Z",
+ "Ζ": "Z",
+ "𝚭": "Z",
+ "𝛧": "Z",
+ "𝜡": "Z",
+ "𝝛": "Z",
+ "𝞕": "Z",
+ "Ꮓ": "Z",
+ "ꓜ": "Z",
+ "𑢩": "Z",
+ "ʐ": "z̨",
+ "ƶ": "z̵",
+ "Ƶ": "Z̵",
+ "ȥ": "z̦",
+ "Ȥ": "Z̦",
+ "ᵶ": "z̴",
+ "ƿ": "þ",
+ "ϸ": "þ",
+ "Ϸ": "Þ",
+ "𐓄": "Þ",
+ "⁹": "ꝰ",
+ "ᴤ": "ƨ",
+ "ϩ": "ƨ",
+ "ꙅ": "ƨ",
+ "ь": "ƅ",
+ "ꮟ": "ƅ",
+ "ы": "ƅi",
+ "ꭾ": "ɂ",
+ "ˤ": "ˁ",
+ "ꛍ": "ʡ",
+ "⊙": "ʘ",
+ "☉": "ʘ",
+ "⨀": "ʘ",
+ "Ꙩ": "ʘ",
+ "ⵙ": "ʘ",
+ "𐓃": "ʘ",
+ "ℾ": "Γ",
+ "𝚪": "Γ",
+ "𝛤": "Γ",
+ "𝜞": "Γ",
+ "𝝘": "Γ",
+ "𝞒": "Γ",
+ "Ⲅ": "Γ",
+ "Г": "Γ",
+ "Ꮁ": "Γ",
+ "ᒥ": "Γ",
+ "𖼇": "Γ",
+ "Ғ": "Γ̵",
+ "ᒯ": "Γ·",
+ "Ґ": "Γ'",
+ "∆": "Δ",
+ "△": "Δ",
+ "🜂": "Δ",
+ "𝚫": "Δ",
+ "𝛥": "Δ",
+ "𝜟": "Δ",
+ "𝝙": "Δ",
+ "𝞓": "Δ",
+ "Ⲇ": "Δ",
+ "ⵠ": "Δ",
+ "ᐃ": "Δ",
+ "𖼚": "Δ",
+ "𐊅": "Δ",
+ "𐊣": "Δ",
+ "⍙": "Δ̲",
+ "ᐏ": "Δ·",
+ "ᐬ": "Δᐠ",
+ "𝟋": "ϝ",
+ "𝛇": "ζ",
+ "𝜁": "ζ",
+ "𝜻": "ζ",
+ "𝝵": "ζ",
+ "𝞯": "ζ",
+ "ⳤ": "ϗ",
+ "𝛌": "λ",
+ "𝜆": "λ",
+ "𝝀": "λ",
+ "𝝺": "λ",
+ "𝞴": "λ",
+ "Ⲗ": "λ",
+ "𐓛": "λ",
+ "µ": "μ",
+ "𝛍": "μ",
+ "𝜇": "μ",
+ "𝝁": "μ",
+ "𝝻": "μ",
+ "𝞵": "μ",
+ "𝛏": "ξ",
+ "𝜉": "ξ",
+ "𝝃": "ξ",
+ "𝝽": "ξ",
+ "𝞷": "ξ",
+ "𝚵": "Ξ",
+ "𝛯": "Ξ",
+ "𝜩": "Ξ",
+ "𝝣": "Ξ",
+ "𝞝": "Ξ",
+ "ϖ": "π",
+ "ℼ": "π",
+ "𝛑": "π",
+ "𝛡": "π",
+ "𝜋": "π",
+ "𝜛": "π",
+ "𝝅": "π",
+ "𝝕": "π",
+ "𝝿": "π",
+ "𝞏": "π",
+ "𝞹": "π",
+ "𝟉": "π",
+ "ᴨ": "π",
+ "п": "π",
+ "∏": "Π",
+ "ℿ": "Π",
+ "𝚷": "Π",
+ "𝛱": "Π",
+ "𝜫": "Π",
+ "𝝥": "Π",
+ "𝞟": "Π",
+ "Ⲡ": "Π",
+ "П": "Π",
+ "ꛛ": "Π",
+ "𐊭": "Ϙ",
+ "𐌒": "Ϙ",
+ "ϛ": "ς",
+ "𝛓": "ς",
+ "𝜍": "ς",
+ "𝝇": "ς",
+ "𝞁": "ς",
+ "𝞻": "ς",
+ "𝚽": "Φ",
+ "𝛷": "Φ",
+ "𝜱": "Φ",
+ "𝝫": "Φ",
+ "𝞥": "Φ",
+ "Ⲫ": "Φ",
+ "Ф": "Φ",
+ "Փ": "Φ",
+ "ቀ": "Φ",
+ "ᛰ": "Φ",
+ "𐊳": "Φ",
+ "ꭓ": "χ",
+ "ꭕ": "χ",
+ "𝛘": "χ",
+ "𝜒": "χ",
+ "𝝌": "χ",
+ "𝞆": "χ",
+ "𝟀": "χ",
+ "ⲭ": "χ",
+ "𝛙": "ψ",
+ "𝜓": "ψ",
+ "𝝍": "ψ",
+ "𝞇": "ψ",
+ "𝟁": "ψ",
+ "ѱ": "ψ",
+ "𐓹": "ψ",
+ "𝚿": "Ψ",
+ "𝛹": "Ψ",
+ "𝜳": "Ψ",
+ "𝝭": "Ψ",
+ "𝞧": "Ψ",
+ "Ⲯ": "Ψ",
+ "Ѱ": "Ψ",
+ "𐓑": "Ψ",
+ "ᛘ": "Ψ",
+ "𐊵": "Ψ",
+ "⍵": "ω",
+ "ꞷ": "ω",
+ "𝛚": "ω",
+ "𝜔": "ω",
+ "𝝎": "ω",
+ "𝞈": "ω",
+ "𝟂": "ω",
+ "ⲱ": "ω",
+ "ꙍ": "ω",
+ "Ω": "Ω",
+ "𝛀": "Ω",
+ "𝛺": "Ω",
+ "𝜴": "Ω",
+ "𝝮": "Ω",
+ "𝞨": "Ω",
+ "ᘯ": "Ω",
+ "ᘵ": "Ω",
+ "𐊶": "Ω",
+ "⍹": "ω̲",
+ "ώ": "ῴ",
+ "☰": "Ⲷ",
+ "Ⳝ": "Ϭ",
+ "җ": "ж̩",
+ "Җ": "Ж̩",
+ "𝈋": "И",
+ "Ͷ": "И",
+ "ꚡ": "И",
+ "𐐥": "И",
+ "Й": "Ѝ",
+ "Ҋ": "Ѝ̦",
+ "ѝ": "й",
+ "ҋ": "й̦",
+ "𐒼": "Ӄ",
+ "ᴫ": "л",
+ "ӆ": "л̦",
+ "ꭠ": "љ",
+ "𐓫": "ꙩ",
+ "ᷮ": "ⷬ",
+ "𐓍": "Ћ",
+ "𝈂": "Ӿ",
+ "𝈢": "Ѡ",
+ "Ꮗ": "Ѡ",
+ "ᗯ": "Ѡ",
+ "Ѽ": "Ѡ҆҇",
+ "ᣭ": "Ѡ·",
+ "Ꞷ": "Ꙍ",
+ "ӌ": "ҷ",
+ "Ӌ": "Ҷ",
+ "Ҿ": "Ҽ̨",
+ "ⲽ": "ш",
+ "Ⲽ": "Ш",
+ "Ꙑ": "Ъl",
+ "℈": "Э",
+ "🜁": "Ꙙ",
+ "𖼜": "Ꙙ",
+ "ꦒ": "ⰿ",
+ "և": "եւ",
+ "ኔ": "ձ",
+ "ﬔ": "մե",
+ "ﬕ": "մի",
+ "ﬗ": "մխ",
+ "ﬓ": "մն",
+ "∩": "Ո",
+ "⋂": "Ո",
+ "𝉅": "Ո",
+ "በ": "Ո",
+ "ᑎ": "Ո",
+ "ꓵ": "Ո",
+ "ᑚ": "Ո·",
+ "ᑨ": "Ո'",
+ "ﬖ": "վն",
+ "₽": "Ք",
+ "˓": "ՙ",
+ "ʿ": "ՙ",
+ "ℵ": "א",
+ "ﬡ": "א",
+ "אָ": "אַ",
+ "אּ": "אַ",
+ "ﭏ": "אל",
+ "ℶ": "ב",
+ "ℷ": "ג",
+ "ℸ": "ד",
+ "ﬢ": "ד",
+ "ﬣ": "ה",
+ "יּ": "יִ",
+ "ﬤ": "כ",
+ "ﬥ": "ל",
+ "ﬦ": "ם",
+ "ﬠ": "ע",
+ "ﬧ": "ר",
+ "שׂ": "שׁ",
+ "שּ": "שׁ",
+ "שּׂ": "שּׁ",
+ "ﬨ": "ת",
+ "ﺀ": "ء",
+ "۽": "ء͈",
+ "ﺂ": "آ",
+ "ﺁ": "آ",
+ "ﭑ": "ٱ",
+ "ﭐ": "ٱ",
+ "𞸁": "ب",
+ "𞸡": "ب",
+ "𞹡": "ب",
+ "𞺁": "ب",
+ "𞺡": "ب",
+ "ﺑ": "ب",
+ "ﺒ": "ب",
+ "ﺐ": "ب",
+ "ﺏ": "ب",
+ "ݑ": "بۛ",
+ "ࢶ": "بۢ",
+ "ࢡ": "بٔ",
+ "ﲠ": "بo",
+ "ﳢ": "بo",
+ "ﲜ": "بج",
+ "ﰅ": "بج",
+ "ﲝ": "بح",
+ "ﰆ": "بح",
+ "ﷂ": "بحى",
+ "ﲞ": "بخ",
+ "ﰇ": "بخ",
+ "ﳒ": "بخ",
+ "ﱋ": "بخ",
+ "ﶞ": "بخى",
+ "ﱪ": "بر",
+ "ﱫ": "بز",
+ "ﲟ": "بم",
+ "ﳡ": "بم",
+ "ﱬ": "بم",
+ "ﰈ": "بم",
+ "ﱭ": "بن",
+ "ﱮ": "بى",
+ "ﰉ": "بى",
+ "ﱯ": "بى",
+ "ﰊ": "بى",
+ "ﭔ": "ٻ",
+ "ﭕ": "ٻ",
+ "ﭓ": "ٻ",
+ "ﭒ": "ٻ",
+ "ې": "ٻ",
+ "ﯦ": "ٻ",
+ "ﯧ": "ٻ",
+ "ﯥ": "ٻ",
+ "ﯤ": "ٻ",
+ "ﭜ": "ڀ",
+ "ﭝ": "ڀ",
+ "ﭛ": "ڀ",
+ "ﭚ": "ڀ",
+ "ࢩ": "ݔ",
+ "ݧ": "ݔ",
+ "ö": "ة",
+ "ﺔ": "ة",
+ "ﺓ": "ة",
+ "ۃ": "ة",
+ "𞸕": "ت",
+ "𞸵": "ت",
+ "𞹵": "ت",
+ "𞺕": "ت",
+ "𞺵": "ت",
+ "ﺗ": "ت",
+ "ﺘ": "ت",
+ "ﺖ": "ت",
+ "ﺕ": "ت",
+ "ﲥ": "تo",
+ "ﳤ": "تo",
+ "ﲡ": "تج",
+ "ﰋ": "تج",
+ "ﵐ": "تجم",
+ "ﶠ": "تجى",
+ "ﶟ": "تجى",
+ "ﲢ": "تح",
+ "ﰌ": "تح",
+ "ﵒ": "تحج",
+ "ﵑ": "تحج",
+ "ﵓ": "تحم",
+ "ﲣ": "تخ",
+ "ﰍ": "تخ",
+ "ﵔ": "تخم",
+ "ﶢ": "تخى",
+ "ﶡ": "تخى",
+ "ﱰ": "تر",
+ "ﱱ": "تز",
+ "ﲤ": "تم",
+ "ﳣ": "تم",
+ "ﱲ": "تم",
+ "ﰎ": "تم",
+ "ﵕ": "تمج",
+ "ﵖ": "تمح",
+ "ﵗ": "تمخ",
+ "ﶤ": "تمى",
+ "ﶣ": "تمى",
+ "ﱳ": "تن",
+ "ﱴ": "تى",
+ "ﰏ": "تى",
+ "ﱵ": "تى",
+ "ﰐ": "تى",
+ "ﭠ": "ٺ",
+ "ﭡ": "ٺ",
+ "ﭟ": "ٺ",
+ "ﭞ": "ٺ",
+ "ﭤ": "ٿ",
+ "ﭥ": "ٿ",
+ "ﭣ": "ٿ",
+ "ﭢ": "ٿ",
+ "𞸂": "ج",
+ "𞸢": "ج",
+ "𞹂": "ج",
+ "𞹢": "ج",
+ "𞺂": "ج",
+ "𞺢": "ج",
+ "ﺟ": "ج",
+ "ﺠ": "ج",
+ "ﺞ": "ج",
+ "ﺝ": "ج",
+ "ﲧ": "جح",
+ "ﰕ": "جح",
+ "ﶦ": "جحى",
+ "ﶾ": "جحى",
+ "ﷻ": "جل جلlلo",
+ "ﲨ": "جم",
+ "ﰖ": "جم",
+ "ﵙ": "جمح",
+ "ﵘ": "جمح",
+ "ﶧ": "جمى",
+ "ﶥ": "جمى",
+ "ﴝ": "جى",
+ "ﴁ": "جى",
+ "ﴞ": "جى",
+ "ﴂ": "جى",
+ "ﭸ": "ڃ",
+ "ﭹ": "ڃ",
+ "ﭷ": "ڃ",
+ "ﭶ": "ڃ",
+ "ﭴ": "ڄ",
+ "ﭵ": "ڄ",
+ "ﭳ": "ڄ",
+ "ﭲ": "ڄ",
+ "ﭼ": "چ",
+ "ﭽ": "چ",
+ "ﭻ": "چ",
+ "ﭺ": "چ",
+ "ﮀ": "ڇ",
+ "ﮁ": "ڇ",
+ "ﭿ": "ڇ",
+ "ﭾ": "ڇ",
+ "𞸇": "ح",
+ "𞸧": "ح",
+ "𞹇": "ح",
+ "𞹧": "ح",
+ "𞺇": "ح",
+ "𞺧": "ح",
+ "ﺣ": "ح",
+ "ﺤ": "ح",
+ "ﺢ": "ح",
+ "ﺡ": "ح",
+ "څ": "حۛ",
+ "ځ": "حٔ",
+ "ݲ": "حٔ",
+ "ﲩ": "حج",
+ "ﰗ": "حج",
+ "ﶿ": "حجى",
+ "ﲪ": "حم",
+ "ﰘ": "حم",
+ "ﵛ": "حمى",
+ "ﵚ": "حمى",
+ "ﴛ": "حى",
+ "ﳿ": "حى",
+ "ﴜ": "حى",
+ "ﴀ": "حى",
+ "𞸗": "خ",
+ "𞸷": "خ",
+ "𞹗": "خ",
+ "𞹷": "خ",
+ "𞺗": "خ",
+ "𞺷": "خ",
+ "ﺧ": "خ",
+ "ﺨ": "خ",
+ "ﺦ": "خ",
+ "ﺥ": "خ",
+ "ﲫ": "خج",
+ "ﰙ": "خج",
+ "ﰚ": "خح",
+ "ﲬ": "خم",
+ "ﰛ": "خم",
+ "ﴟ": "خى",
+ "ﴃ": "خى",
+ "ﴠ": "خى",
+ "ﴄ": "خى",
+ "𐋡": "د",
+ "𞸃": "د",
+ "𞺃": "د",
+ "𞺣": "د",
+ "ﺪ": "د",
+ "ﺩ": "د",
+ "ڈ": "دؕ",
+ "ﮉ": "دؕ",
+ "ﮈ": "دؕ",
+ "ڎ": "دۛ",
+ "ﮇ": "دۛ",
+ "ﮆ": "دۛ",
+ "ۮ": "د̂",
+ "ࢮ": "د̤̣",
+ "𞸘": "ذ",
+ "𞺘": "ذ",
+ "𞺸": "ذ",
+ "ﺬ": "ذ",
+ "ﺫ": "ذ",
+ "ﱛ": "ذٰ",
+ "ڋ": "ڊؕ",
+ "ﮅ": "ڌ",
+ "ﮄ": "ڌ",
+ "ﮃ": "ڍ",
+ "ﮂ": "ڍ",
+ "𞸓": "ر",
+ "𞺓": "ر",
+ "𞺳": "ر",
+ "ﺮ": "ر",
+ "ﺭ": "ر",
+ "ڑ": "رؕ",
+ "ﮍ": "رؕ",
+ "ﮌ": "رؕ",
+ "ژ": "رۛ",
+ "ﮋ": "رۛ",
+ "ﮊ": "رۛ",
+ "ڒ": "ر̆",
+ "ࢹ": "ر̆̇",
+ "ۯ": "ر̂",
+ "ݬ": "رٔ",
+ "ﱜ": "رٰ",
+ "ﷶ": "رسول",
+ "﷼": "رىlل",
+ "𞸆": "ز",
+ "𞺆": "ز",
+ "𞺦": "ز",
+ "ﺰ": "ز",
+ "ﺯ": "ز",
+ "ࢲ": "ز̂",
+ "ݱ": "ڗؕ",
+ "𞸎": "س",
+ "𞸮": "س",
+ "𞹎": "س",
+ "𞹮": "س",
+ "𞺎": "س",
+ "𞺮": "س",
+ "ﺳ": "س",
+ "ﺴ": "س",
+ "ﺲ": "س",
+ "ﺱ": "س",
+ "ش": "سۛ",
+ "𞸔": "سۛ",
+ "𞸴": "سۛ",
+ "𞹔": "سۛ",
+ "𞹴": "سۛ",
+ "𞺔": "سۛ",
+ "𞺴": "سۛ",
+ "ﺷ": "سۛ",
+ "ﺸ": "سۛ",
+ "ﺶ": "سۛ",
+ "ﺵ": "سۛ",
+ "ݾ": "س̂",
+ "ﴱ": "سo",
+ "ﳨ": "سo",
+ "ﴲ": "سۛo",
+ "ﳪ": "سۛo",
+ "ﲭ": "سج",
+ "ﴴ": "سج",
+ "ﰜ": "سج",
+ "ﴭ": "سۛج",
+ "ﴷ": "سۛج",
+ "ﴥ": "سۛج",
+ "ﴉ": "سۛج",
+ "ﵝ": "سجح",
+ "ﵞ": "سجى",
+ "ﵩ": "سۛجى",
+ "ﲮ": "سح",
+ "ﴵ": "سح",
+ "ﰝ": "سح",
+ "ﴮ": "سۛح",
+ "ﴸ": "سۛح",
+ "ﴦ": "سۛح",
+ "ﴊ": "سۛح",
+ "ﵜ": "سحج",
+ "ﵨ": "سۛحم",
+ "ﵧ": "سۛحم",
+ "ﶪ": "سۛحى",
+ "ﲯ": "سخ",
+ "ﴶ": "سخ",
+ "ﰞ": "سخ",
+ "ﴯ": "سۛخ",
+ "ﴹ": "سۛخ",
+ "ﴧ": "سۛخ",
+ "ﴋ": "سۛخ",
+ "ﶨ": "سخى",
+ "ﷆ": "سخى",
+ "ﴪ": "سر",
+ "ﴎ": "سر",
+ "ﴩ": "سۛر",
+ "ﴍ": "سۛر",
+ "ﲰ": "سم",
+ "ﳧ": "سم",
+ "ﰟ": "سم",
+ "ﴰ": "سۛم",
+ "ﳩ": "سۛم",
+ "ﴨ": "سۛم",
+ "ﴌ": "سۛم",
+ "ﵡ": "سمج",
+ "ﵠ": "سمح",
+ "ﵟ": "سمح",
+ "ﵫ": "سۛمخ",
+ "ﵪ": "سۛمخ",
+ "ﵣ": "سمم",
+ "ﵢ": "سمم",
+ "ﵭ": "سۛمم",
+ "ﵬ": "سۛمم",
+ "ﴗ": "سى",
+ "ﳻ": "سى",
+ "ﴘ": "سى",
+ "ﳼ": "سى",
+ "ﴙ": "سۛى",
+ "ﳽ": "سۛى",
+ "ﴚ": "سۛى",
+ "ﳾ": "سۛى",
+ "𐋲": "ص",
+ "𞸑": "ص",
+ "𞸱": "ص",
+ "𞹑": "ص",
+ "𞹱": "ص",
+ "𞺑": "ص",
+ "𞺱": "ص",
+ "ﺻ": "ص",
+ "ﺼ": "ص",
+ "ﺺ": "ص",
+ "ﺹ": "ص",
+ "ڞ": "صۛ",
+ "ࢯ": "ص̤̣",
+ "ﲱ": "صح",
+ "ﰠ": "صح",
+ "ﵥ": "صحح",
+ "ﵤ": "صحح",
+ "ﶩ": "صحى",
+ "ﲲ": "صخ",
+ "ﴫ": "صر",
+ "ﴏ": "صر",
+ "ﷵ": "صلعم",
+ "ﷹ": "صلى",
+ "ﷰ": "صلى",
+ "ﷺ": "صلى lللo علىo وسلم",
+ "ﲳ": "صم",
+ "ﰡ": "صم",
+ "ﷅ": "صمم",
+ "ﵦ": "صمم",
+ "ﴡ": "صى",
+ "ﴅ": "صى",
+ "ﴢ": "صى",
+ "ﴆ": "صى",
+ "𞸙": "ض",
+ "𞸹": "ض",
+ "𞹙": "ض",
+ "𞹹": "ض",
+ "𞺙": "ض",
+ "𞺹": "ض",
+ "ﺿ": "ض",
+ "ﻀ": "ض",
+ "ﺾ": "ض",
+ "ﺽ": "ض",
+ "ﲴ": "ضج",
+ "ﰢ": "ضج",
+ "ﲵ": "ضح",
+ "ﰣ": "ضح",
+ "ﵮ": "ضحى",
+ "ﶫ": "ضحى",
+ "ﲶ": "ضخ",
+ "ﰤ": "ضخ",
+ "ﵰ": "ضخم",
+ "ﵯ": "ضخم",
+ "ﴬ": "ضر",
+ "ﴐ": "ضر",
+ "ﲷ": "ضم",
+ "ﰥ": "ضم",
+ "ﴣ": "ضى",
+ "ﴇ": "ضى",
+ "ﴤ": "ضى",
+ "ﴈ": "ضى",
+ "𐋨": "ط",
+ "𞸈": "ط",
+ "𞹨": "ط",
+ "𞺈": "ط",
+ "𞺨": "ط",
+ "ﻃ": "ط",
+ "ﻄ": "ط",
+ "ﻂ": "ط",
+ "ﻁ": "ط",
+ "ڟ": "طۛ",
+ "ﲸ": "طح",
+ "ﰦ": "طح",
+ "ﴳ": "طم",
+ "ﴺ": "طم",
+ "ﰧ": "طم",
+ "ﵲ": "طمح",
+ "ﵱ": "طمح",
+ "ﵳ": "طمم",
+ "ﵴ": "طمى",
+ "ﴑ": "طى",
+ "ﳵ": "طى",
+ "ﴒ": "طى",
+ "ﳶ": "طى",
+ "𞸚": "ظ",
+ "𞹺": "ظ",
+ "𞺚": "ظ",
+ "𞺺": "ظ",
+ "ﻇ": "ظ",
+ "ﻈ": "ظ",
+ "ﻆ": "ظ",
+ "ﻅ": "ظ",
+ "ﲹ": "ظم",
+ "ﴻ": "ظم",
+ "ﰨ": "ظم",
+ "؏": "ع",
+ "𞸏": "ع",
+ "𞸯": "ع",
+ "𞹏": "ع",
+ "𞹯": "ع",
+ "𞺏": "ع",
+ "𞺯": "ع",
+ "ﻋ": "ع",
+ "ﻌ": "ع",
+ "ﻊ": "ع",
+ "ﻉ": "ع",
+ "ﲺ": "عج",
+ "ﰩ": "عج",
+ "ﷄ": "عجم",
+ "ﵵ": "عجم",
+ "ﷷ": "علىo",
+ "ﲻ": "عم",
+ "ﰪ": "عم",
+ "ﵷ": "عمم",
+ "ﵶ": "عمم",
+ "ﵸ": "عمى",
+ "ﶶ": "عمى",
+ "ﴓ": "عى",
+ "ﳷ": "عى",
+ "ﴔ": "عى",
+ "ﳸ": "عى",
+ "𞸛": "غ",
+ "𞸻": "غ",
+ "𞹛": "غ",
+ "𞹻": "غ",
+ "𞺛": "غ",
+ "𞺻": "غ",
+ "ﻏ": "غ",
+ "ﻐ": "غ",
+ "ﻎ": "غ",
+ "ﻍ": "غ",
+ "ﲼ": "غج",
+ "ﰫ": "غج",
+ "ﲽ": "غم",
+ "ﰬ": "غم",
+ "ﵹ": "غمم",
+ "ﵻ": "غمى",
+ "ﵺ": "غمى",
+ "ﴕ": "غى",
+ "ﳹ": "غى",
+ "ﴖ": "غى",
+ "ﳺ": "غى",
+ "𞸐": "ف",
+ "𞸰": "ف",
+ "𞹰": "ف",
+ "𞺐": "ف",
+ "𞺰": "ف",
+ "ﻓ": "ف",
+ "ﻔ": "ف",
+ "ﻒ": "ف",
+ "ﻑ": "ف",
+ "ڧ": "ف",
+ "ﲾ": "فج",
+ "ﰭ": "فج",
+ "ﲿ": "فح",
+ "ﰮ": "فح",
+ "ﳀ": "فخ",
+ "ﰯ": "فخ",
+ "ﵽ": "فخم",
+ "ﵼ": "فخم",
+ "ﳁ": "فم",
+ "ﰰ": "فم",
+ "ﷁ": "فمى",
+ "ﱼ": "فى",
+ "ﰱ": "فى",
+ "ﱽ": "فى",
+ "ﰲ": "فى",
+ "𞸞": "ڡ",
+ "𞹾": "ڡ",
+ "ࢻ": "ڡ",
+ "ٯ": "ڡ",
+ "𞸟": "ڡ",
+ "𞹟": "ڡ",
+ "ࢼ": "ڡ",
+ "ڤ": "ڡۛ",
+ "ﭬ": "ڡۛ",
+ "ﭭ": "ڡۛ",
+ "ﭫ": "ڡۛ",
+ "ﭪ": "ڡۛ",
+ "ڨ": "ڡۛ",
+ "ࢤ": "ڢۛ",
+ "ﭰ": "ڦ",
+ "ﭱ": "ڦ",
+ "ﭯ": "ڦ",
+ "ﭮ": "ڦ",
+ "𞸒": "ق",
+ "𞸲": "ق",
+ "𞹒": "ق",
+ "𞹲": "ق",
+ "𞺒": "ق",
+ "𞺲": "ق",
+ "ﻗ": "ق",
+ "ﻘ": "ق",
+ "ﻖ": "ق",
+ "ﻕ": "ق",
+ "ﳂ": "قح",
+ "ﰳ": "قح",
+ "ﷱ": "قلى",
+ "ﳃ": "قم",
+ "ﰴ": "قم",
+ "ﶴ": "قمح",
+ "ﵾ": "قمح",
+ "ﵿ": "قمم",
+ "ﶲ": "قمى",
+ "ﱾ": "قى",
+ "ﰵ": "قى",
+ "ﱿ": "قى",
+ "ﰶ": "قى",
+ "𞸊": "ك",
+ "𞸪": "ك",
+ "𞹪": "ك",
+ "ﻛ": "ك",
+ "ﻜ": "ك",
+ "ﻚ": "ك",
+ "ﻙ": "ك",
+ "ک": "ك",
+ "ﮐ": "ك",
+ "ﮑ": "ك",
+ "ﮏ": "ك",
+ "ﮎ": "ك",
+ "ڪ": "ك",
+ "ڭ": "كۛ",
+ "ﯕ": "كۛ",
+ "ﯖ": "كۛ",
+ "ﯔ": "كۛ",
+ "ﯓ": "كۛ",
+ "ݣ": "كۛ",
+ "ﲀ": "كl",
+ "ﰷ": "كl",
+ "ﳄ": "كج",
+ "ﰸ": "كج",
+ "ﳅ": "كح",
+ "ﰹ": "كح",
+ "ﳆ": "كخ",
+ "ﰺ": "كخ",
+ "ﳇ": "كل",
+ "ﳫ": "كل",
+ "ﲁ": "كل",
+ "ﰻ": "كل",
+ "ﳈ": "كم",
+ "ﳬ": "كم",
+ "ﲂ": "كم",
+ "ﰼ": "كم",
+ "ﷃ": "كمم",
+ "ﶻ": "كمم",
+ "ﶷ": "كمى",
+ "ﲃ": "كى",
+ "ﰽ": "كى",
+ "ﲄ": "كى",
+ "ﰾ": "كى",
+ "ݢ": "ڬ",
+ "ﮔ": "گ",
+ "ﮕ": "گ",
+ "ﮓ": "گ",
+ "ﮒ": "گ",
+ "ࢰ": "گ",
+ "ڴ": "گۛ",
+ "ﮜ": "ڱ",
+ "ﮝ": "ڱ",
+ "ﮛ": "ڱ",
+ "ﮚ": "ڱ",
+ "ﮘ": "ڳ",
+ "ﮙ": "ڳ",
+ "ﮗ": "ڳ",
+ "ﮖ": "ڳ",
+ "𞸋": "ل",
+ "𞸫": "ل",
+ "𞹋": "ل",
+ "𞺋": "ل",
+ "𞺫": "ل",
+ "ﻟ": "ل",
+ "ﻠ": "ل",
+ "ﻞ": "ل",
+ "ﻝ": "ل",
+ "ڷ": "لۛ",
+ "ڵ": "ل̆",
+ "ﻼ": "لl",
+ "ﻻ": "لl",
+ "ﻺ": "لlٕ",
+ "ﻹ": "لlٕ",
+ "ﻸ": "لlٴ",
+ "ﻷ": "لlٴ",
+ "ﳍ": "لo",
+ "ﻶ": "لآ",
+ "ﻵ": "لآ",
+ "ﳉ": "لج",
+ "ﰿ": "لج",
+ "ﶃ": "لجج",
+ "ﶄ": "لجج",
+ "ﶺ": "لجم",
+ "ﶼ": "لجم",
+ "ﶬ": "لجى",
+ "ﳊ": "لح",
+ "ﱀ": "لح",
+ "ﶵ": "لحم",
+ "ﶀ": "لحم",
+ "ﶂ": "لحى",
+ "ﶁ": "لحى",
+ "ﳋ": "لخ",
+ "ﱁ": "لخ",
+ "ﶆ": "لخم",
+ "ﶅ": "لخم",
+ "ﳌ": "لم",
+ "ﳭ": "لم",
+ "ﲅ": "لم",
+ "ﱂ": "لم",
+ "ﶈ": "لمح",
+ "ﶇ": "لمح",
+ "ﶭ": "لمى",
+ "ﲆ": "لى",
+ "ﱃ": "لى",
+ "ﲇ": "لى",
+ "ﱄ": "لى",
+ "𞸌": "م",
+ "𞸬": "م",
+ "𞹬": "م",
+ "𞺌": "م",
+ "𞺬": "م",
+ "ﻣ": "م",
+ "ﻤ": "م",
+ "ﻢ": "م",
+ "ﻡ": "م",
+ "ࢧ": "مۛ",
+ "۾": "م͈",
+ "ﲈ": "مl",
+ "ﳎ": "مج",
+ "ﱅ": "مج",
+ "ﶌ": "مجح",
+ "ﶒ": "مجخ",
+ "ﶍ": "مجم",
+ "ﷀ": "مجى",
+ "ﳏ": "مح",
+ "ﱆ": "مح",
+ "ﶉ": "محج",
+ "ﶊ": "محم",
+ "ﷴ": "محمد",
+ "ﶋ": "محى",
+ "ﳐ": "مخ",
+ "ﱇ": "مخ",
+ "ﶎ": "مخج",
+ "ﶏ": "مخم",
+ "ﶹ": "مخى",
+ "ﳑ": "مم",
+ "ﲉ": "مم",
+ "ﱈ": "مم",
+ "ﶱ": "ممى",
+ "ﱉ": "مى",
+ "ﱊ": "مى",
+ "𞸍": "ن",
+ "𞸭": "ن",
+ "𞹍": "ن",
+ "𞹭": "ن",
+ "𞺍": "ن",
+ "𞺭": "ن",
+ "ﻧ": "ن",
+ "ﻨ": "ن",
+ "ﻦ": "ن",
+ "ﻥ": "ن",
+ "ݨ": "نؕ",
+ "ݩ": "ن̆",
+ "ﳖ": "نo",
+ "ﳯ": "نo",
+ "ﶸ": "نجح",
+ "ﶽ": "نجح",
+ "ﶘ": "نجم",
+ "ﶗ": "نجم",
+ "ﶙ": "نجى",
+ "ﷇ": "نجى",
+ "ﳓ": "نح",
+ "ﱌ": "نح",
+ "ﶕ": "نحم",
+ "ﶖ": "نحى",
+ "ﶳ": "نحى",
+ "ﳔ": "نخ",
+ "ﱍ": "نخ",
+ "ﲊ": "نر",
+ "ﲋ": "نز",
+ "ﳕ": "نم",
+ "ﳮ": "نم",
+ "ﲌ": "نم",
+ "ﱎ": "نم",
+ "ﶛ": "نمى",
+ "ﶚ": "نمى",
+ "ﲍ": "نن",
+ "ﲎ": "نى",
+ "ﱏ": "نى",
+ "ﲏ": "نى",
+ "ﱐ": "نى",
+ "ۂ": "ۀ",
+ "ﮥ": "ۀ",
+ "ﮤ": "ۀ",
+ "𐋤": "و",
+ "𞸅": "و",
+ "𞺅": "و",
+ "𞺥": "و",
+ "ﻮ": "و",
+ "ﻭ": "و",
+ "ࢱ": "و",
+ "ۋ": "وۛ",
+ "ﯟ": "وۛ",
+ "ﯞ": "وۛ",
+ "ۇ": "و̓",
+ "ﯘ": "و̓",
+ "ﯗ": "و̓",
+ "ۆ": "و̆",
+ "ﯚ": "و̆",
+ "ﯙ": "و̆",
+ "ۉ": "و̂",
+ "ﯣ": "و̂",
+ "ﯢ": "و̂",
+ "ۈ": "وٰ",
+ "ﯜ": "وٰ",
+ "ﯛ": "وٰ",
+ "ؤ": "وٴ",
+ "ﺆ": "وٴ",
+ "ﺅ": "وٴ",
+ "ٶ": "وٴ",
+ "ٷ": "و̓ٴ",
+ "ﯝ": "و̓ٴ",
+ "ﷸ": "وسلم",
+ "ﯡ": "ۅ",
+ "ﯠ": "ۅ",
+ "ٮ": "ى",
+ "𞸜": "ى",
+ "𞹼": "ى",
+ "ں": "ى",
+ "𞸝": "ى",
+ "𞹝": "ى",
+ "ﮟ": "ى",
+ "ﮞ": "ى",
+ "ࢽ": "ى",
+ "ﯨ": "ى",
+ "ﯩ": "ى",
+ "ﻰ": "ى",
+ "ﻯ": "ى",
+ "ي": "ى",
+ "𞸉": "ى",
+ "𞸩": "ى",
+ "𞹉": "ى",
+ "𞹩": "ى",
+ "𞺉": "ى",
+ "𞺩": "ى",
+ "ﻳ": "ى",
+ "ﻴ": "ى",
+ "ﻲ": "ى",
+ "ﻱ": "ى",
+ "ی": "ى",
+ "ﯾ": "ى",
+ "ﯿ": "ى",
+ "ﯽ": "ى",
+ "ﯼ": "ى",
+ "ے": "ى",
+ "ﮯ": "ى",
+ "ﮮ": "ى",
+ "ٹ": "ىؕ",
+ "ﭨ": "ىؕ",
+ "ﭩ": "ىؕ",
+ "ﭧ": "ىؕ",
+ "ﭦ": "ىؕ",
+ "ڻ": "ىؕ",
+ "ﮢ": "ىؕ",
+ "ﮣ": "ىؕ",
+ "ﮡ": "ىؕ",
+ "ﮠ": "ىؕ",
+ "پ": "ىۛ",
+ "ﭘ": "ىۛ",
+ "ﭙ": "ىۛ",
+ "ﭗ": "ىۛ",
+ "ﭖ": "ىۛ",
+ "ث": "ىۛ",
+ "𞸖": "ىۛ",
+ "𞸶": "ىۛ",
+ "𞹶": "ىۛ",
+ "𞺖": "ىۛ",
+ "𞺶": "ىۛ",
+ "ﺛ": "ىۛ",
+ "ﺜ": "ىۛ",
+ "ﺚ": "ىۛ",
+ "ﺙ": "ىۛ",
+ "ڽ": "ىۛ",
+ "ۑ": "ىۛ",
+ "ؿ": "ىۛ",
+ "ࢷ": "ىۛۢ",
+ "ݖ": "ى̆",
+ "ێ": "ى̆",
+ "ࢺ": "ى̆̇",
+ "ؽ": "ى̂",
+ "ࢨ": "ىٔ",
+ "ﲐ": "ىٰ",
+ "ﱝ": "ىٰ",
+ "ﳞ": "ىo",
+ "ﳱ": "ىo",
+ "ﳦ": "ىۛo",
+ "ئ": "ىٴ",
+ "ﺋ": "ىٴ",
+ "ﺌ": "ىٴ",
+ "ﺊ": "ىٴ",
+ "ﺉ": "ىٴ",
+ "ٸ": "ىٴ",
+ "ﯫ": "ىٴl",
+ "ﯪ": "ىٴl",
+ "ﲛ": "ىٴo",
+ "ﳠ": "ىٴo",
+ "ﯭ": "ىٴo",
+ "ﯬ": "ىٴo",
+ "ﯸ": "ىٴٻ",
+ "ﯷ": "ىٴٻ",
+ "ﯶ": "ىٴٻ",
+ "ﲗ": "ىٴج",
+ "ﰀ": "ىٴج",
+ "ﲘ": "ىٴح",
+ "ﰁ": "ىٴح",
+ "ﲙ": "ىٴخ",
+ "ﱤ": "ىٴر",
+ "ﱥ": "ىٴز",
+ "ﲚ": "ىٴم",
+ "ﳟ": "ىٴم",
+ "ﱦ": "ىٴم",
+ "ﰂ": "ىٴم",
+ "ﱧ": "ىٴن",
+ "ﯯ": "ىٴو",
+ "ﯮ": "ىٴو",
+ "ﯱ": "ىٴو̓",
+ "ﯰ": "ىٴو̓",
+ "ﯳ": "ىٴو̆",
+ "ﯲ": "ىٴو̆",
+ "ﯵ": "ىٴوٰ",
+ "ﯴ": "ىٴوٰ",
+ "ﯻ": "ىٴى",
+ "ﯺ": "ىٴى",
+ "ﱨ": "ىٴى",
+ "ﯹ": "ىٴى",
+ "ﰃ": "ىٴى",
+ "ﱩ": "ىٴى",
+ "ﰄ": "ىٴى",
+ "ﳚ": "ىج",
+ "ﱕ": "ىج",
+ "ﰑ": "ىۛج",
+ "ﶯ": "ىجى",
+ "ﳛ": "ىح",
+ "ﱖ": "ىح",
+ "ﶮ": "ىحى",
+ "ﳜ": "ىخ",
+ "ﱗ": "ىخ",
+ "ﲑ": "ىر",
+ "ﱶ": "ىۛر",
+ "ﲒ": "ىز",
+ "ﱷ": "ىۛز",
+ "ﳝ": "ىم",
+ "ﳰ": "ىم",
+ "ﲓ": "ىم",
+ "ﱘ": "ىم",
+ "ﲦ": "ىۛم",
+ "ﳥ": "ىۛم",
+ "ﱸ": "ىۛم",
+ "ﰒ": "ىۛم",
+ "ﶝ": "ىمم",
+ "ﶜ": "ىمم",
+ "ﶰ": "ىمى",
+ "ﲔ": "ىن",
+ "ﱹ": "ىۛن",
+ "ﲕ": "ىى",
+ "ﱙ": "ىى",
+ "ﲖ": "ىى",
+ "ﱚ": "ىى",
+ "ﱺ": "ىۛى",
+ "ﰓ": "ىۛى",
+ "ﱻ": "ىۛى",
+ "ﰔ": "ىۛى",
+ "ﮱ": "ۓ",
+ "ﮰ": "ۓ",
+ "𐊸": "ⵀ",
+ "⁞": "ⵂ",
+ "⸽": "ⵂ",
+ "⦙": "ⵂ",
+ "︙": "ⵗ",
+ "⁝": "ⵗ",
+ "⋮": "ⵗ",
+ "Մ": "ሆ",
+ "Ռ": "ቡ",
+ "Ի": "ኮ",
+ "Պ": "ጣ",
+ "आ": "अा",
+ "ऒ": "अाॆ",
+ "ओ": "अाे",
+ "औ": "अाै",
+ "ऄ": "अॆ",
+ "ऑ": "अॉ",
+ "ऍ": "एॅ",
+ "ऎ": "एॆ",
+ "ऐ": "एे",
+ "ई": "र्इ",
+ "ઽ": "ऽ",
+ "𑇜": "ꣻ",
+ "𑇋": "ऺ",
+ "ુ": "ु",
+ "ૂ": "ू",
+ "ੋ": "ॆ",
+ "੍": "्",
+ "્": "्",
+ "আ": "অা",
+ "ৠ": "ঋৃ",
+ "ৡ": "ঋৃ",
+ "𑒒": "ঘ",
+ "𑒔": "চ",
+ "𑒖": "জ",
+ "𑒘": "ঞ",
+ "𑒙": "ট",
+ "𑒛": "ড",
+ "𑒪": "ণ",
+ "𑒞": "ত",
+ "𑒟": "থ",
+ "𑒠": "দ",
+ "𑒡": "ধ",
+ "𑒢": "ন",
+ "𑒣": "প",
+ "𑒩": "ব",
+ "𑒧": "ম",
+ "𑒨": "য",
+ "𑒫": "র",
+ "𑒝": "ল",
+ "𑒭": "ষ",
+ "𑒮": "স",
+ "𑓄": "ঽ",
+ "𑒰": "া",
+ "𑒱": "ি",
+ "𑒹": "ে",
+ "𑒼": "ো",
+ "𑒾": "ৌ",
+ "𑓂": "্",
+ "𑒽": "ৗ",
+ "ਉ": "ੳੁ",
+ "ਊ": "ੳੂ",
+ "ਆ": "ਅਾ",
+ "ਐ": "ਅੈ",
+ "ਔ": "ਅੌ",
+ "ਇ": "ੲਿ",
+ "ਈ": "ੲੀ",
+ "ਏ": "ੲੇ",
+ "આ": "અા",
+ "ઑ": "અાૅ",
+ "ઓ": "અાે",
+ "ઔ": "અાૈ",
+ "ઍ": "અૅ",
+ "એ": "અે",
+ "ઐ": "અૈ",
+ "ଆ": "ଅା",
+ "௮": "அ",
+ "ர": "ஈ",
+ "ா": "ஈ",
+ "௫": "ஈு",
+ "௨": "உ",
+ "ഉ": "உ",
+ "ஊ": "உள",
+ "ഊ": "உൗ",
+ "௭": "எ",
+ "௷": "எவ",
+ "ஜ": "ஐ",
+ "ജ": "ஐ",
+ "௧": "க",
+ "௪": "ச",
+ "௬": "சு",
+ "௲": "சூ",
+ "ഺ": "டி",
+ "ണ": "ண",
+ "௺": "நீ",
+ "௴": "மீ",
+ "௰": "ய",
+ "ഴ": "ழ",
+ "ௗ": "ள",
+ "ை": "ன",
+ "ശ": "ஶ",
+ "௸": "ஷ",
+ "ി": "ி",
+ "ീ": "ி",
+ "ொ": "ெஈ",
+ "ௌ": "ெள",
+ "ோ": "ேஈ",
+ "ಅ": "అ",
+ "ಆ": "ఆ",
+ "ಇ": "ఇ",
+ "ౠ": "ఋా",
+ "ౡ": "ఌా",
+ "ಒ": "ఒ",
+ "ఔ": "ఒౌ",
+ "ಔ": "ఒౌ",
+ "ఓ": "ఒౕ",
+ "ಓ": "ఒౕ",
+ "ಜ": "జ",
+ "ಞ": "ఞ",
+ "ఢ": "డ̣",
+ "ಣ": "ణ",
+ "థ": "ధּ",
+ "భ": "బ̣",
+ "ಯ": "య",
+ "ఠ": "రּ",
+ "ಱ": "ఱ",
+ "ಲ": "ల",
+ "ష": "వ̣",
+ "హ": "వా",
+ "మ": "వు",
+ "ూ": "ుా",
+ "ౄ": "ృా",
+ "ೡ": "ಌಾ",
+ "ഈ": "ഇൗ",
+ "ഐ": "എെ",
+ "ഓ": "ഒാ",
+ "ഔ": "ഒൗ",
+ "ൡ": "ഞ",
+ "൫": "ദ്ര",
+ "൹": "നു",
+ "ഌ": "നു",
+ "ങ": "നു",
+ "൯": "ന്",
+ "ൻ": "ന്",
+ "൬": "ന്ന",
+ "൚": "ന്മ",
+ "റ": "ര",
+ "൪": "ര്",
+ "ർ": "ര്",
+ "൮": "വ്ര",
+ "൶": "ഹ്മ",
+ "ൂ": "ു",
+ "ൃ": "ു",
+ "ൈ": "െെ",
+ "෪": "ජ",
+ "෫": "ද",
+ "𑐓": "𑐴𑑂𑐒",
+ "𑐙": "𑐴𑑂𑐘",
+ "𑐤": "𑐴𑑂𑐣",
+ "𑐪": "𑐴𑑂𑐩",
+ "𑐭": "𑐴𑑂𑐬",
+ "𑐯": "𑐴𑑂𑐮",
+ "𑗘": "𑖂",
+ "𑗙": "𑖂",
+ "𑗚": "𑖃",
+ "𑗛": "𑖄",
+ "𑗜": "𑖲",
+ "𑗝": "𑖳",
+ "ฃ": "ข",
+ "ด": "ค",
+ "ต": "ค",
+ "ม": "ฆ",
+ "ຈ": "จ",
+ "ซ": "ช",
+ "ฏ": "ฎ",
+ "ท": "ฑ",
+ "ບ": "บ",
+ "ປ": "ป",
+ "ຝ": "ฝ",
+ "ພ": "พ",
+ "ຟ": "ฟ",
+ "ฦ": "ภ",
+ "ຍ": "ย",
+ "។": "ฯ",
+ "ๅ": "า",
+ "ำ": "̊า",
+ "ិ": "ิ",
+ "ី": "ี",
+ "ឹ": "ึ",
+ "ឺ": "ื",
+ "ຸ": "ุ",
+ "ູ": "ู",
+ "แ": "เเ",
+ "ໜ": "ຫນ",
+ "ໝ": "ຫມ",
+ "ຳ": "̊າ",
+ "༂": "འུྂཿ",
+ "༃": "འུྂ༔",
+ "ཪ": "ར",
+ "ༀ": "ཨོཾ",
+ "ཷ": "ྲཱྀ",
+ "ཹ": "ླཱྀ",
+ "𑲲": "𑲪",
+ "ႁ": "ဂှ",
+ "က": "ဂာ",
+ "ၰ": "ဃှ",
+ "ၦ": "ပှ",
+ "ဟ": "ပာ",
+ "ၯ": "ပာှ",
+ "ၾ": "ၽှ",
+ "ဩ": "သြ",
+ "ဪ": "သြော်",
+ "႞": "ႃ̊",
+ "ឣ": "អ",
+ "᧐": "ᦞ",
+ "᧑": "ᦱ",
+ "᪀": "ᩅ",
+ "᪐": "ᩅ",
+ "꩓": "ꨁ",
+ "꩖": "ꨣ",
+ "᭒": "ᬍ",
+ "᭓": "ᬑ",
+ "᭘": "ᬨ",
+ "ꦣ": "ꦝ",
+ "ᢖ": "ᡜ",
+ "ᡕ": "ᠵ",
+ "ῶ": "Ꮿ",
+ "ᐍ": "ᐁ·",
+ "ᐫ": "ᐁᐠ",
+ "ᐑ": "ᐄ·",
+ "ᐓ": "ᐅ·",
+ "ᐭ": "ᐅᐠ",
+ "ᐕ": "ᐆ·",
+ "ᐘ": "ᐊ·",
+ "ᐮ": "ᐊᐠ",
+ "ᐚ": "ᐋ·",
+ "ᣝ": "ᐞᣟ",
+ "ᓑ": "ᐡ",
+ "ᕀ": "ᐩ",
+ "ᐿ": "ᐲ·",
+ "ᑃ": "ᐴ·",
+ "⍩": "ᐵ",
+ "ᑇ": "ᐹ·",
+ "ᑜ": "ᑏ·",
+ "⸧": "ᑐ",
+ "⊃": "ᑐ",
+ "ᑞ": "ᑐ·",
+ "ᑩ": "ᑐ'",
+ "⟉": "ᑐ/",
+ "⫗": "ᑐᑕ",
+ "ᑠ": "ᑑ·",
+ "⸦": "ᑕ",
+ "⊂": "ᑕ",
+ "ᑢ": "ᑕ·",
+ "ᑪ": "ᑕ'",
+ "ᑤ": "ᑖ·",
+ "ᑵ": "ᑫ·",
+ "ᒅ": "ᑫ'",
+ "ᑹ": "ᑮ·",
+ "ᑽ": "ᑰ·",
+ "ᑿ": "ᑲ·",
+ "ᒈ": "ᑲ'",
+ "ᒁ": "ᑳ·",
+ "ᘃ": "ᒉ",
+ "ᒓ": "ᒉ·",
+ "ᒕ": "ᒋ·",
+ "ᒗ": "ᒌ·",
+ "ᒛ": "ᒎ·",
+ "ᘂ": "ᒐ",
+ "ᒝ": "ᒐ·",
+ "ᒟ": "ᒑ·",
+ "ᒭ": "ᒣ·",
+ "ᒱ": "ᒦ·",
+ "ᒳ": "ᒧ·",
+ "ᒵ": "ᒨ·",
+ "ᒹ": "ᒫ·",
+ "ᓊ": "ᓀ·",
+ "ᣇ": "ᓂ·",
+ "ᣉ": "ᓃ·",
+ "ᣋ": "ᓄ·",
+ "ᣍ": "ᓅ·",
+ "ᓌ": "ᓇ·",
+ "ᓎ": "ᓈ·",
+ "ᘄ": "ᓓ",
+ "ᓝ": "ᓓ·",
+ "ᓟ": "ᓕ·",
+ "ᓡ": "ᓖ·",
+ "ᓣ": "ᓗ·",
+ "ᓥ": "ᓘ·",
+ "ᘇ": "ᓚ",
+ "ᓧ": "ᓚ·",
+ "ᓩ": "ᓛ·",
+ "ᓷ": "ᓭ·",
+ "ᓹ": "ᓯ·",
+ "ᓻ": "ᓰ·",
+ "ᓽ": "ᓱ·",
+ "ᓿ": "ᓲ·",
+ "ᔁ": "ᓴ·",
+ "ᔃ": "ᓵ·",
+ "ᔌ": "ᔋ<",
+ "ᔍ": "ᔋᑕ",
+ "ᔎ": "ᔋᑲ",
+ "ᔏ": "ᔋᒐ",
+ "ᔘ": "ᔐ·",
+ "ᔚ": "ᔑ·",
+ "ᔜ": "ᔒ·",
+ "ᔞ": "ᔓ·",
+ "ᔠ": "ᔔ·",
+ "ᔢ": "ᔕ·",
+ "ᔤ": "ᔖ·",
+ "ᔲ": "ᔨ·",
+ "ᔴ": "ᔩ·",
+ "ᔶ": "ᔪ·",
+ "ᔸ": "ᔫ·",
+ "ᔺ": "ᔭ·",
+ "ᔼ": "ᔮ·",
+ "ᘢ": "ᕃ",
+ "ᣠ": "ᕃ·",
+ "ᘣ": "ᕆ",
+ "ᘤ": "ᕊ",
+ "ᕏ": "ᕌ·",
+ "ᖁ": "ᕐd",
+ "ᕿ": "ᕐP",
+ "ᙯ": "ᕐᑫ",
+ "ᕾ": "ᕐᑬ",
+ "ᖀ": "ᕐᑮ",
+ "ᖂ": "ᕐᑰ",
+ "ᖃ": "ᕐᑲ",
+ "ᖄ": "ᕐᑳ",
+ "ᖅ": "ᕐᒃ",
+ "ᕜ": "ᕚ·",
+ "ᣣ": "ᕞ·",
+ "ᣤ": "ᕦ·",
+ "ᕩ": "ᕧ·",
+ "ᣥ": "ᕫ·",
+ "ᣨ": "ᖆ·",
+ "ᖑ": "ᖕJ",
+ "ᙰ": "ᖕᒉ",
+ "ᖎ": "ᖕᒊ",
+ "ᖏ": "ᖕᒋ",
+ "ᖐ": "ᖕᒌ",
+ "ᖒ": "ᖕᒎ",
+ "ᖓ": "ᖕᒐ",
+ "ᖔ": "ᖕᒑ",
+ "ᙳ": "ᖖJ",
+ "ᙱ": "ᖖᒋ",
+ "ᙲ": "ᖖᒌ",
+ "ᙴ": "ᖖᒎ",
+ "ᙵ": "ᖖᒐ",
+ "ᙶ": "ᖖᒑ",
+ "ᣪ": "ᖗ·",
+ "ᙷ": "ᖧ·",
+ "ᙸ": "ᖨ·",
+ "ᙹ": "ᖩ·",
+ "ᙺ": "ᖪ·",
+ "ᙻ": "ᖫ·",
+ "ᙼ": "ᖬ·",
+ "ᙽ": "ᖭ·",
+ "⪫": "ᗒ",
+ "⪪": "ᗕ",
+ "ꓷ": "ᗡ",
+ "ᣰ": "ᗴ·",
+ "ᣲ": "ᘛ·",
+ "ᶻ": "ᙆ",
+ "ꓭ": "ᙠ",
+ "ᶺ": "ᣔ",
+ "ᴾ": "ᣖ",
+ "ᣜ": "ᣟᐞ",
+ "ˡ": "ᣳ",
+ "ʳ": "ᣴ",
+ "ˢ": "ᣵ",
+ "ᣛ": "ᣵ",
+ "ꚰ": "ᚹ",
+ "ᛡ": "ᚼ",
+ "⍿": "ᚽ",
+ "ᛂ": "ᚽ",
+ "𝈿": "ᛋ",
+ "↑": "ᛏ",
+ "↿": "ᛐ",
+ "⥮": "ᛐ⇂",
+ "⥣": "ᛐᛚ",
+ "ⵣ": "ᛯ",
+ "↾": "ᛚ",
+ "⨡": "ᛚ",
+ "⋄": "ᛜ",
+ "◇": "ᛜ",
+ "◊": "ᛜ",
+ "♢": "ᛜ",
+ "🝔": "ᛜ",
+ "𑢷": "ᛜ",
+ "𐊔": "ᛜ",
+ "⍚": "ᛜ̲",
+ "⋈": "ᛞ",
+ "⨝": "ᛞ",
+ "𐓐": "ᛦ",
+ "↕": "ᛨ",
+ "𐳼": "𐲂",
+ "𐳺": "𐲥",
+ "ㄱ": "ᄀ",
+ "ᆨ": "ᄀ",
+ "ᄁ": "ᄀᄀ",
+ "ㄲ": "ᄀᄀ",
+ "ᆩ": "ᄀᄀ",
+ "ᇺ": "ᄀᄂ",
+ "ᅚ": "ᄀᄃ",
+ "ᇃ": "ᄀᄅ",
+ "ᇻ": "ᄀᄇ",
+ "ᆪ": "ᄀᄉ",
+ "ㄳ": "ᄀᄉ",
+ "ᇄ": "ᄀᄉᄀ",
+ "ᇼ": "ᄀᄎ",
+ "ᇽ": "ᄀᄏ",
+ "ᇾ": "ᄀᄒ",
+ "ㄴ": "ᄂ",
+ "ᆫ": "ᄂ",
+ "ᄓ": "ᄂᄀ",
+ "ᇅ": "ᄂᄀ",
+ "ᄔ": "ᄂᄂ",
+ "ㅥ": "ᄂᄂ",
+ "ᇿ": "ᄂᄂ",
+ "ᄕ": "ᄂᄃ",
+ "ㅦ": "ᄂᄃ",
+ "ᇆ": "ᄂᄃ",
+ "ퟋ": "ᄂᄅ",
+ "ᄖ": "ᄂᄇ",
+ "ᅛ": "ᄂᄉ",
+ "ᇇ": "ᄂᄉ",
+ "ㅧ": "ᄂᄉ",
+ "ᅜ": "ᄂᄌ",
+ "ᆬ": "ᄂᄌ",
+ "ㄵ": "ᄂᄌ",
+ "ퟌ": "ᄂᄎ",
+ "ᇉ": "ᄂᄐ",
+ "ᅝ": "ᄂᄒ",
+ "ᆭ": "ᄂᄒ",
+ "ㄶ": "ᄂᄒ",
+ "ᇈ": "ᄂᅀ",
+ "ㅨ": "ᄂᅀ",
+ "ㄷ": "ᄃ",
+ "ᆮ": "ᄃ",
+ "ᄗ": "ᄃᄀ",
+ "ᇊ": "ᄃᄀ",
+ "ᄄ": "ᄃᄃ",
+ "ㄸ": "ᄃᄃ",
+ "ퟍ": "ᄃᄃ",
+ "ퟎ": "ᄃᄃᄇ",
+ "ᅞ": "ᄃᄅ",
+ "ᇋ": "ᄃᄅ",
+ "ꥠ": "ᄃᄆ",
+ "ꥡ": "ᄃᄇ",
+ "ퟏ": "ᄃᄇ",
+ "ꥢ": "ᄃᄉ",
+ "ퟐ": "ᄃᄉ",
+ "ퟑ": "ᄃᄉᄀ",
+ "ꥣ": "ᄃᄌ",
+ "ퟒ": "ᄃᄌ",
+ "ퟓ": "ᄃᄎ",
+ "ퟔ": "ᄃᄐ",
+ "ㄹ": "ᄅ",
+ "ᆯ": "ᄅ",
+ "ꥤ": "ᄅᄀ",
+ "ᆰ": "ᄅᄀ",
+ "ㄺ": "ᄅᄀ",
+ "ꥥ": "ᄅᄀᄀ",
+ "ퟕ": "ᄅᄀᄀ",
+ "ᇌ": "ᄅᄀᄉ",
+ "ㅩ": "ᄅᄀᄉ",
+ "ퟖ": "ᄅᄀᄒ",
+ "ᄘ": "ᄅᄂ",
+ "ᇍ": "ᄅᄂ",
+ "ꥦ": "ᄅᄃ",
+ "ᇎ": "ᄅᄃ",
+ "ㅪ": "ᄅᄃ",
+ "ꥧ": "ᄅᄃᄃ",
+ "ᇏ": "ᄅᄃᄒ",
+ "ᄙ": "ᄅᄅ",
+ "ᇐ": "ᄅᄅ",
+ "ퟗ": "ᄅᄅᄏ",
+ "ꥨ": "ᄅᄆ",
+ "ᆱ": "ᄅᄆ",
+ "ㄻ": "ᄅᄆ",
+ "ᇑ": "ᄅᄆᄀ",
+ "ᇒ": "ᄅᄆᄉ",
+ "ퟘ": "ᄅᄆᄒ",
+ "ꥩ": "ᄅᄇ",
+ "ᆲ": "ᄅᄇ",
+ "ㄼ": "ᄅᄇ",
+ "ퟙ": "ᄅᄇᄃ",
+ "ꥪ": "ᄅᄇᄇ",
+ "ᇓ": "ᄅᄇᄉ",
+ "ㅫ": "ᄅᄇᄉ",
+ "ꥫ": "ᄅᄇᄋ",
+ "ᇕ": "ᄅᄇᄋ",
+ "ퟚ": "ᄅᄇᄑ",
+ "ᇔ": "ᄅᄇᄒ",
+ "ꥬ": "ᄅᄉ",
+ "ᆳ": "ᄅᄉ",
+ "ㄽ": "ᄅᄉ",
+ "ᇖ": "ᄅᄉᄉ",
+ "ᄛ": "ᄅᄋ",
+ "ퟝ": "ᄅᄋ",
+ "ꥭ": "ᄅᄌ",
+ "ꥮ": "ᄅᄏ",
+ "ᇘ": "ᄅᄏ",
+ "ᆴ": "ᄅᄐ",
+ "ㄾ": "ᄅᄐ",
+ "ᆵ": "ᄅᄑ",
+ "ㄿ": "ᄅᄑ",
+ "ᄚ": "ᄅᄒ",
+ "ㅀ": "ᄅᄒ",
+ "ᄻ": "ᄅᄒ",
+ "ᆶ": "ᄅᄒ",
+ "ퟲ": "ᄅᄒ",
+ "ᇗ": "ᄅᅀ",
+ "ㅬ": "ᄅᅀ",
+ "ퟛ": "ᄅᅌ",
+ "ᇙ": "ᄅᅙ",
+ "ㅭ": "ᄅᅙ",
+ "ퟜ": "ᄅᅙᄒ",
+ "ㅁ": "ᄆ",
+ "ᆷ": "ᄆ",
+ "ꥯ": "ᄆᄀ",
+ "ᇚ": "ᄆᄀ",
+ "ퟞ": "ᄆᄂ",
+ "ퟟ": "ᄆᄂᄂ",
+ "ꥰ": "ᄆᄃ",
+ "ᇛ": "ᄆᄅ",
+ "ퟠ": "ᄆᄆ",
+ "ᄜ": "ᄆᄇ",
+ "ㅮ": "ᄆᄇ",
+ "ᇜ": "ᄆᄇ",
+ "ퟡ": "ᄆᄇᄉ",
+ "ꥱ": "ᄆᄉ",
+ "ᇝ": "ᄆᄉ",
+ "ㅯ": "ᄆᄉ",
+ "ᇞ": "ᄆᄉᄉ",
+ "ᄝ": "ᄆᄋ",
+ "ㅱ": "ᄆᄋ",
+ "ᇢ": "ᄆᄋ",
+ "ퟢ": "ᄆᄌ",
+ "ᇠ": "ᄆᄎ",
+ "ᇡ": "ᄆᄒ",
+ "ᇟ": "ᄆᅀ",
+ "ㅰ": "ᄆᅀ",
+ "ㅂ": "ᄇ",
+ "ᆸ": "ᄇ",
+ "ᄞ": "ᄇᄀ",
+ "ㅲ": "ᄇᄀ",
+ "ᄟ": "ᄇᄂ",
+ "ᄠ": "ᄇᄃ",
+ "ㅳ": "ᄇᄃ",
+ "ퟣ": "ᄇᄃ",
+ "ᇣ": "ᄇᄅ",
+ "ퟤ": "ᄇᄅᄑ",
+ "ퟥ": "ᄇᄆ",
+ "ᄈ": "ᄇᄇ",
+ "ㅃ": "ᄇᄇ",
+ "ퟦ": "ᄇᄇ",
+ "ᄬ": "ᄇᄇᄋ",
+ "ㅹ": "ᄇᄇᄋ",
+ "ᄡ": "ᄇᄉ",
+ "ㅄ": "ᄇᄉ",
+ "ᆹ": "ᄇᄉ",
+ "ᄢ": "ᄇᄉᄀ",
+ "ㅴ": "ᄇᄉᄀ",
+ "ᄣ": "ᄇᄉᄃ",
+ "ㅵ": "ᄇᄉᄃ",
+ "ퟧ": "ᄇᄉᄃ",
+ "ᄤ": "ᄇᄉᄇ",
+ "ᄥ": "ᄇᄉᄉ",
+ "ᄦ": "ᄇᄉᄌ",
+ "ꥲ": "ᄇᄉᄐ",
+ "ᄫ": "ᄇᄋ",
+ "ㅸ": "ᄇᄋ",
+ "ᇦ": "ᄇᄋ",
+ "ᄧ": "ᄇᄌ",
+ "ㅶ": "ᄇᄌ",
+ "ퟨ": "ᄇᄌ",
+ "ᄨ": "ᄇᄎ",
+ "ퟩ": "ᄇᄎ",
+ "ꥳ": "ᄇᄏ",
+ "ᄩ": "ᄇᄐ",
+ "ㅷ": "ᄇᄐ",
+ "ᄪ": "ᄇᄑ",
+ "ᇤ": "ᄇᄑ",
+ "ꥴ": "ᄇᄒ",
+ "ᇥ": "ᄇᄒ",
+ "ㅅ": "ᄉ",
+ "ᆺ": "ᄉ",
+ "ᄭ": "ᄉᄀ",
+ "ㅺ": "ᄉᄀ",
+ "ᇧ": "ᄉᄀ",
+ "ᄮ": "ᄉᄂ",
+ "ㅻ": "ᄉᄂ",
+ "ᄯ": "ᄉᄃ",
+ "ㅼ": "ᄉᄃ",
+ "ᇨ": "ᄉᄃ",
+ "ᄰ": "ᄉᄅ",
+ "ᇩ": "ᄉᄅ",
+ "ᄱ": "ᄉᄆ",
+ "ퟪ": "ᄉᄆ",
+ "ᄲ": "ᄉᄇ",
+ "ㅽ": "ᄉᄇ",
+ "ᇪ": "ᄉᄇ",
+ "ᄳ": "ᄉᄇᄀ",
+ "ퟫ": "ᄉᄇᄋ",
+ "ᄊ": "ᄉᄉ",
+ "ㅆ": "ᄉᄉ",
+ "ᆻ": "ᄉᄉ",
+ "ퟬ": "ᄉᄉᄀ",
+ "ퟭ": "ᄉᄉᄃ",
+ "ꥵ": "ᄉᄉᄇ",
+ "ᄴ": "ᄉᄉᄉ",
+ "ᄵ": "ᄉᄋ",
+ "ᄶ": "ᄉᄌ",
+ "ㅾ": "ᄉᄌ",
+ "ퟯ": "ᄉᄌ",
+ "ᄷ": "ᄉᄎ",
+ "ퟰ": "ᄉᄎ",
+ "ᄸ": "ᄉᄏ",
+ "ᄹ": "ᄉᄐ",
+ "ퟱ": "ᄉᄐ",
+ "ᄺ": "ᄉᄑ",
+ "ퟮ": "ᄉᅀ",
+ "ㅇ": "ᄋ",
+ "ᆼ": "ᄋ",
+ "ᅁ": "ᄋᄀ",
+ "ᇬ": "ᄋᄀ",
+ "ᇭ": "ᄋᄀᄀ",
+ "ᅂ": "ᄋᄃ",
+ "ꥶ": "ᄋᄅ",
+ "ᅃ": "ᄋᄆ",
+ "ᅄ": "ᄋᄇ",
+ "ᅅ": "ᄋᄉ",
+ "ᇱ": "ᄋᄉ",
+ "ㆂ": "ᄋᄉ",
+ "ᅇ": "ᄋᄋ",
+ "ㆀ": "ᄋᄋ",
+ "ᇮ": "ᄋᄋ",
+ "ᅈ": "ᄋᄌ",
+ "ᅉ": "ᄋᄎ",
+ "ᇯ": "ᄋᄏ",
+ "ᅊ": "ᄋᄐ",
+ "ᅋ": "ᄋᄑ",
+ "ꥷ": "ᄋᄒ",
+ "ᅆ": "ᄋᅀ",
+ "ᇲ": "ᄋᅀ",
+ "ㆃ": "ᄋᅀ",
+ "ㅈ": "ᄌ",
+ "ᆽ": "ᄌ",
+ "ퟷ": "ᄌᄇ",
+ "ퟸ": "ᄌᄇᄇ",
+ "ᅍ": "ᄌᄋ",
+ "ᄍ": "ᄌᄌ",
+ "ㅉ": "ᄌᄌ",
+ "ퟹ": "ᄌᄌ",
+ "ꥸ": "ᄌᄌᄒ",
+ "ㅊ": "ᄎ",
+ "ᆾ": "ᄎ",
+ "ᅒ": "ᄎᄏ",
+ "ᅓ": "ᄎᄒ",
+ "ㅋ": "ᄏ",
+ "ᆿ": "ᄏ",
+ "ㅌ": "ᄐ",
+ "ᇀ": "ᄐ",
+ "ꥹ": "ᄐᄐ",
+ "ㅍ": "ᄑ",
+ "ᇁ": "ᄑ",
+ "ᅖ": "ᄑᄇ",
+ "ᇳ": "ᄑᄇ",
+ "ퟺ": "ᄑᄉ",
+ "ᅗ": "ᄑᄋ",
+ "ㆄ": "ᄑᄋ",
+ "ᇴ": "ᄑᄋ",
+ "ퟻ": "ᄑᄐ",
+ "ꥺ": "ᄑᄒ",
+ "ㅎ": "ᄒ",
+ "ᇂ": "ᄒ",
+ "ᇵ": "ᄒᄂ",
+ "ᇶ": "ᄒᄅ",
+ "ᇷ": "ᄒᄆ",
+ "ᇸ": "ᄒᄇ",
+ "ꥻ": "ᄒᄉ",
+ "ᅘ": "ᄒᄒ",
+ "ㆅ": "ᄒᄒ",
+ "ᄽ": "ᄼᄼ",
+ "ᄿ": "ᄾᄾ",
+ "ㅿ": "ᅀ",
+ "ᇫ": "ᅀ",
+ "ퟳ": "ᅀᄇ",
+ "ퟴ": "ᅀᄇᄋ",
+ "ㆁ": "ᅌ",
+ "ᇰ": "ᅌ",
+ "ퟵ": "ᅌᄆ",
+ "ퟶ": "ᅌᄒ",
+ "ᅏ": "ᅎᅎ",
+ "ᅑ": "ᅐᅐ",
+ "ㆆ": "ᅙ",
+ "ᇹ": "ᅙ",
+ "ꥼ": "ᅙᅙ",
+ "ㅤ": "ᅠ",
+ "ㅏ": "ᅡ",
+ "ᆣ": "ᅡー",
+ "ᅶ": "ᅡᅩ",
+ "ᅷ": "ᅡᅮ",
+ "ᅢ": "ᅡ丨",
+ "ㅐ": "ᅡ丨",
+ "ㅑ": "ᅣ",
+ "ᅸ": "ᅣᅩ",
+ "ᅹ": "ᅣᅭ",
+ "ᆤ": "ᅣᅮ",
+ "ᅤ": "ᅣ丨",
+ "ㅒ": "ᅣ丨",
+ "ㅓ": "ᅥ",
+ "ᅼ": "ᅥー",
+ "ᅺ": "ᅥᅩ",
+ "ᅻ": "ᅥᅮ",
+ "ᅦ": "ᅥ丨",
+ "ㅔ": "ᅥ丨",
+ "ㅕ": "ᅧ",
+ "ᆥ": "ᅧᅣ",
+ "ᅽ": "ᅧᅩ",
+ "ᅾ": "ᅧᅮ",
+ "ᅨ": "ᅧ丨",
+ "ㅖ": "ᅧ丨",
+ "ㅗ": "ᅩ",
+ "ᅪ": "ᅩᅡ",
+ "ㅘ": "ᅩᅡ",
+ "ᅫ": "ᅩᅡ丨",
+ "ㅙ": "ᅩᅡ丨",
+ "ᆦ": "ᅩᅣ",
+ "ᆧ": "ᅩᅣ丨",
+ "ᅿ": "ᅩᅥ",
+ "ᆀ": "ᅩᅥ丨",
+ "ힰ": "ᅩᅧ",
+ "ᆁ": "ᅩᅧ丨",
+ "ᆂ": "ᅩᅩ",
+ "ힱ": "ᅩᅩ丨",
+ "ᆃ": "ᅩᅮ",
+ "ᅬ": "ᅩ丨",
+ "ㅚ": "ᅩ丨",
+ "ㅛ": "ᅭ",
+ "ힲ": "ᅭᅡ",
+ "ힳ": "ᅭᅡ丨",
+ "ᆄ": "ᅭᅣ",
+ "ㆇ": "ᅭᅣ",
+ "ᆆ": "ᅭᅣ",
+ "ᆅ": "ᅭᅣ丨",
+ "ㆈ": "ᅭᅣ丨",
+ "ힴ": "ᅭᅥ",
+ "ᆇ": "ᅭᅩ",
+ "ᆈ": "ᅭ丨",
+ "ㆉ": "ᅭ丨",
+ "ㅜ": "ᅮ",
+ "ᆉ": "ᅮᅡ",
+ "ᆊ": "ᅮᅡ丨",
+ "ᅯ": "ᅮᅥ",
+ "ㅝ": "ᅮᅥ",
+ "ᆋ": "ᅮᅥー",
+ "ᅰ": "ᅮᅥ丨",
+ "ㅞ": "ᅮᅥ丨",
+ "ힵ": "ᅮᅧ",
+ "ᆌ": "ᅮᅧ丨",
+ "ᆍ": "ᅮᅮ",
+ "ᅱ": "ᅮ丨",
+ "ㅟ": "ᅮ丨",
+ "ힶ": "ᅮ丨丨",
+ "ㅠ": "ᅲ",
+ "ᆎ": "ᅲᅡ",
+ "ힷ": "ᅲᅡ丨",
+ "ᆏ": "ᅲᅥ",
+ "ᆐ": "ᅲᅥ丨",
+ "ᆑ": "ᅲᅧ",
+ "ㆊ": "ᅲᅧ",
+ "ᆒ": "ᅲᅧ丨",
+ "ㆋ": "ᅲᅧ丨",
+ "ힸ": "ᅲᅩ",
+ "ᆓ": "ᅲᅮ",
+ "ᆔ": "ᅲ丨",
+ "ㆌ": "ᅲ丨",
+ "ㆍ": "ᆞ",
+ "ퟅ": "ᆞᅡ",
+ "ᆟ": "ᆞᅥ",
+ "ퟆ": "ᆞᅥ丨",
+ "ᆠ": "ᆞᅮ",
+ "ᆢ": "ᆞᆞ",
+ "ᆡ": "ᆞ丨",
+ "ㆎ": "ᆞ丨",
+ "ヘ": "へ",
+ "⍁": "〼",
+ "⧄": "〼",
+ "꒞": "ꁊ",
+ "꒬": "ꁐ",
+ "꒜": "ꃀ",
+ "꒨": "ꄲ",
+ "꒿": "ꉙ",
+ "꒾": "ꊱ",
+ "꒔": "ꋍ",
+ "꓀": "ꎫ",
+ "꓂": "ꎵ",
+ "꒺": "ꎿ",
+ "꒰": "ꏂ",
+ "꒧": "ꑘ",
+ "⊥": "ꓕ",
+ "⟂": "ꓕ",
+ "𝈜": "ꓕ",
+ "Ʇ": "ꓕ",
+ "Ꞟ": "ꓤ",
+ "⅁": "ꓨ",
+ "⅂": "ꓶ",
+ "𝈕": "ꓶ",
+ "𝈫": "ꓶ",
+ "𖼦": "ꓶ",
+ "𐐑": "ꓶ",
+ "⅃": "𖼀",
+ "𑫦": "𑫥𑫯",
+ "𑫨": "𑫥𑫥",
+ "𑫩": "𑫥𑫥𑫯",
+ "𑫪": "𑫥𑫥𑫰",
+ "𑫧": "𑫥𑫰",
+ "𑫴": "𑫳𑫯",
+ "𑫶": "𑫳𑫳",
+ "𑫷": "𑫳𑫳𑫯",
+ "𑫸": "𑫳𑫳𑫰",
+ "𑫵": "𑫳𑫰",
+ "𑫬": "𑫫𑫯",
+ "𑫭": "𑫫𑫫",
+ "𑫮": "𑫫𑫫𑫯",
+ "⊕": "𐊨",
+ "⨁": "𐊨",
+ "🜨": "𐊨",
+ "Ꚛ": "𐊨",
+ "▽": "𐊼",
+ "𝈔": "𐊼",
+ "🜄": "𐊼",
+ "⧖": "𐋀",
+ "ꞛ": "𐐺",
+ "Ꞛ": "𐐒",
+ "𐒠": "𐒆",
+ "𐏑": "𐎂",
+ "𐏓": "𐎓",
+ "𒀸": "𐎚",
+ "☥": "𐦞",
+ "𓋹": "𐦞",
+ "〹": "卄",
+ "不": "不",
+ "丽": "丽",
+ "並": "並",
+ "⎜": "丨",
+ "⎟": "丨",
+ "⎢": "丨",
+ "⎥": "丨",
+ "⎪": "丨",
+ "⎮": "丨",
+ "㇑": "丨",
+ "ᅵ": "丨",
+ "ㅣ": "丨",
+ "⼁": "丨",
+ "ᆜ": "丨ー",
+ "ᆘ": "丨ᅡ",
+ "ᆙ": "丨ᅣ",
+ "ힽ": "丨ᅣᅩ",
+ "ힾ": "丨ᅣ丨",
+ "ힿ": "丨ᅧ",
+ "ퟀ": "丨ᅧ丨",
+ "ᆚ": "丨ᅩ",
+ "ퟁ": "丨ᅩ丨",
+ "ퟂ": "丨ᅭ",
+ "ᆛ": "丨ᅮ",
+ "ퟃ": "丨ᅲ",
+ "ᆝ": "丨ᆞ",
+ "ퟄ": "丨丨",
+ "串": "串",
+ "丸": "丸",
+ "丹": "丹",
+ "乁": "乁",
+ "㇠": "乙",
+ "⼄": "乙",
+ "㇟": "乚",
+ "⺃": "乚",
+ "㇖": "乛",
+ "⺂": "乛",
+ "⻲": "亀",
+ "亂": "亂",
+ "㇚": "亅",
+ "⼅": "亅",
+ "了": "了",
+ "ニ": "二",
+ "⼆": "二",
+ "𠄢": "𠄢",
+ "⼇": "亠",
+ "亮": "亮",
+ "⼈": "人",
+ "イ": "亻",
+ "⺅": "亻",
+ "什": "什",
+ "仌": "仌",
+ "令": "令",
+ "你": "你",
+ "倂": "併",
+ "倂": "併",
+ "侀": "侀",
+ "來": "來",
+ "例": "例",
+ "侮": "侮",
+ "侮": "侮",
+ "侻": "侻",
+ "便": "便",
+ "值": "値",
+ "倫": "倫",
+ "偺": "偺",
+ "備": "備",
+ "像": "像",
+ "僚": "僚",
+ "僧": "僧",
+ "僧": "僧",
+ "㒞": "㒞",
+ "⼉": "儿",
+ "兀": "兀",
+ "⺎": "兀",
+ "充": "充",
+ "免": "免",
+ "免": "免",
+ "兔": "兔",
+ "兤": "兤",
+ "⼊": "入",
+ "內": "內",
+ "全": "全",
+ "兩": "兩",
+ "ハ": "八",
+ "⼋": "八",
+ "六": "六",
+ "具": "具",
+ "𠔜": "𠔜",
+ "𠔥": "𠔥",
+ "冀": "冀",
+ "㒹": "㒹",
+ "⼌": "冂",
+ "再": "再",
+ "𠕋": "𠕋",
+ "冒": "冒",
+ "冕": "冕",
+ "㒻": "㒻",
+ "最": "最",
+ "⼍": "冖",
+ "冗": "冗",
+ "冤": "冤",
+ "⼎": "冫",
+ "冬": "冬",
+ "况": "况",
+ "况": "况",
+ "冷": "冷",
+ "凉": "凉",
+ "凌": "凌",
+ "凜": "凜",
+ "凞": "凞",
+ "⼏": "几",
+ "𠘺": "𠘺",
+ "凵": "凵",
+ "⼐": "凵",
+ "⼑": "刀",
+ "⺉": "刂",
+ "刃": "刃",
+ "切": "切",
+ "切": "切",
+ "列": "列",
+ "利": "利",
+ "㓟": "㓟",
+ "刺": "刺",
+ "刻": "刻",
+ "剆": "剆",
+ "割": "割",
+ "剷": "剷",
+ "劉": "劉",
+ "𠠄": "𠠄",
+ "カ": "力",
+ "力": "力",
+ "⼒": "力",
+ "劣": "劣",
+ "㔕": "㔕",
+ "劳": "劳",
+ "勇": "勇",
+ "勇": "勇",
+ "勉": "勉",
+ "勉": "勉",
+ "勒": "勒",
+ "勞": "勞",
+ "勤": "勤",
+ "勤": "勤",
+ "勵": "勵",
+ "⼓": "勹",
+ "勺": "勺",
+ "勺": "勺",
+ "包": "包",
+ "匆": "匆",
+ "𠣞": "𠣞",
+ "⼔": "匕",
+ "北": "北",
+ "北": "北",
+ "⼕": "匚",
+ "⼖": "匸",
+ "匿": "匿",
+ "⼗": "十",
+ "〸": "十",
+ "〺": "卅",
+ "卉": "卉",
+ "࿖": "卍",
+ "࿕": "卐",
+ "卑": "卑",
+ "卑": "卑",
+ "博": "博",
+ "ト": "卜",
+ "⼘": "卜",
+ "⼙": "卩",
+ "⺋": "㔾",
+ "即": "即",
+ "卵": "卵",
+ "卽": "卽",
+ "卿": "卿",
+ "卿": "卿",
+ "卿": "卿",
+ "⼚": "厂",
+ "𠨬": "𠨬",
+ "⼛": "厶",
+ "參": "參",
+ "⼜": "又",
+ "及": "及",
+ "叟": "叟",
+ "𠭣": "𠭣",
+ "ロ": "口",
+ "⼝": "口",
+ "囗": "口",
+ "⼞": "口",
+ "句": "句",
+ "叫": "叫",
+ "叱": "叱",
+ "吆": "吆",
+ "吏": "吏",
+ "吝": "吝",
+ "吸": "吸",
+ "呂": "呂",
+ "呈": "呈",
+ "周": "周",
+ "咞": "咞",
+ "咢": "咢",
+ "咽": "咽",
+ "䎛": "㖈",
+ "哶": "哶",
+ "唐": "唐",
+ "啓": "啓",
+ "啟": "啓",
+ "啕": "啕",
+ "啣": "啣",
+ "善": "善",
+ "善": "善",
+ "喇": "喇",
+ "喙": "喙",
+ "喙": "喙",
+ "喝": "喝",
+ "喝": "喝",
+ "喫": "喫",
+ "喳": "喳",
+ "嗀": "嗀",
+ "嗂": "嗂",
+ "嗢": "嗢",
+ "嘆": "嘆",
+ "嘆": "嘆",
+ "噑": "噑",
+ "噴": "噴",
+ "器": "器",
+ "囹": "囹",
+ "圖": "圖",
+ "圗": "圗",
+ "⼟": "土",
+ "士": "土",
+ "⼠": "土",
+ "型": "型",
+ "城": "城",
+ "㦳": "㘽",
+ "埴": "埴",
+ "堍": "堍",
+ "報": "報",
+ "堲": "堲",
+ "塀": "塀",
+ "塚": "塚",
+ "塚": "塚",
+ "塞": "塞",
+ "填": "塡",
+ "壿": "墫",
+ "墬": "墬",
+ "墳": "墳",
+ "壘": "壘",
+ "壟": "壟",
+ "𡓤": "𡓤",
+ "壮": "壮",
+ "売": "売",
+ "壷": "壷",
+ "⼡": "夂",
+ "夆": "夆",
+ "⼢": "夊",
+ "タ": "夕",
+ "⼣": "夕",
+ "多": "多",
+ "夢": "夢",
+ "⼤": "大",
+ "奄": "奄",
+ "奈": "奈",
+ "契": "契",
+ "奔": "奔",
+ "奢": "奢",
+ "女": "女",
+ "⼥": "女",
+ "𡚨": "𡚨",
+ "𡛪": "𡛪",
+ "姘": "姘",
+ "姬": "姬",
+ "娛": "娛",
+ "娧": "娧",
+ "婢": "婢",
+ "婦": "婦",
+ "嬀": "媯",
+ "㛮": "㛮",
+ "㛼": "㛼",
+ "媵": "媵",
+ "嬈": "嬈",
+ "嬨": "嬨",
+ "嬾": "嬾",
+ "嬾": "嬾",
+ "⼦": "子",
+ "⼧": "宀",
+ "宅": "宅",
+ "𡧈": "𡧈",
+ "寃": "寃",
+ "寘": "寘",
+ "寧": "寧",
+ "寧": "寧",
+ "寧": "寧",
+ "寮": "寮",
+ "寳": "寳",
+ "𡬘": "𡬘",
+ "⼨": "寸",
+ "寿": "寿",
+ "将": "将",
+ "⼩": "小",
+ "尢": "尢",
+ "⺐": "尢",
+ "⼪": "尢",
+ "⺏": "尣",
+ "㞁": "㞁",
+ "⼫": "尸",
+ "尿": "尿",
+ "屠": "屠",
+ "屢": "屢",
+ "層": "層",
+ "履": "履",
+ "屮": "屮",
+ "屮": "屮",
+ "⼬": "屮",
+ "𡴋": "𡴋",
+ "⼭": "山",
+ "峀": "峀",
+ "岍": "岍",
+ "𡷤": "𡷤",
+ "𡷦": "𡷦",
+ "崙": "崙",
+ "嵃": "嵃",
+ "嵐": "嵐",
+ "嵫": "嵫",
+ "嵮": "嵮",
+ "嵼": "嵼",
+ "嶲": "嶲",
+ "嶺": "嶺",
+ "⼮": "巛",
+ "巢": "巢",
+ "エ": "工",
+ "⼯": "工",
+ "⼰": "己",
+ "⺒": "巳",
+ "㠯": "㠯",
+ "巽": "巽",
+ "⼱": "巾",
+ "帲": "帡",
+ "帨": "帨",
+ "帽": "帽",
+ "幩": "幩",
+ "㡢": "㡢",
+ "𢆃": "𢆃",
+ "⼲": "干",
+ "年": "年",
+ "𢆟": "𢆟",
+ "⺓": "幺",
+ "⼳": "幺",
+ "⼴": "广",
+ "度": "度",
+ "㡼": "㡼",
+ "庰": "庰",
+ "庳": "庳",
+ "庶": "庶",
+ "廊": "廊",
+ "廊": "廊",
+ "廉": "廉",
+ "廒": "廒",
+ "廓": "廓",
+ "廙": "廙",
+ "廬": "廬",
+ "⼵": "廴",
+ "廾": "廾",
+ "⼶": "廾",
+ "𢌱": "𢌱",
+ "𢌱": "𢌱",
+ "弄": "弄",
+ "⼷": "弋",
+ "⼸": "弓",
+ "弢": "弢",
+ "弢": "弢",
+ "⼹": "彐",
+ "⺔": "彑",
+ "当": "当",
+ "㣇": "㣇",
+ "⼺": "彡",
+ "形": "形",
+ "彩": "彩",
+ "彫": "彫",
+ "⼻": "彳",
+ "律": "律",
+ "㣣": "㣣",
+ "徚": "徚",
+ "復": "復",
+ "徭": "徭",
+ "⼼": "心",
+ "⺖": "忄",
+ "⺗": "㣺",
+ "忍": "忍",
+ "志": "志",
+ "念": "念",
+ "忹": "忹",
+ "怒": "怒",
+ "怜": "怜",
+ "恵": "恵",
+ "㤜": "㤜",
+ "㤺": "㤺",
+ "悁": "悁",
+ "悔": "悔",
+ "悔": "悔",
+ "惇": "惇",
+ "惘": "惘",
+ "惡": "惡",
+ "𢛔": "𢛔",
+ "愈": "愈",
+ "慨": "慨",
+ "慄": "慄",
+ "慈": "慈",
+ "慌": "慌",
+ "慌": "慌",
+ "慎": "慎",
+ "慎": "慎",
+ "慠": "慠",
+ "慺": "慺",
+ "憎": "憎",
+ "憎": "憎",
+ "憎": "憎",
+ "憐": "憐",
+ "憤": "憤",
+ "憯": "憯",
+ "憲": "憲",
+ "𢡄": "𢡄",
+ "𢡊": "𢡊",
+ "懞": "懞",
+ "懲": "懲",
+ "懲": "懲",
+ "懲": "懲",
+ "懶": "懶",
+ "懶": "懶",
+ "戀": "戀",
+ "⼽": "戈",
+ "成": "成",
+ "戛": "戛",
+ "戮": "戮",
+ "戴": "戴",
+ "⼾": "戶",
+ "戸": "戶",
+ "⼿": "手",
+ "⺘": "扌",
+ "扝": "扝",
+ "抱": "抱",
+ "拉": "拉",
+ "拏": "拏",
+ "拓": "拓",
+ "拔": "拔",
+ "拼": "拼",
+ "拾": "拾",
+ "𢬌": "𢬌",
+ "挽": "挽",
+ "捐": "捐",
+ "捨": "捨",
+ "捻": "捻",
+ "掃": "掃",
+ "掠": "掠",
+ "掩": "掩",
+ "揄": "揄",
+ "揤": "揤",
+ "摒": "摒",
+ "𢯱": "𢯱",
+ "搜": "搜",
+ "搢": "搢",
+ "揅": "揅",
+ "摩": "摩",
+ "摷": "摷",
+ "摾": "摾",
+ "㨮": "㨮",
+ "搉": "㩁",
+ "撚": "撚",
+ "撝": "撝",
+ "擄": "擄",
+ "㩬": "㩬",
+ "⽀": "支",
+ "⽁": "攴",
+ "⺙": "攵",
+ "敏": "敏",
+ "敏": "敏",
+ "敖": "敖",
+ "敬": "敬",
+ "數": "數",
+ "𣀊": "𣀊",
+ "⽂": "文",
+ "⻫": "斉",
+ "⽃": "斗",
+ "料": "料",
+ "⽄": "斤",
+ "⽅": "方",
+ "旅": "旅",
+ "⽆": "无",
+ "⺛": "旡",
+ "既": "既",
+ "旣": "旣",
+ "⽇": "日",
+ "易": "易",
+ "曶": "㫚",
+ "㫤": "㫤",
+ "晉": "晉",
+ "晩": "晚",
+ "晴": "晴",
+ "晴": "晴",
+ "暑": "暑",
+ "暑": "暑",
+ "暈": "暈",
+ "㬈": "㬈",
+ "暜": "暜",
+ "暴": "暴",
+ "曆": "曆",
+ "㬙": "㬙",
+ "𣊸": "𣊸",
+ "⽈": "曰",
+ "更": "更",
+ "書": "書",
+ "⽉": "月",
+ "𣍟": "𣍟",
+ "肦": "朌",
+ "胐": "朏",
+ "胊": "朐",
+ "脁": "朓",
+ "胶": "㬵",
+ "朗": "朗",
+ "朗": "朗",
+ "朗": "朗",
+ "脧": "朘",
+ "望": "望",
+ "望": "望",
+ "朡": "朡",
+ "幐": "㬺",
+ "䐠": "㬻",
+ "𣎓": "𣎓",
+ "膧": "朣",
+ "𣎜": "𣎜",
+ "⽊": "木",
+ "李": "李",
+ "杓": "杓",
+ "杖": "杖",
+ "杞": "杞",
+ "𣏃": "𣏃",
+ "柿": "杮",
+ "杻": "杻",
+ "枅": "枅",
+ "林": "林",
+ "㭉": "㭉",
+ "𣏕": "𣏕",
+ "柳": "柳",
+ "柺": "柺",
+ "栗": "栗",
+ "栟": "栟",
+ "桒": "桒",
+ "𣑭": "𣑭",
+ "梁": "梁",
+ "梅": "梅",
+ "梅": "梅",
+ "梎": "梎",
+ "梨": "梨",
+ "椔": "椔",
+ "楂": "楂",
+ "㮝": "㮝",
+ "㮝": "㮝",
+ "槩": "㮣",
+ "樧": "榝",
+ "榣": "榣",
+ "槪": "槪",
+ "樂": "樂",
+ "樂": "樂",
+ "樂": "樂",
+ "樓": "樓",
+ "𣚣": "𣚣",
+ "檨": "檨",
+ "櫓": "櫓",
+ "櫛": "櫛",
+ "欄": "欄",
+ "㰘": "㰘",
+ "⽋": "欠",
+ "次": "次",
+ "𣢧": "𣢧",
+ "歔": "歔",
+ "㱎": "㱎",
+ "⽌": "止",
+ "⻭": "歯",
+ "歲": "歲",
+ "歷": "歷",
+ "歹": "歹",
+ "⽍": "歹",
+ "⺞": "歺",
+ "殟": "殟",
+ "殮": "殮",
+ "⽎": "殳",
+ "殺": "殺",
+ "殺": "殺",
+ "殺": "殺",
+ "殻": "殻",
+ "𣪍": "𣪍",
+ "⽏": "毋",
+ "⺟": "母",
+ "𣫺": "𣫺",
+ "⽐": "比",
+ "⽑": "毛",
+ "⽒": "氏",
+ "⺠": "民",
+ "⽓": "气",
+ "⽔": "水",
+ "⺡": "氵",
+ "⺢": "氺",
+ "汎": "汎",
+ "汧": "汧",
+ "沈": "沈",
+ "沿": "沿",
+ "泌": "泌",
+ "泍": "泍",
+ "泥": "泥",
+ "𣲼": "𣲼",
+ "洛": "洛",
+ "洞": "洞",
+ "洴": "洴",
+ "派": "派",
+ "流": "流",
+ "流": "流",
+ "流": "流",
+ "洖": "洖",
+ "浩": "浩",
+ "浪": "浪",
+ "海": "海",
+ "海": "海",
+ "浸": "浸",
+ "涅": "涅",
+ "𣴞": "𣴞",
+ "淋": "淋",
+ "淚": "淚",
+ "淪": "淪",
+ "淹": "淹",
+ "渚": "渚",
+ "港": "港",
+ "湮": "湮",
+ "潙": "溈",
+ "滋": "滋",
+ "滋": "滋",
+ "溜": "溜",
+ "溺": "溺",
+ "滇": "滇",
+ "滑": "滑",
+ "滛": "滛",
+ "㴳": "㴳",
+ "漏": "漏",
+ "漢": "漢",
+ "漢": "漢",
+ "漣": "漣",
+ "𣻑": "𣻑",
+ "潮": "潮",
+ "𣽞": "𣽞",
+ "𣾎": "𣾎",
+ "濆": "濆",
+ "濫": "濫",
+ "濾": "濾",
+ "瀛": "瀛",
+ "瀞": "瀞",
+ "瀞": "瀞",
+ "瀹": "瀹",
+ "灊": "灊",
+ "㶖": "㶖",
+ "⽕": "火",
+ "⺣": "灬",
+ "灰": "灰",
+ "灷": "灷",
+ "災": "災",
+ "炙": "炙",
+ "炭": "炭",
+ "烈": "烈",
+ "烙": "烙",
+ "煮": "煮",
+ "煮": "煮",
+ "𤉣": "𤉣",
+ "煅": "煅",
+ "煉": "煉",
+ "𤋮": "𤋮",
+ "熜": "熜",
+ "燎": "燎",
+ "燐": "燐",
+ "𤎫": "𤎫",
+ "爐": "爐",
+ "爛": "爛",
+ "爨": "爨",
+ "⽖": "爪",
+ "爫": "爫",
+ "⺤": "爫",
+ "爵": "爵",
+ "爵": "爵",
+ "⽗": "父",
+ "⽘": "爻",
+ "⺦": "丬",
+ "⽙": "爿",
+ "⽚": "片",
+ "牐": "牐",
+ "⽛": "牙",
+ "𤘈": "𤘈",
+ "⽜": "牛",
+ "牢": "牢",
+ "犀": "犀",
+ "犕": "犕",
+ "⽝": "犬",
+ "⺨": "犭",
+ "犯": "犯",
+ "狀": "狀",
+ "𤜵": "𤜵",
+ "狼": "狼",
+ "猪": "猪",
+ "猪": "猪",
+ "𤠔": "𤠔",
+ "獵": "獵",
+ "獺": "獺",
+ "⽞": "玄",
+ "率": "率",
+ "率": "率",
+ "⽟": "玉",
+ "王": "王",
+ "㺬": "㺬",
+ "玥": "玥",
+ "玲": "玲",
+ "㺸": "㺸",
+ "㺸": "㺸",
+ "珞": "珞",
+ "琉": "琉",
+ "理": "理",
+ "琢": "琢",
+ "瑇": "瑇",
+ "瑜": "瑜",
+ "瑩": "瑩",
+ "瑱": "瑱",
+ "瑱": "瑱",
+ "璅": "璅",
+ "璉": "璉",
+ "璘": "璘",
+ "瓊": "瓊",
+ "⽠": "瓜",
+ "⽡": "瓦",
+ "㼛": "㼛",
+ "甆": "甆",
+ "⽢": "甘",
+ "⽣": "生",
+ "甤": "甤",
+ "⽤": "用",
+ "⽥": "田",
+ "画": "画",
+ "甾": "甾",
+ "𤰶": "𤰶",
+ "留": "留",
+ "略": "略",
+ "異": "異",
+ "異": "異",
+ "𤲒": "𤲒",
+ "⽦": "疋",
+ "⽧": "疒",
+ "痢": "痢",
+ "瘐": "瘐",
+ "瘟": "瘟",
+ "瘝": "瘝",
+ "療": "療",
+ "癩": "癩",
+ "⽨": "癶",
+ "⽩": "白",
+ "𤾡": "𤾡",
+ "𤾸": "𤾸",
+ "⽪": "皮",
+ "⽫": "皿",
+ "𥁄": "𥁄",
+ "㿼": "㿼",
+ "益": "益",
+ "益": "益",
+ "盛": "盛",
+ "盧": "盧",
+ "䀈": "䀈",
+ "⽬": "目",
+ "直": "直",
+ "直": "直",
+ "𥃲": "𥃲",
+ "𥃳": "𥃳",
+ "省": "省",
+ "䀘": "䀘",
+ "𥄙": "𥄙",
+ "眞": "眞",
+ "真": "真",
+ "真": "真",
+ "𥄳": "𥄳",
+ "着": "着",
+ "睊": "睊",
+ "睊": "睊",
+ "鿃": "䀹",
+ "䀹": "䀹",
+ "䀹": "䀹",
+ "晣": "䀿",
+ "䁆": "䁆",
+ "瞋": "瞋",
+ "𥉉": "𥉉",
+ "瞧": "瞧",
+ "⽭": "矛",
+ "⽮": "矢",
+ "⽯": "石",
+ "䂖": "䂖",
+ "𥐝": "𥐝",
+ "硏": "研",
+ "硎": "硎",
+ "硫": "硫",
+ "碌": "碌",
+ "碌": "碌",
+ "碑": "碑",
+ "磊": "磊",
+ "磌": "磌",
+ "磌": "磌",
+ "磻": "磻",
+ "䃣": "䃣",
+ "礪": "礪",
+ "⽰": "示",
+ "⺭": "礻",
+ "礼": "礼",
+ "社": "社",
+ "祈": "祈",
+ "祉": "祉",
+ "𥘦": "𥘦",
+ "祐": "祐",
+ "祖": "祖",
+ "祖": "祖",
+ "祝": "祝",
+ "神": "神",
+ "祥": "祥",
+ "視": "視",
+ "視": "視",
+ "祿": "祿",
+ "𥚚": "𥚚",
+ "禍": "禍",
+ "禎": "禎",
+ "福": "福",
+ "福": "福",
+ "𥛅": "𥛅",
+ "禮": "禮",
+ "⽱": "禸",
+ "⽲": "禾",
+ "秊": "秊",
+ "䄯": "䄯",
+ "秫": "秫",
+ "稜": "稜",
+ "穊": "穊",
+ "穀": "穀",
+ "穀": "穀",
+ "穏": "穏",
+ "⽳": "穴",
+ "突": "突",
+ "𥥼": "𥥼",
+ "窱": "窱",
+ "立": "立",
+ "⽴": "立",
+ "⻯": "竜",
+ "𥪧": "𥪧",
+ "𥪧": "𥪧",
+ "竮": "竮",
+ "⽵": "竹",
+ "笠": "笠",
+ "節": "節",
+ "節": "節",
+ "䈂": "䈂",
+ "𥮫": "𥮫",
+ "篆": "篆",
+ "䈧": "䈧",
+ "築": "築",
+ "𥲀": "𥲀",
+ "𥳐": "𥳐",
+ "簾": "簾",
+ "籠": "籠",
+ "⽶": "米",
+ "类": "类",
+ "粒": "粒",
+ "精": "精",
+ "糒": "糒",
+ "糖": "糖",
+ "糨": "糨",
+ "䊠": "䊠",
+ "糣": "糣",
+ "糧": "糧",
+ "⽷": "糸",
+ "⺯": "糹",
+ "𥾆": "𥾆",
+ "紀": "紀",
+ "紐": "紐",
+ "索": "索",
+ "累": "累",
+ "絶": "絕",
+ "絣": "絣",
+ "絛": "絛",
+ "綠": "綠",
+ "綾": "綾",
+ "緇": "緇",
+ "練": "練",
+ "練": "練",
+ "練": "練",
+ "縂": "縂",
+ "䌁": "䌁",
+ "縉": "縉",
+ "縷": "縷",
+ "繁": "繁",
+ "繅": "繅",
+ "𦇚": "𦇚",
+ "䌴": "䌴",
+ "⽸": "缶",
+ "𦈨": "𦈨",
+ "缾": "缾",
+ "𦉇": "𦉇",
+ "⽹": "网",
+ "⺫": "罒",
+ "⺲": "罒",
+ "⺱": "罓",
+ "䍙": "䍙",
+ "署": "署",
+ "𦋙": "𦋙",
+ "罹": "罹",
+ "罺": "罺",
+ "羅": "羅",
+ "𦌾": "𦌾",
+ "⽺": "羊",
+ "羕": "羕",
+ "羚": "羚",
+ "羽": "羽",
+ "⽻": "羽",
+ "翺": "翺",
+ "老": "老",
+ "⽼": "老",
+ "⺹": "耂",
+ "者": "者",
+ "者": "者",
+ "者": "者",
+ "⽽": "而",
+ "𦓚": "𦓚",
+ "⽾": "耒",
+ "𦔣": "𦔣",
+ "⽿": "耳",
+ "聆": "聆",
+ "聠": "聠",
+ "𦖨": "𦖨",
+ "聯": "聯",
+ "聰": "聰",
+ "聾": "聾",
+ "⾀": "聿",
+ "⺺": "肀",
+ "⾁": "肉",
+ "肋": "肋",
+ "肭": "肭",
+ "育": "育",
+ "䏕": "䏕",
+ "䏙": "䏙",
+ "腁": "胼",
+ "脃": "脃",
+ "脾": "脾",
+ "䐋": "䐋",
+ "𦞧": "𦞧",
+ "𦞵": "𦞵",
+ "朦": "䑃",
+ "臘": "臘",
+ "⾂": "臣",
+ "臨": "臨",
+ "⾃": "自",
+ "臭": "臭",
+ "⾄": "至",
+ "⾅": "臼",
+ "舁": "舁",
+ "舁": "舁",
+ "舄": "舄",
+ "⾆": "舌",
+ "舘": "舘",
+ "⾇": "舛",
+ "⾈": "舟",
+ "䑫": "䑫",
+ "⾉": "艮",
+ "良": "良",
+ "⾊": "色",
+ "⾋": "艸",
+ "艹": "艹",
+ "艹": "艹",
+ "⺾": "艹",
+ "⺿": "艹",
+ "⻀": "艹",
+ "芋": "芋",
+ "芑": "芑",
+ "芝": "芝",
+ "花": "花",
+ "芳": "芳",
+ "芽": "芽",
+ "若": "若",
+ "若": "若",
+ "苦": "苦",
+ "𦬼": "𦬼",
+ "茶": "茶",
+ "荒": "荒",
+ "荣": "荣",
+ "茝": "茝",
+ "茣": "茣",
+ "莽": "莽",
+ "荓": "荓",
+ "菉": "菉",
+ "菊": "菊",
+ "菌": "菌",
+ "菜": "菜",
+ "菧": "菧",
+ "華": "華",
+ "菱": "菱",
+ "著": "著",
+ "著": "著",
+ "𦰶": "𦰶",
+ "莭": "莭",
+ "落": "落",
+ "葉": "葉",
+ "蔿": "蒍",
+ "𦳕": "𦳕",
+ "𦵫": "𦵫",
+ "蓮": "蓮",
+ "蓱": "蓱",
+ "蓳": "蓳",
+ "蓼": "蓼",
+ "蔖": "蔖",
+ "䔫": "䔫",
+ "蕤": "蕤",
+ "𦼬": "𦼬",
+ "藍": "藍",
+ "䕝": "䕝",
+ "𦾱": "𦾱",
+ "䕡": "䕡",
+ "藺": "藺",
+ "蘆": "蘆",
+ "䕫": "䕫",
+ "蘒": "蘒",
+ "蘭": "蘭",
+ "𧃒": "𧃒",
+ "虁": "蘷",
+ "蘿": "蘿",
+ "⾌": "虍",
+ "⻁": "虎",
+ "虐": "虐",
+ "虜": "虜",
+ "虜": "虜",
+ "虧": "虧",
+ "虩": "虩",
+ "⾍": "虫",
+ "蚩": "蚩",
+ "蚈": "蚈",
+ "蛢": "蛢",
+ "蜎": "蜎",
+ "蜨": "蜨",
+ "蝫": "蝫",
+ "蟡": "蟡",
+ "蝹": "蝹",
+ "蝹": "蝹",
+ "螆": "螆",
+ "䗗": "䗗",
+ "𧏊": "𧏊",
+ "螺": "螺",
+ "蠁": "蠁",
+ "䗹": "䗹",
+ "蠟": "蠟",
+ "⾎": "血",
+ "行": "行",
+ "⾏": "行",
+ "衠": "衠",
+ "衣": "衣",
+ "⾐": "衣",
+ "⻂": "衤",
+ "裂": "裂",
+ "𧙧": "𧙧",
+ "裏": "裏",
+ "裗": "裗",
+ "裞": "裞",
+ "裡": "裡",
+ "裸": "裸",
+ "裺": "裺",
+ "䘵": "䘵",
+ "褐": "褐",
+ "襁": "襁",
+ "襤": "襤",
+ "⾑": "襾",
+ "⻄": "西",
+ "⻃": "覀",
+ "覆": "覆",
+ "見": "見",
+ "⾒": "見",
+ "𧢮": "𧢮",
+ "⻅": "见",
+ "⾓": "角",
+ "⾔": "言",
+ "𧥦": "𧥦",
+ "詽": "訮",
+ "訞": "䚶",
+ "䚾": "䚾",
+ "䛇": "䛇",
+ "誠": "誠",
+ "說": "說",
+ "說": "說",
+ "調": "調",
+ "請": "請",
+ "諒": "諒",
+ "論": "論",
+ "諭": "諭",
+ "諭": "諭",
+ "諸": "諸",
+ "諸": "諸",
+ "諾": "諾",
+ "諾": "諾",
+ "謁": "謁",
+ "謁": "謁",
+ "謹": "謹",
+ "謹": "謹",
+ "識": "識",
+ "讀": "讀",
+ "讏": "讆",
+ "變": "變",
+ "變": "變",
+ "⻈": "讠",
+ "⾕": "谷",
+ "⾖": "豆",
+ "豈": "豈",
+ "豕": "豕",
+ "⾗": "豕",
+ "豣": "豜",
+ "⾘": "豸",
+ "𧲨": "𧲨",
+ "⾙": "貝",
+ "貫": "貫",
+ "賁": "賁",
+ "賂": "賂",
+ "賈": "賈",
+ "賓": "賓",
+ "贈": "贈",
+ "贈": "贈",
+ "贛": "贛",
+ "⻉": "贝",
+ "⾚": "赤",
+ "⾛": "走",
+ "起": "起",
+ "趆": "赿",
+ "𧻓": "𧻓",
+ "𧼯": "𧼯",
+ "⾜": "足",
+ "跋": "跋",
+ "趼": "趼",
+ "跺": "跥",
+ "路": "路",
+ "跰": "跰",
+ "躛": "躗",
+ "⾝": "身",
+ "車": "車",
+ "⾞": "車",
+ "軔": "軔",
+ "輧": "軿",
+ "輦": "輦",
+ "輪": "輪",
+ "輸": "輸",
+ "輸": "輸",
+ "輻": "輻",
+ "轢": "轢",
+ "⻋": "车",
+ "⾟": "辛",
+ "辞": "辞",
+ "辰": "辰",
+ "⾠": "辰",
+ "⾡": "辵",
+ "辶": "辶",
+ "⻌": "辶",
+ "⻍": "辶",
+ "巡": "巡",
+ "連": "連",
+ "逸": "逸",
+ "逸": "逸",
+ "遲": "遲",
+ "遼": "遼",
+ "𨗒": "𨗒",
+ "𨗭": "𨗭",
+ "邏": "邏",
+ "⾢": "邑",
+ "邔": "邔",
+ "郎": "郎",
+ "郞": "郎",
+ "郞": "郎",
+ "郱": "郱",
+ "都": "都",
+ "𨜮": "𨜮",
+ "鄑": "鄑",
+ "鄛": "鄛",
+ "⾣": "酉",
+ "酪": "酪",
+ "醙": "醙",
+ "醴": "醴",
+ "⾤": "釆",
+ "里": "里",
+ "⾥": "里",
+ "量": "量",
+ "金": "金",
+ "⾦": "金",
+ "鈴": "鈴",
+ "鈸": "鈸",
+ "鉶": "鉶",
+ "鋗": "鋗",
+ "鋘": "鋘",
+ "鉼": "鉼",
+ "錄": "錄",
+ "鍊": "鍊",
+ "鎮": "鎭",
+ "鏹": "鏹",
+ "鐕": "鐕",
+ "𨯺": "𨯺",
+ "⻐": "钅",
+ "⻑": "長",
+ "⾧": "長",
+ "⻒": "镸",
+ "⻓": "长",
+ "⾨": "門",
+ "開": "開",
+ "䦕": "䦕",
+ "閭": "閭",
+ "閷": "閷",
+ "𨵷": "𨵷",
+ "⻔": "门",
+ "⾩": "阜",
+ "⻏": "阝",
+ "⻖": "阝",
+ "阮": "阮",
+ "陋": "陋",
+ "降": "降",
+ "陵": "陵",
+ "陸": "陸",
+ "陼": "陼",
+ "隆": "隆",
+ "隣": "隣",
+ "䧦": "䧦",
+ "⾪": "隶",
+ "隷": "隷",
+ "隸": "隷",
+ "隸": "隷",
+ "⾫": "隹",
+ "雃": "雃",
+ "離": "離",
+ "難": "難",
+ "難": "難",
+ "⾬": "雨",
+ "零": "零",
+ "雷": "雷",
+ "霣": "霣",
+ "𩅅": "𩅅",
+ "露": "露",
+ "靈": "靈",
+ "⾭": "靑",
+ "⻘": "青",
+ "靖": "靖",
+ "靖": "靖",
+ "𩇟": "𩇟",
+ "⾮": "非",
+ "⾯": "面",
+ "𩈚": "𩈚",
+ "⾰": "革",
+ "䩮": "䩮",
+ "䩶": "䩶",
+ "⾱": "韋",
+ "韛": "韛",
+ "韠": "韠",
+ "⻙": "韦",
+ "⾲": "韭",
+ "𩐊": "𩐊",
+ "⾳": "音",
+ "響": "響",
+ "響": "響",
+ "⾴": "頁",
+ "䪲": "䪲",
+ "頋": "頋",
+ "頋": "頋",
+ "頋": "頋",
+ "領": "領",
+ "頩": "頩",
+ "𩒖": "𩒖",
+ "頻": "頻",
+ "頻": "頻",
+ "類": "類",
+ "⻚": "页",
+ "⾵": "風",
+ "𩖶": "𩖶",
+ "⻛": "风",
+ "⾶": "飛",
+ "⻜": "飞",
+ "⻝": "食",
+ "⾷": "食",
+ "⻟": "飠",
+ "飢": "飢",
+ "飯": "飯",
+ "飼": "飼",
+ "䬳": "䬳",
+ "館": "館",
+ "餩": "餩",
+ "⻠": "饣",
+ "⾸": "首",
+ "⾹": "香",
+ "馧": "馧",
+ "⾺": "馬",
+ "駂": "駂",
+ "駱": "駱",
+ "駾": "駾",
+ "驪": "驪",
+ "⻢": "马",
+ "⾻": "骨",
+ "䯎": "䯎",
+ "⾼": "高",
+ "⾽": "髟",
+ "𩬰": "𩬰",
+ "鬒": "鬒",
+ "鬒": "鬒",
+ "⾾": "鬥",
+ "⾿": "鬯",
+ "⿀": "鬲",
+ "⿁": "鬼",
+ "⻤": "鬼",
+ "⿂": "魚",
+ "魯": "魯",
+ "鱀": "鱀",
+ "鱗": "鱗",
+ "⻥": "鱼",
+ "⿃": "鳥",
+ "鳽": "鳽",
+ "䳎": "䳎",
+ "鵧": "鵧",
+ "䳭": "䳭",
+ "𪃎": "𪃎",
+ "鶴": "鶴",
+ "𪄅": "𪄅",
+ "䳸": "䳸",
+ "鷺": "鷺",
+ "𪈎": "𪈎",
+ "鸞": "鸞",
+ "鹃": "鹂",
+ "⿄": "鹵",
+ "鹿": "鹿",
+ "⿅": "鹿",
+ "𪊑": "𪊑",
+ "麗": "麗",
+ "麟": "麟",
+ "⿆": "麥",
+ "⻨": "麦",
+ "麻": "麻",
+ "⿇": "麻",
+ "𪎒": "𪎒",
+ "⿈": "黃",
+ "⻩": "黄",
+ "⿉": "黍",
+ "黎": "黎",
+ "䵖": "䵖",
+ "⿊": "黑",
+ "黒": "黑",
+ "墨": "墨",
+ "黹": "黹",
+ "⿋": "黹",
+ "⿌": "黽",
+ "鼅": "鼅",
+ "黾": "黾",
+ "⿍": "鼎",
+ "鼏": "鼏",
+ "⿎": "鼓",
+ "鼖": "鼖",
+ "⿏": "鼠",
+ "鼻": "鼻",
+ "⿐": "鼻",
+ "齃": "齃",
+ "⿑": "齊",
+ "⻬": "齐",
+ "⿒": "齒",
+ "𪘀": "𪘀",
+ "⻮": "齿",
+ "龍": "龍",
+ "⿓": "龍",
+ "龎": "龎",
+ "⻰": "龙",
+ "龜": "龜",
+ "龜": "龜",
+ "龜": "龜",
+ "⿔": "龜",
+ "⻳": "龟",
+ "⿕": "龠"
+}
+},{}],379:[function(require,module,exports){
+const CONFUSABLES = require('./data/confusables.json')
+
+const ZERO_WIDTH = ''
+const zeroWidthPoints = new Set([
+  '\u200b', // zero width space
+  '\u200c', // zero width non-joiner
+  '\u200d', // zero width joiner
+  '\ufeff', // zero width no-break space
+  '\u2028', // line separator
+  '\u2029', // paragraph separator,
+])
+
+function makeSkeleton (string) {
+  return [...string].reduce((acc, point) => {
+    if (zeroWidthPoints.has(point)) return acc
+    acc.push(CONFUSABLES[point] || point)
+    return acc
+  }, [])
+}
+
+function isConfusing (string) {
+  const skeleton = makeSkeleton(string)
+  const original = [...string]
+  for (var i = 0, l = skeleton.length; i < l; i++) {
+    if (skeleton[i] !== original[i]) return true
+  }
+
+  return false
+}
+
+function confusables (string) {
+  const skeleton = makeSkeleton(string)
+  const original = [...string]
+  let offset = 0
+
+  return original.reduce((acc, point, index) => {
+    const target = skeleton[index - offset]
+    if (target === point || !target) {
+      acc.push({point: point})
+    } else if (zeroWidthPoints.has(point)) {
+      acc.push({ point, similarTo: ZERO_WIDTH })
+      offset = offset + 1
+    } else {
+      acc.push({ point, similarTo: target })
+    }
+
+    return acc
+  }, [])
+}
+
+function rectifyConfusion (string) {
+  return confusables(string).map(({ point, similarTo }) => (
+    similarTo == null ? point : similarTo
+  )).join('')
+}
+
+module.exports = {
+  isConfusing,
+  confusables,
+  rectifyConfusion,
+}
+
+},{"./data/confusables.json":378}],380:[function(require,module,exports){
 module.exports = urlSetQuery
 function urlSetQuery (url, query) {
   if (query) {
@@ -65950,7 +72313,7 @@ function urlSetQuery (url, query) {
   return url
 }
 
-},{}],379:[function(require,module,exports){
+},{}],381:[function(require,module,exports){
 /*! https://mths.be/utf8js v3.0.0 by @mathias */
 ;(function(root) {
 
@@ -66154,7 +72517,7 @@ function urlSetQuery (url, query) {
 
 }(typeof exports === 'undefined' ? this.utf8 = {} : exports));
 
-},{}],380:[function(require,module,exports){
+},{}],382:[function(require,module,exports){
 (function (global){(function (){
 
 /**
@@ -66225,7 +72588,7 @@ function config (name) {
 }
 
 }).call(this)}).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{}],381:[function(require,module,exports){
+},{}],383:[function(require,module,exports){
 module.exports = read
 
 var MSB = 0x80
@@ -66256,7 +72619,7 @@ function read(buf, offset) {
   return res
 }
 
-},{}],382:[function(require,module,exports){
+},{}],384:[function(require,module,exports){
 module.exports = encode
 
 var MSB = 0x80
@@ -66284,14 +72647,14 @@ function encode(num, out, offset) {
   return out
 }
 
-},{}],383:[function(require,module,exports){
+},{}],385:[function(require,module,exports){
 module.exports = {
     encode: require('./encode.js')
   , decode: require('./decode.js')
   , encodingLength: require('./length.js')
 }
 
-},{"./decode.js":381,"./encode.js":382,"./length.js":384}],384:[function(require,module,exports){
+},{"./decode.js":383,"./encode.js":384,"./length.js":386}],386:[function(require,module,exports){
 
 var N1 = Math.pow(2,  7)
 var N2 = Math.pow(2, 14)
@@ -66318,7 +72681,7 @@ module.exports = function (value) {
   )
 }
 
-},{}],385:[function(require,module,exports){
+},{}],387:[function(require,module,exports){
 /*
     This file is part of web3.js.
 
@@ -66388,7 +72751,7 @@ Bzz.prototype.setProvider = function (provider) {
 };
 module.exports = Bzz;
 
-},{"swarm-js":374}],386:[function(require,module,exports){
+},{"swarm-js":374}],388:[function(require,module,exports){
 /*
     This file is part of web3.js.
 
@@ -66517,7 +72880,7 @@ module.exports = {
     }
 };
 
-},{}],387:[function(require,module,exports){
+},{}],389:[function(require,module,exports){
 /*
     This file is part of web3.js.
 
@@ -66966,7 +73329,7 @@ module.exports = {
     outputSyncingFormatter: outputSyncingFormatter
 };
 
-},{"web3-eth-iban":421,"web3-utils":431}],388:[function(require,module,exports){
+},{"web3-eth-iban":423,"web3-utils":433}],390:[function(require,module,exports){
 /*
     This file is part of web3.js.
 
@@ -66996,7 +73359,7 @@ module.exports = {
     formatters: formatters
 };
 
-},{"./errors":386,"./formatters":387}],389:[function(require,module,exports){
+},{"./errors":388,"./formatters":389}],391:[function(require,module,exports){
 /*
     This file is part of web3.js.
 
@@ -67785,7 +74148,7 @@ Method.prototype.request = function () {
 };
 module.exports = Method;
 
-},{"@ethersproject/transactions":107,"web3-core-helpers":388,"web3-core-promievent":390,"web3-core-subscriptions":395,"web3-utils":431}],390:[function(require,module,exports){
+},{"@ethersproject/transactions":107,"web3-core-helpers":390,"web3-core-promievent":392,"web3-core-subscriptions":397,"web3-utils":433}],392:[function(require,module,exports){
 /*
  This file is part of web3.js.
 
@@ -67851,7 +74214,7 @@ PromiEvent.resolve = function (value) {
 };
 module.exports = PromiEvent;
 
-},{"eventemitter3":260}],391:[function(require,module,exports){
+},{"eventemitter3":260}],393:[function(require,module,exports){
 /*
     This file is part of web3.js.
 
@@ -67925,7 +74288,7 @@ Batch.prototype._sortResponses = function (responses) {
 };
 module.exports = Batch;
 
-},{"./jsonrpc":394,"web3-core-helpers":388}],392:[function(require,module,exports){
+},{"./jsonrpc":396,"web3-core-helpers":390}],394:[function(require,module,exports){
 /*
  This file is part of web3.js.
 
@@ -68003,7 +74366,7 @@ else if (typeof global.web3 !== 'undefined' && global.web3.currentProvider) {
 /* jshint ignore:end */
 module.exports = givenProvider;
 
-},{}],393:[function(require,module,exports){
+},{}],395:[function(require,module,exports){
 /*
     This file is part of web3.js.
     web3.js is free software: you can redistribute it and/or modify
@@ -68318,7 +74681,7 @@ module.exports = {
     BatchManager: BatchManager
 };
 
-},{"./batch.js":391,"./givenProvider.js":392,"./jsonrpc.js":394,"util":689,"web3-core-helpers":388,"web3-providers-http":426,"web3-providers-ipc":427,"web3-providers-ws":429}],394:[function(require,module,exports){
+},{"./batch.js":393,"./givenProvider.js":394,"./jsonrpc.js":396,"util":691,"web3-core-helpers":390,"web3-providers-http":428,"web3-providers-ipc":429,"web3-providers-ws":431}],396:[function(require,module,exports){
 /*
     This file is part of web3.js.
 
@@ -68399,7 +74762,7 @@ Jsonrpc.toBatchPayload = function (messages) {
 };
 module.exports = Jsonrpc;
 
-},{}],395:[function(require,module,exports){
+},{}],397:[function(require,module,exports){
 /*
     This file is part of web3.js.
 
@@ -68462,7 +74825,7 @@ module.exports = {
     subscription: Subscription
 };
 
-},{"./subscription.js":396}],396:[function(require,module,exports){
+},{"./subscription.js":398}],398:[function(require,module,exports){
 /*
     This file is part of web3.js.
 
@@ -68741,7 +75104,7 @@ Subscription.prototype.resubscribe = function () {
 };
 module.exports = Subscription;
 
-},{"eventemitter3":260,"web3-core-helpers":388}],397:[function(require,module,exports){
+},{"eventemitter3":260,"web3-core-helpers":390}],399:[function(require,module,exports){
 /*
  This file is part of web3.js.
 
@@ -68798,7 +75161,7 @@ var extend = function (pckg) {
 };
 module.exports = extend;
 
-},{"web3-core-helpers":388,"web3-core-method":389,"web3-utils":431}],398:[function(require,module,exports){
+},{"web3-core-helpers":390,"web3-core-method":391,"web3-utils":433}],400:[function(require,module,exports){
 /*
     This file is part of web3.js.
 
@@ -68875,7 +75238,7 @@ module.exports = {
     addProviders
 };
 
-},{"./extend":397,"web3-core-requestmanager":393}],399:[function(require,module,exports){
+},{"./extend":399,"web3-core-requestmanager":395}],401:[function(require,module,exports){
 /*
  This file is part of web3.js.
 
@@ -69242,7 +75605,7 @@ ABICoder.prototype.decodeLog = function (inputs, data, topics) {
 var coder = new ABICoder();
 module.exports = coder;
 
-},{"@ethersproject/abi":70,"buffer":518,"web3-utils":431}],400:[function(require,module,exports){
+},{"@ethersproject/abi":70,"buffer":520,"web3-utils":433}],402:[function(require,module,exports){
 (function (global,Buffer){(function (){
 /*
  This file is part of web3.js.
@@ -69892,7 +76255,7 @@ function storageAvailable(type) {
 module.exports = Accounts;
 
 }).call(this)}).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {},require("buffer").Buffer)
-},{"@ethereumjs/common":47,"@ethereumjs/tx":51,"buffer":518,"crypto":529,"crypto-browserify":205,"eth-lib/lib/account":401,"ethereumjs-util":252,"scrypt-js":359,"uuid":407,"web3-core":398,"web3-core-helpers":388,"web3-core-method":389,"web3-utils":431}],401:[function(require,module,exports){
+},{"@ethereumjs/common":47,"@ethereumjs/tx":51,"buffer":520,"crypto":531,"crypto-browserify":205,"eth-lib/lib/account":403,"ethereumjs-util":252,"scrypt-js":359,"uuid":409,"web3-core":400,"web3-core-helpers":390,"web3-core-method":391,"web3-utils":433}],403:[function(require,module,exports){
 (function (Buffer){(function (){
 const Bytes = require("./bytes");
 const Nat = require("./nat");
@@ -69959,7 +76322,7 @@ module.exports = {
   decodeSignature
 };
 }).call(this)}).call(this,require("buffer").Buffer)
-},{"./bytes":403,"./hash":404,"./nat":405,"./rlp":406,"buffer":518,"elliptic":217}],402:[function(require,module,exports){
+},{"./bytes":405,"./hash":406,"./nat":407,"./rlp":408,"buffer":520,"elliptic":217}],404:[function(require,module,exports){
 const generate = (num, fn) => {
   let a = [];
   for (var i = 0; i < num; ++i) a.push(fn(i));
@@ -69989,7 +76352,7 @@ module.exports = {
   flatten,
   chunksOf
 };
-},{}],403:[function(require,module,exports){
+},{}],405:[function(require,module,exports){
 const A = require("./array.js");
 
 const at = (bytes, index) => parseInt(bytes.slice(index * 2 + 2, index * 2 + 4), 16);
@@ -70148,7 +76511,7 @@ module.exports = {
   fromUint8Array,
   toUint8Array
 };
-},{"./array.js":402}],404:[function(require,module,exports){
+},{"./array.js":404}],406:[function(require,module,exports){
 // This was ported from https://github.com/emn178/js-sha3, with some minor
 // modifications and pruning. It is licensed under MIT:
 //
@@ -70480,7 +76843,7 @@ module.exports = {
   keccak256s: keccak(256),
   keccak512s: keccak(512)
 };
-},{}],405:[function(require,module,exports){
+},{}],407:[function(require,module,exports){
 const BN = require("bn.js");
 const Bytes = require("./bytes");
 
@@ -70525,7 +76888,7 @@ module.exports = {
   div,
   sub
 };
-},{"./bytes":403,"bn.js":152}],406:[function(require,module,exports){
+},{"./bytes":405,"bn.js":152}],408:[function(require,module,exports){
 // The RLP format
 // Serialization and deserialization for the BytesTree type, under the following grammar:
 // | First byte | Meaning                                                                    |
@@ -70592,7 +76955,7 @@ const decode = hex => {
 };
 
 module.exports = { encode, decode };
-},{}],407:[function(require,module,exports){
+},{}],409:[function(require,module,exports){
 var v1 = require('./v1');
 var v4 = require('./v4');
 
@@ -70602,7 +76965,7 @@ uuid.v4 = v4;
 
 module.exports = uuid;
 
-},{"./v1":410,"./v4":411}],408:[function(require,module,exports){
+},{"./v1":412,"./v4":413}],410:[function(require,module,exports){
 /**
  * Convert array of 16 byte values to UUID string format of the form:
  * XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX
@@ -70628,7 +76991,7 @@ function bytesToUuid(buf, offset) {
 
 module.exports = bytesToUuid;
 
-},{}],409:[function(require,module,exports){
+},{}],411:[function(require,module,exports){
 // Unique ID creation requires a high quality random # generator.  In the
 // browser this is a little complicated due to unknown quality of Math.random()
 // and inconsistent support for the `crypto` API.  We do the best we can via
@@ -70664,7 +77027,7 @@ if (getRandomValues) {
   };
 }
 
-},{}],410:[function(require,module,exports){
+},{}],412:[function(require,module,exports){
 var rng = require('./lib/rng');
 var bytesToUuid = require('./lib/bytesToUuid');
 
@@ -70775,7 +77138,7 @@ function v1(options, buf, offset) {
 
 module.exports = v1;
 
-},{"./lib/bytesToUuid":408,"./lib/rng":409}],411:[function(require,module,exports){
+},{"./lib/bytesToUuid":410,"./lib/rng":411}],413:[function(require,module,exports){
 var rng = require('./lib/rng');
 var bytesToUuid = require('./lib/bytesToUuid');
 
@@ -70806,7 +77169,7 @@ function v4(options, buf, offset) {
 
 module.exports = v4;
 
-},{"./lib/bytesToUuid":408,"./lib/rng":409}],412:[function(require,module,exports){
+},{"./lib/bytesToUuid":410,"./lib/rng":411}],414:[function(require,module,exports){
 /*
     This file is part of web3.js.
 
@@ -71695,7 +78058,7 @@ Contract.prototype._executeMethod = function _executeMethod() {
 };
 module.exports = Contract;
 
-},{"web3-core":398,"web3-core-helpers":388,"web3-core-method":389,"web3-core-promievent":390,"web3-core-subscriptions":395,"web3-eth-abi":399,"web3-utils":431}],413:[function(require,module,exports){
+},{"web3-core":400,"web3-core-helpers":390,"web3-core-method":391,"web3-core-promievent":392,"web3-core-subscriptions":397,"web3-eth-abi":401,"web3-utils":433}],415:[function(require,module,exports){
 /*
     This file is part of web3.js.
     web3.js is free software: you can redistribute it and/or modify
@@ -72186,7 +78549,7 @@ ENS.prototype.checkNetwork = async function () {
 };
 module.exports = ENS;
 
-},{"./config":414,"./contracts/Registry":415,"./lib/ResolverMethodHandler":417,"./lib/contentHash":418,"web3-core-helpers":388,"web3-utils":431}],414:[function(require,module,exports){
+},{"./config":416,"./contracts/Registry":417,"./lib/ResolverMethodHandler":419,"./lib/contentHash":420,"web3-core-helpers":390,"web3-utils":433}],416:[function(require,module,exports){
 /*
     This file is part of web3.js.
     web3.js is free software: you can redistribute it and/or modify
@@ -72234,7 +78597,7 @@ var config = {
 };
 module.exports = config;
 
-},{}],415:[function(require,module,exports){
+},{}],417:[function(require,module,exports){
 /*
     This file is part of web3.js.
     web3.js is free software: you can redistribute it and/or modify
@@ -72714,7 +79077,7 @@ Registry.prototype.setResolver = function (name, address, txConfig, callback) {
 };
 module.exports = Registry;
 
-},{"../resources/ABI/Registry":419,"../resources/ABI/Resolver":420,"eth-ens-namehash":234,"web3-core-helpers":388,"web3-core-promievent":390,"web3-eth-contract":412,"web3-utils":431}],416:[function(require,module,exports){
+},{"../resources/ABI/Registry":421,"../resources/ABI/Resolver":422,"eth-ens-namehash":234,"web3-core-helpers":390,"web3-core-promievent":392,"web3-eth-contract":414,"web3-utils":433}],418:[function(require,module,exports){
 /*
     This file is part of web3.js.
     web3.js is free software: you can redistribute it and/or modify
@@ -72738,7 +79101,7 @@ module.exports = Registry;
 var ENS = require('./ENS');
 module.exports = ENS;
 
-},{"./ENS":413}],417:[function(require,module,exports){
+},{"./ENS":415}],419:[function(require,module,exports){
 /*
     This file is part of web3.js.
     web3.js is free software: you can redistribute it and/or modify
@@ -72959,7 +79322,7 @@ ResolverMethodHandler.prototype.checkInterfaceSupport = async function (resolver
 };
 module.exports = ResolverMethodHandler;
 
-},{"../config":414,"eth-ens-namehash":234,"web3-core-helpers":388,"web3-core-promievent":390}],418:[function(require,module,exports){
+},{"../config":416,"eth-ens-namehash":234,"web3-core-helpers":390,"web3-core-promievent":392}],420:[function(require,module,exports){
 /*
 Adapted from ensdomains/ui
 https://github.com/ensdomains/ui/blob/3e62e440b53466eeec9dd1c63d73924eefbd88c1/src/utils/contents.js#L1-L85
@@ -73076,7 +79439,7 @@ module.exports = {
     encode: encode
 };
 
-},{"content-hash":196}],419:[function(require,module,exports){
+},{"content-hash":196}],421:[function(require,module,exports){
 "use strict";
 var REGISTRY = [
     {
@@ -73438,7 +79801,7 @@ var REGISTRY = [
 ];
 module.exports = REGISTRY;
 
-},{}],420:[function(require,module,exports){
+},{}],422:[function(require,module,exports){
 "use strict";
 var RESOLVER = [
     {
@@ -73848,7 +80211,7 @@ var RESOLVER = [
 ];
 module.exports = RESOLVER;
 
-},{}],421:[function(require,module,exports){
+},{}],423:[function(require,module,exports){
 /*
     This file is part of web3.js.
 
@@ -74096,7 +80459,7 @@ class Iban {
 }
 module.exports = Iban;
 
-},{"bn.js":152,"web3-utils":431}],422:[function(require,module,exports){
+},{"bn.js":152,"web3-utils":433}],424:[function(require,module,exports){
 /*
     This file is part of web3.js.
 
@@ -74227,7 +80590,7 @@ var Personal = function Personal() {
 core.addProviders(Personal);
 module.exports = Personal;
 
-},{"web3-core":398,"web3-core-helpers":388,"web3-core-method":389,"web3-net":425,"web3-utils":431}],423:[function(require,module,exports){
+},{"web3-core":400,"web3-core-helpers":390,"web3-core-method":391,"web3-net":427,"web3-utils":433}],425:[function(require,module,exports){
 /*
  This file is part of web3.js.
 
@@ -74299,7 +80662,7 @@ var getNetworkType = function (callback) {
 };
 module.exports = getNetworkType;
 
-},{}],424:[function(require,module,exports){
+},{}],426:[function(require,module,exports){
 /*
  This file is part of web3.js.
 
@@ -74939,7 +81302,7 @@ var Eth = function Eth() {
 core.addProviders(Eth);
 module.exports = Eth;
 
-},{"./getNetworkType.js":423,"web3-core":398,"web3-core-helpers":388,"web3-core-method":389,"web3-core-subscriptions":395,"web3-eth-abi":399,"web3-eth-accounts":400,"web3-eth-contract":412,"web3-eth-ens":416,"web3-eth-iban":421,"web3-eth-personal":422,"web3-net":425,"web3-utils":431}],425:[function(require,module,exports){
+},{"./getNetworkType.js":425,"web3-core":400,"web3-core-helpers":390,"web3-core-method":391,"web3-core-subscriptions":397,"web3-eth-abi":401,"web3-eth-accounts":402,"web3-eth-contract":414,"web3-eth-ens":418,"web3-eth-iban":423,"web3-eth-personal":424,"web3-net":427,"web3-utils":433}],427:[function(require,module,exports){
 /*
     This file is part of web3.js.
 
@@ -74995,7 +81358,7 @@ var Net = function () {
 core.addProviders(Net);
 module.exports = Net;
 
-},{"web3-core":398,"web3-core-method":389,"web3-utils":431}],426:[function(require,module,exports){
+},{"web3-core":400,"web3-core-method":391,"web3-utils":433}],428:[function(require,module,exports){
 /*
     This file is part of web3.js.
 
@@ -75122,7 +81485,7 @@ HttpProvider.prototype.supportsSubscriptions = function () {
 };
 module.exports = HttpProvider;
 
-},{"http":663,"https":598,"web3-core-helpers":388,"xhr2-cookies":445}],427:[function(require,module,exports){
+},{"http":665,"https":600,"web3-core-helpers":390,"xhr2-cookies":447}],429:[function(require,module,exports){
 /*
     This file is part of web3.js.
 
@@ -75392,7 +81755,7 @@ IpcProvider.prototype.supportsSubscriptions = function () {
 };
 module.exports = IpcProvider;
 
-},{"oboe":317,"web3-core-helpers":388}],428:[function(require,module,exports){
+},{"oboe":317,"web3-core-helpers":390}],430:[function(require,module,exports){
 (function (process,Buffer){(function (){
 var isNode = Object.prototype.toString.call(typeof process !== 'undefined' ? process : 0) === '[object process]';
 var isRN = typeof navigator !== 'undefined' && navigator.product === 'ReactNative';
@@ -75427,7 +81790,7 @@ module.exports = {
 };
 
 }).call(this)}).call(this,require('_process'),require("buffer").Buffer)
-},{"_process":623,"buffer":518,"url":684}],429:[function(require,module,exports){
+},{"_process":625,"buffer":520,"url":686}],431:[function(require,module,exports){
 /*
  This file is part of web3.js.
 
@@ -75784,7 +82147,7 @@ WebsocketProvider.prototype.reconnect = function () {
 };
 module.exports = WebsocketProvider;
 
-},{"./helpers.js":428,"eventemitter3":260,"web3-core-helpers":388,"websocket":436}],430:[function(require,module,exports){
+},{"./helpers.js":430,"eventemitter3":260,"web3-core-helpers":390,"websocket":438}],432:[function(require,module,exports){
 /*
     This file is part of web3.js.
 
@@ -75964,7 +82327,7 @@ Shh.prototype.clearSubscriptions = function () {
 core.addProviders(Shh);
 module.exports = Shh;
 
-},{"web3-core":398,"web3-core-method":389,"web3-core-subscriptions":395,"web3-net":425}],431:[function(require,module,exports){
+},{"web3-core":400,"web3-core-method":391,"web3-core-subscriptions":397,"web3-net":427}],433:[function(require,module,exports){
 /*
  This file is part of web3.js.
 
@@ -76368,7 +82731,7 @@ module.exports = {
     toNumber: utils.toNumber
 };
 
-},{"./soliditySha3.js":432,"./utils.js":433,"bn.js":152,"ethjs-unit":258,"randombytes":337}],432:[function(require,module,exports){
+},{"./soliditySha3.js":434,"./utils.js":435,"bn.js":152,"ethjs-unit":258,"randombytes":337}],434:[function(require,module,exports){
 /*
  This file is part of web3.js.
 
@@ -76613,7 +82976,7 @@ module.exports = {
     encodePacked: encodePacked
 };
 
-},{"./utils.js":433,"bn.js":152}],433:[function(require,module,exports){
+},{"./utils.js":435,"bn.js":152}],435:[function(require,module,exports){
 (function (Buffer){(function (){
 /*
  This file is part of web3.js.
@@ -77119,7 +83482,7 @@ module.exports = {
 };
 
 }).call(this)}).call(this,require("buffer").Buffer)
-},{"bn.js":152,"buffer":518,"ethereum-bloom-filters":239,"ethereumjs-util":252,"number-to-bn":315,"utf8":379}],434:[function(require,module,exports){
+},{"bn.js":152,"buffer":520,"ethereum-bloom-filters":239,"ethereumjs-util":252,"number-to-bn":315,"utf8":381}],436:[function(require,module,exports){
 /*
     This file is part of web3.js.
 
@@ -77187,7 +83550,7 @@ Web3.modules = {
 core.addProviders(Web3);
 module.exports = Web3;
 
-},{"../package.json":435,"web3-bzz":385,"web3-core":398,"web3-eth":424,"web3-eth-personal":422,"web3-net":425,"web3-shh":430,"web3-utils":431}],435:[function(require,module,exports){
+},{"../package.json":437,"web3-bzz":387,"web3-core":400,"web3-eth":426,"web3-eth-personal":424,"web3-net":427,"web3-shh":432,"web3-utils":433}],437:[function(require,module,exports){
 module.exports={
   "_from": "web3",
   "_id": "web3@1.7.0",
@@ -77289,7 +83652,7 @@ module.exports={
   "version": "1.7.0"
 }
 
-},{}],436:[function(require,module,exports){
+},{}],438:[function(require,module,exports){
 var _globalThis;
 if (typeof globalThis === 'object') {
 	_globalThis = globalThis;
@@ -77345,10 +83708,10 @@ module.exports = {
     'version'      : websocket_version
 };
 
-},{"./version":437,"es5-ext/global":233}],437:[function(require,module,exports){
+},{"./version":439,"es5-ext/global":233}],439:[function(require,module,exports){
 module.exports = require('../package.json').version;
 
-},{"../package.json":438}],438:[function(require,module,exports){
+},{"../package.json":440}],440:[function(require,module,exports){
 module.exports={
   "_from": "websocket@^1.0.32",
   "_id": "websocket@1.0.34",
@@ -77444,7 +83807,7 @@ module.exports={
   "version": "1.0.34"
 }
 
-},{}],439:[function(require,module,exports){
+},{}],441:[function(require,module,exports){
 var queryString = require('query-string')
 var setQuery = require('url-set-query')
 var assign = require('object-assign')
@@ -77505,7 +83868,7 @@ function xhrRequest (url, opt, cb) {
   return request(opt, cb)
 }
 
-},{"./lib/ensure-header.js":440,"./lib/request.js":442,"object-assign":316,"query-string":336,"url-set-query":378}],440:[function(require,module,exports){
+},{"./lib/ensure-header.js":442,"./lib/request.js":444,"object-assign":316,"query-string":336,"url-set-query":380}],442:[function(require,module,exports){
 module.exports = ensureHeader
 function ensureHeader (headers, key, value) {
   var lower = key.toLowerCase()
@@ -77514,7 +83877,7 @@ function ensureHeader (headers, key, value) {
   }
 }
 
-},{}],441:[function(require,module,exports){
+},{}],443:[function(require,module,exports){
 module.exports = getResponse
 function getResponse (opt, resp) {
   if (!resp) return null
@@ -77528,7 +83891,7 @@ function getResponse (opt, resp) {
   }
 }
 
-},{}],442:[function(require,module,exports){
+},{}],444:[function(require,module,exports){
 var xhr = require('xhr')
 var normalize = require('./normalize-response')
 var noop = function () {}
@@ -77572,7 +83935,7 @@ function xhrRequest (opt, cb) {
   return req
 }
 
-},{"./normalize-response":441,"xhr":443}],443:[function(require,module,exports){
+},{"./normalize-response":443,"xhr":445}],445:[function(require,module,exports){
 "use strict";
 var window = require("global/window")
 var isFunction = require("is-function")
@@ -77821,7 +84184,7 @@ function getXml(xhr) {
 
 function noop() {}
 
-},{"global/window":262,"is-function":280,"parse-headers":323,"xtend":450}],444:[function(require,module,exports){
+},{"global/window":262,"is-function":280,"parse-headers":323,"xtend":452}],446:[function(require,module,exports){
 "use strict";
 var __extends = (this && this.__extends) || (function () {
     var extendStatics = Object.setPrototypeOf ||
@@ -77867,7 +84230,7 @@ var SyntaxError = /** @class */ (function (_super) {
 }(Error));
 exports.SyntaxError = SyntaxError;
 
-},{}],445:[function(require,module,exports){
+},{}],447:[function(require,module,exports){
 "use strict";
 function __export(m) {
     for (var p in m) if (!exports.hasOwnProperty(p)) exports[p] = m[p];
@@ -77877,7 +84240,7 @@ __export(require("./xml-http-request"));
 var xml_http_request_event_target_1 = require("./xml-http-request-event-target");
 exports.XMLHttpRequestEventTarget = xml_http_request_event_target_1.XMLHttpRequestEventTarget;
 
-},{"./xml-http-request":449,"./xml-http-request-event-target":447}],446:[function(require,module,exports){
+},{"./xml-http-request":451,"./xml-http-request-event-target":449}],448:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 var ProgressEvent = /** @class */ (function () {
@@ -77893,7 +84256,7 @@ var ProgressEvent = /** @class */ (function () {
 }());
 exports.ProgressEvent = ProgressEvent;
 
-},{}],447:[function(require,module,exports){
+},{}],449:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 var XMLHttpRequestEventTarget = /** @class */ (function () {
@@ -77935,7 +84298,7 @@ var XMLHttpRequestEventTarget = /** @class */ (function () {
 }());
 exports.XMLHttpRequestEventTarget = XMLHttpRequestEventTarget;
 
-},{}],448:[function(require,module,exports){
+},{}],450:[function(require,module,exports){
 (function (Buffer){(function (){
 "use strict";
 var __extends = (this && this.__extends) || (function () {
@@ -78016,7 +84379,7 @@ var XMLHttpRequestUpload = /** @class */ (function (_super) {
 exports.XMLHttpRequestUpload = XMLHttpRequestUpload;
 
 }).call(this)}).call(this,require("buffer").Buffer)
-},{"./xml-http-request-event-target":447,"buffer":518}],449:[function(require,module,exports){
+},{"./xml-http-request-event-target":449,"buffer":520}],451:[function(require,module,exports){
 (function (process,Buffer){(function (){
 "use strict";
 var __extends = (this && this.__extends) || (function () {
@@ -78466,7 +84829,7 @@ XMLHttpRequest.prototype.nodejsHttpsAgent = https.globalAgent;
 XMLHttpRequest.prototype.nodejsBaseUrl = null;
 
 }).call(this)}).call(this,require('_process'),require("buffer").Buffer)
-},{"./errors":444,"./progress-event":446,"./xml-http-request-event-target":447,"./xml-http-request-upload":448,"_process":623,"buffer":518,"cookiejar":198,"http":663,"https":598,"os":611,"url":684}],450:[function(require,module,exports){
+},{"./errors":446,"./progress-event":448,"./xml-http-request-event-target":449,"./xml-http-request-upload":450,"_process":625,"buffer":520,"cookiejar":198,"http":665,"https":600,"os":613,"url":686}],452:[function(require,module,exports){
 module.exports = extend
 
 var hasOwnProperty = Object.prototype.hasOwnProperty;
@@ -78487,37 +84850,37 @@ function extend() {
     return target
 }
 
-},{}],451:[function(require,module,exports){
+},{}],453:[function(require,module,exports){
 arguments[4][108][0].apply(exports,arguments)
-},{"./asn1/api":452,"./asn1/base":454,"./asn1/constants":458,"./asn1/decoders":460,"./asn1/encoders":463,"bn.js":465,"dup":108}],452:[function(require,module,exports){
+},{"./asn1/api":454,"./asn1/base":456,"./asn1/constants":460,"./asn1/decoders":462,"./asn1/encoders":465,"bn.js":467,"dup":108}],454:[function(require,module,exports){
 arguments[4][109][0].apply(exports,arguments)
-},{"./decoders":460,"./encoders":463,"dup":109,"inherits":600}],453:[function(require,module,exports){
+},{"./decoders":462,"./encoders":465,"dup":109,"inherits":602}],455:[function(require,module,exports){
 arguments[4][110][0].apply(exports,arguments)
-},{"../base/reporter":456,"dup":110,"inherits":600,"safer-buffer":639}],454:[function(require,module,exports){
+},{"../base/reporter":458,"dup":110,"inherits":602,"safer-buffer":641}],456:[function(require,module,exports){
 arguments[4][111][0].apply(exports,arguments)
-},{"./buffer":453,"./node":455,"./reporter":456,"dup":111}],455:[function(require,module,exports){
+},{"./buffer":455,"./node":457,"./reporter":458,"dup":111}],457:[function(require,module,exports){
 arguments[4][112][0].apply(exports,arguments)
-},{"../base/buffer":453,"../base/reporter":456,"dup":112,"minimalistic-assert":608}],456:[function(require,module,exports){
+},{"../base/buffer":455,"../base/reporter":458,"dup":112,"minimalistic-assert":610}],458:[function(require,module,exports){
 arguments[4][113][0].apply(exports,arguments)
-},{"dup":113,"inherits":600}],457:[function(require,module,exports){
+},{"dup":113,"inherits":602}],459:[function(require,module,exports){
 arguments[4][114][0].apply(exports,arguments)
-},{"dup":114}],458:[function(require,module,exports){
+},{"dup":114}],460:[function(require,module,exports){
 arguments[4][115][0].apply(exports,arguments)
-},{"./der":457,"dup":115}],459:[function(require,module,exports){
+},{"./der":459,"dup":115}],461:[function(require,module,exports){
 arguments[4][116][0].apply(exports,arguments)
-},{"../base/buffer":453,"../base/node":455,"../constants/der":457,"bn.js":465,"dup":116,"inherits":600}],460:[function(require,module,exports){
+},{"../base/buffer":455,"../base/node":457,"../constants/der":459,"bn.js":467,"dup":116,"inherits":602}],462:[function(require,module,exports){
 arguments[4][117][0].apply(exports,arguments)
-},{"./der":459,"./pem":461,"dup":117}],461:[function(require,module,exports){
+},{"./der":461,"./pem":463,"dup":117}],463:[function(require,module,exports){
 arguments[4][118][0].apply(exports,arguments)
-},{"./der":459,"dup":118,"inherits":600,"safer-buffer":639}],462:[function(require,module,exports){
+},{"./der":461,"dup":118,"inherits":602,"safer-buffer":641}],464:[function(require,module,exports){
 arguments[4][119][0].apply(exports,arguments)
-},{"../base/node":455,"../constants/der":457,"dup":119,"inherits":600,"safer-buffer":639}],463:[function(require,module,exports){
+},{"../base/node":457,"../constants/der":459,"dup":119,"inherits":602,"safer-buffer":641}],465:[function(require,module,exports){
 arguments[4][120][0].apply(exports,arguments)
-},{"./der":462,"./pem":464,"dup":120}],464:[function(require,module,exports){
+},{"./der":464,"./pem":466,"dup":120}],466:[function(require,module,exports){
 arguments[4][121][0].apply(exports,arguments)
-},{"./der":462,"dup":121,"inherits":600}],465:[function(require,module,exports){
+},{"./der":464,"dup":121,"inherits":602}],467:[function(require,module,exports){
 arguments[4][152][0].apply(exports,arguments)
-},{"buffer":474,"dup":152}],466:[function(require,module,exports){
+},{"buffer":476,"dup":152}],468:[function(require,module,exports){
 (function (global){(function (){
 'use strict';
 
@@ -79027,7 +85390,7 @@ var objectKeys = Object.keys || function (obj) {
 };
 
 }).call(this)}).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"object-assign":610,"util/":469}],467:[function(require,module,exports){
+},{"object-assign":612,"util/":471}],469:[function(require,module,exports){
 if (typeof Object.create === 'function') {
   // implementation from standard node.js 'util' module
   module.exports = function inherits(ctor, superCtor) {
@@ -79052,14 +85415,14 @@ if (typeof Object.create === 'function') {
   }
 }
 
-},{}],468:[function(require,module,exports){
+},{}],470:[function(require,module,exports){
 module.exports = function isBuffer(arg) {
   return arg && typeof arg === 'object'
     && typeof arg.copy === 'function'
     && typeof arg.fill === 'function'
     && typeof arg.readUInt8 === 'function';
 }
-},{}],469:[function(require,module,exports){
+},{}],471:[function(require,module,exports){
 (function (process,global){(function (){
 // Copyright Joyent, Inc. and other Node contributors.
 //
@@ -79649,7 +86012,7 @@ function hasOwnProperty(obj, prop) {
 }
 
 }).call(this)}).call(this,require('_process'),typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"./support/isBuffer":468,"_process":623,"inherits":467}],470:[function(require,module,exports){
+},{"./support/isBuffer":470,"_process":625,"inherits":469}],472:[function(require,module,exports){
 (function (global){(function (){
 'use strict';
 
@@ -79680,7 +86043,7 @@ module.exports = function availableTypedArrays() {
 };
 
 }).call(this)}).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{}],471:[function(require,module,exports){
+},{}],473:[function(require,module,exports){
 'use strict'
 
 exports.byteLength = byteLength
@@ -79832,99 +86195,99 @@ function fromByteArray (uint8) {
   return parts.join('')
 }
 
-},{}],472:[function(require,module,exports){
+},{}],474:[function(require,module,exports){
 arguments[4][175][0].apply(exports,arguments)
-},{"buffer":474,"dup":175}],473:[function(require,module,exports){
+},{"buffer":476,"dup":175}],475:[function(require,module,exports){
 arguments[4][153][0].apply(exports,arguments)
-},{"crypto":474,"dup":153}],474:[function(require,module,exports){
+},{"crypto":476,"dup":153}],476:[function(require,module,exports){
 
-},{}],475:[function(require,module,exports){
+},{}],477:[function(require,module,exports){
 arguments[4][154][0].apply(exports,arguments)
-},{"dup":154,"safe-buffer":638}],476:[function(require,module,exports){
+},{"dup":154,"safe-buffer":640}],478:[function(require,module,exports){
 arguments[4][155][0].apply(exports,arguments)
-},{"./aes":475,"./ghash":480,"./incr32":481,"buffer-xor":517,"cipher-base":522,"dup":155,"inherits":600,"safe-buffer":638}],477:[function(require,module,exports){
+},{"./aes":477,"./ghash":482,"./incr32":483,"buffer-xor":519,"cipher-base":524,"dup":155,"inherits":602,"safe-buffer":640}],479:[function(require,module,exports){
 arguments[4][156][0].apply(exports,arguments)
-},{"./decrypter":478,"./encrypter":479,"./modes/list.json":489,"dup":156}],478:[function(require,module,exports){
+},{"./decrypter":480,"./encrypter":481,"./modes/list.json":491,"dup":156}],480:[function(require,module,exports){
 arguments[4][157][0].apply(exports,arguments)
-},{"./aes":475,"./authCipher":476,"./modes":488,"./streamCipher":491,"cipher-base":522,"dup":157,"evp_bytestokey":560,"inherits":600,"safe-buffer":638}],479:[function(require,module,exports){
+},{"./aes":477,"./authCipher":478,"./modes":490,"./streamCipher":493,"cipher-base":524,"dup":157,"evp_bytestokey":562,"inherits":602,"safe-buffer":640}],481:[function(require,module,exports){
 arguments[4][158][0].apply(exports,arguments)
-},{"./aes":475,"./authCipher":476,"./modes":488,"./streamCipher":491,"cipher-base":522,"dup":158,"evp_bytestokey":560,"inherits":600,"safe-buffer":638}],480:[function(require,module,exports){
+},{"./aes":477,"./authCipher":478,"./modes":490,"./streamCipher":493,"cipher-base":524,"dup":158,"evp_bytestokey":562,"inherits":602,"safe-buffer":640}],482:[function(require,module,exports){
 arguments[4][159][0].apply(exports,arguments)
-},{"dup":159,"safe-buffer":638}],481:[function(require,module,exports){
+},{"dup":159,"safe-buffer":640}],483:[function(require,module,exports){
 arguments[4][160][0].apply(exports,arguments)
-},{"dup":160}],482:[function(require,module,exports){
+},{"dup":160}],484:[function(require,module,exports){
 arguments[4][161][0].apply(exports,arguments)
-},{"buffer-xor":517,"dup":161}],483:[function(require,module,exports){
+},{"buffer-xor":519,"dup":161}],485:[function(require,module,exports){
 arguments[4][162][0].apply(exports,arguments)
-},{"buffer-xor":517,"dup":162,"safe-buffer":638}],484:[function(require,module,exports){
+},{"buffer-xor":519,"dup":162,"safe-buffer":640}],486:[function(require,module,exports){
 arguments[4][163][0].apply(exports,arguments)
-},{"dup":163,"safe-buffer":638}],485:[function(require,module,exports){
+},{"dup":163,"safe-buffer":640}],487:[function(require,module,exports){
 arguments[4][164][0].apply(exports,arguments)
-},{"dup":164,"safe-buffer":638}],486:[function(require,module,exports){
+},{"dup":164,"safe-buffer":640}],488:[function(require,module,exports){
 arguments[4][165][0].apply(exports,arguments)
-},{"../incr32":481,"buffer-xor":517,"dup":165,"safe-buffer":638}],487:[function(require,module,exports){
+},{"../incr32":483,"buffer-xor":519,"dup":165,"safe-buffer":640}],489:[function(require,module,exports){
 arguments[4][166][0].apply(exports,arguments)
-},{"dup":166}],488:[function(require,module,exports){
+},{"dup":166}],490:[function(require,module,exports){
 arguments[4][167][0].apply(exports,arguments)
-},{"./cbc":482,"./cfb":483,"./cfb1":484,"./cfb8":485,"./ctr":486,"./ecb":487,"./list.json":489,"./ofb":490,"dup":167}],489:[function(require,module,exports){
+},{"./cbc":484,"./cfb":485,"./cfb1":486,"./cfb8":487,"./ctr":488,"./ecb":489,"./list.json":491,"./ofb":492,"dup":167}],491:[function(require,module,exports){
 arguments[4][168][0].apply(exports,arguments)
-},{"dup":168}],490:[function(require,module,exports){
+},{"dup":168}],492:[function(require,module,exports){
 arguments[4][169][0].apply(exports,arguments)
-},{"buffer":518,"buffer-xor":517,"dup":169}],491:[function(require,module,exports){
+},{"buffer":520,"buffer-xor":519,"dup":169}],493:[function(require,module,exports){
 arguments[4][170][0].apply(exports,arguments)
-},{"./aes":475,"cipher-base":522,"dup":170,"inherits":600,"safe-buffer":638}],492:[function(require,module,exports){
+},{"./aes":477,"cipher-base":524,"dup":170,"inherits":602,"safe-buffer":640}],494:[function(require,module,exports){
 arguments[4][171][0].apply(exports,arguments)
-},{"browserify-aes/browser":477,"browserify-aes/modes":488,"browserify-des":493,"browserify-des/modes":494,"dup":171,"evp_bytestokey":560}],493:[function(require,module,exports){
+},{"browserify-aes/browser":479,"browserify-aes/modes":490,"browserify-des":495,"browserify-des/modes":496,"dup":171,"evp_bytestokey":562}],495:[function(require,module,exports){
 arguments[4][172][0].apply(exports,arguments)
-},{"cipher-base":522,"des.js":530,"dup":172,"inherits":600,"safe-buffer":638}],494:[function(require,module,exports){
+},{"cipher-base":524,"des.js":532,"dup":172,"inherits":602,"safe-buffer":640}],496:[function(require,module,exports){
 arguments[4][173][0].apply(exports,arguments)
-},{"dup":173}],495:[function(require,module,exports){
+},{"dup":173}],497:[function(require,module,exports){
 arguments[4][174][0].apply(exports,arguments)
-},{"bn.js":472,"buffer":518,"dup":174,"randombytes":635}],496:[function(require,module,exports){
+},{"bn.js":474,"buffer":520,"dup":174,"randombytes":637}],498:[function(require,module,exports){
 arguments[4][176][0].apply(exports,arguments)
-},{"./browser/algorithms.json":497,"dup":176}],497:[function(require,module,exports){
+},{"./browser/algorithms.json":499,"dup":176}],499:[function(require,module,exports){
 arguments[4][177][0].apply(exports,arguments)
-},{"dup":177}],498:[function(require,module,exports){
+},{"dup":177}],500:[function(require,module,exports){
 arguments[4][178][0].apply(exports,arguments)
-},{"dup":178}],499:[function(require,module,exports){
+},{"dup":178}],501:[function(require,module,exports){
 arguments[4][179][0].apply(exports,arguments)
-},{"./algorithms.json":497,"./sign":500,"./verify":501,"create-hash":525,"dup":179,"inherits":600,"readable-stream":516,"safe-buffer":638}],500:[function(require,module,exports){
+},{"./algorithms.json":499,"./sign":502,"./verify":503,"create-hash":527,"dup":179,"inherits":602,"readable-stream":518,"safe-buffer":640}],502:[function(require,module,exports){
 arguments[4][180][0].apply(exports,arguments)
-},{"./curves.json":498,"bn.js":472,"browserify-rsa":495,"create-hmac":527,"dup":180,"elliptic":541,"parse-asn1":616,"safe-buffer":638}],501:[function(require,module,exports){
+},{"./curves.json":500,"bn.js":474,"browserify-rsa":497,"create-hmac":529,"dup":180,"elliptic":543,"parse-asn1":618,"safe-buffer":640}],503:[function(require,module,exports){
 arguments[4][181][0].apply(exports,arguments)
-},{"./curves.json":498,"bn.js":472,"dup":181,"elliptic":541,"parse-asn1":616,"safe-buffer":638}],502:[function(require,module,exports){
+},{"./curves.json":500,"bn.js":474,"dup":181,"elliptic":543,"parse-asn1":618,"safe-buffer":640}],504:[function(require,module,exports){
 arguments[4][339][0].apply(exports,arguments)
-},{"dup":339}],503:[function(require,module,exports){
+},{"dup":339}],505:[function(require,module,exports){
 arguments[4][340][0].apply(exports,arguments)
-},{"./_stream_readable":505,"./_stream_writable":507,"_process":623,"dup":340,"inherits":600}],504:[function(require,module,exports){
+},{"./_stream_readable":507,"./_stream_writable":509,"_process":625,"dup":340,"inherits":602}],506:[function(require,module,exports){
 arguments[4][341][0].apply(exports,arguments)
-},{"./_stream_transform":506,"dup":341,"inherits":600}],505:[function(require,module,exports){
+},{"./_stream_transform":508,"dup":341,"inherits":602}],507:[function(require,module,exports){
 arguments[4][342][0].apply(exports,arguments)
-},{"../errors":502,"./_stream_duplex":503,"./internal/streams/async_iterator":508,"./internal/streams/buffer_list":509,"./internal/streams/destroy":510,"./internal/streams/from":512,"./internal/streams/state":514,"./internal/streams/stream":515,"_process":623,"buffer":518,"dup":342,"events":559,"inherits":600,"string_decoder/":682,"util":474}],506:[function(require,module,exports){
+},{"../errors":504,"./_stream_duplex":505,"./internal/streams/async_iterator":510,"./internal/streams/buffer_list":511,"./internal/streams/destroy":512,"./internal/streams/from":514,"./internal/streams/state":516,"./internal/streams/stream":517,"_process":625,"buffer":520,"dup":342,"events":561,"inherits":602,"string_decoder/":684,"util":476}],508:[function(require,module,exports){
 arguments[4][343][0].apply(exports,arguments)
-},{"../errors":502,"./_stream_duplex":503,"dup":343,"inherits":600}],507:[function(require,module,exports){
+},{"../errors":504,"./_stream_duplex":505,"dup":343,"inherits":602}],509:[function(require,module,exports){
 arguments[4][344][0].apply(exports,arguments)
-},{"../errors":502,"./_stream_duplex":503,"./internal/streams/destroy":510,"./internal/streams/state":514,"./internal/streams/stream":515,"_process":623,"buffer":518,"dup":344,"inherits":600,"util-deprecate":686}],508:[function(require,module,exports){
+},{"../errors":504,"./_stream_duplex":505,"./internal/streams/destroy":512,"./internal/streams/state":516,"./internal/streams/stream":517,"_process":625,"buffer":520,"dup":344,"inherits":602,"util-deprecate":688}],510:[function(require,module,exports){
 arguments[4][345][0].apply(exports,arguments)
-},{"./end-of-stream":511,"_process":623,"dup":345}],509:[function(require,module,exports){
+},{"./end-of-stream":513,"_process":625,"dup":345}],511:[function(require,module,exports){
 arguments[4][346][0].apply(exports,arguments)
-},{"buffer":518,"dup":346,"util":474}],510:[function(require,module,exports){
+},{"buffer":520,"dup":346,"util":476}],512:[function(require,module,exports){
 arguments[4][347][0].apply(exports,arguments)
-},{"_process":623,"dup":347}],511:[function(require,module,exports){
+},{"_process":625,"dup":347}],513:[function(require,module,exports){
 arguments[4][348][0].apply(exports,arguments)
-},{"../../../errors":502,"dup":348}],512:[function(require,module,exports){
+},{"../../../errors":504,"dup":348}],514:[function(require,module,exports){
 arguments[4][349][0].apply(exports,arguments)
-},{"dup":349}],513:[function(require,module,exports){
+},{"dup":349}],515:[function(require,module,exports){
 arguments[4][350][0].apply(exports,arguments)
-},{"../../../errors":502,"./end-of-stream":511,"dup":350}],514:[function(require,module,exports){
+},{"../../../errors":504,"./end-of-stream":513,"dup":350}],516:[function(require,module,exports){
 arguments[4][351][0].apply(exports,arguments)
-},{"../../../errors":502,"dup":351}],515:[function(require,module,exports){
+},{"../../../errors":504,"dup":351}],517:[function(require,module,exports){
 arguments[4][352][0].apply(exports,arguments)
-},{"dup":352,"events":559}],516:[function(require,module,exports){
+},{"dup":352,"events":561}],518:[function(require,module,exports){
 arguments[4][353][0].apply(exports,arguments)
-},{"./lib/_stream_duplex.js":503,"./lib/_stream_passthrough.js":504,"./lib/_stream_readable.js":505,"./lib/_stream_transform.js":506,"./lib/_stream_writable.js":507,"./lib/internal/streams/end-of-stream.js":511,"./lib/internal/streams/pipeline.js":513,"dup":353}],517:[function(require,module,exports){
+},{"./lib/_stream_duplex.js":505,"./lib/_stream_passthrough.js":506,"./lib/_stream_readable.js":507,"./lib/_stream_transform.js":508,"./lib/_stream_writable.js":509,"./lib/internal/streams/end-of-stream.js":513,"./lib/internal/streams/pipeline.js":515,"dup":353}],519:[function(require,module,exports){
 arguments[4][183][0].apply(exports,arguments)
-},{"buffer":518,"dup":183}],518:[function(require,module,exports){
+},{"buffer":520,"dup":183}],520:[function(require,module,exports){
 (function (Buffer){(function (){
 /*!
  * The buffer module from node.js, for the browser.
@@ -81705,7 +88068,7 @@ function numberIsNaN (obj) {
 }
 
 }).call(this)}).call(this,require("buffer").Buffer)
-},{"base64-js":471,"buffer":518,"ieee754":599}],519:[function(require,module,exports){
+},{"base64-js":473,"buffer":520,"ieee754":601}],521:[function(require,module,exports){
 module.exports = {
   "100": "Continue",
   "101": "Switching Protocols",
@@ -81771,7 +88134,7 @@ module.exports = {
   "511": "Network Authentication Required"
 }
 
-},{}],520:[function(require,module,exports){
+},{}],522:[function(require,module,exports){
 'use strict';
 
 var GetIntrinsic = require('get-intrinsic');
@@ -81788,7 +88151,7 @@ module.exports = function callBoundIntrinsic(name, allowMissing) {
 	return intrinsic;
 };
 
-},{"./":521,"get-intrinsic":564}],521:[function(require,module,exports){
+},{"./":523,"get-intrinsic":566}],523:[function(require,module,exports){
 'use strict';
 
 var bind = require('function-bind');
@@ -81837,77 +88200,77 @@ if ($defineProperty) {
 	module.exports.apply = applyBind;
 }
 
-},{"function-bind":563,"get-intrinsic":564}],522:[function(require,module,exports){
+},{"function-bind":565,"get-intrinsic":566}],524:[function(require,module,exports){
 arguments[4][193][0].apply(exports,arguments)
-},{"dup":193,"inherits":600,"safe-buffer":638,"stream":648,"string_decoder":682}],523:[function(require,module,exports){
+},{"dup":193,"inherits":602,"safe-buffer":640,"stream":650,"string_decoder":684}],525:[function(require,module,exports){
 arguments[4][200][0].apply(exports,arguments)
-},{"bn.js":524,"buffer":518,"dup":200,"elliptic":541}],524:[function(require,module,exports){
+},{"bn.js":526,"buffer":520,"dup":200,"elliptic":543}],526:[function(require,module,exports){
 arguments[4][152][0].apply(exports,arguments)
-},{"buffer":474,"dup":152}],525:[function(require,module,exports){
+},{"buffer":476,"dup":152}],527:[function(require,module,exports){
 arguments[4][201][0].apply(exports,arguments)
-},{"cipher-base":522,"dup":201,"inherits":600,"md5.js":605,"ripemd160":637,"sha.js":641}],526:[function(require,module,exports){
+},{"cipher-base":524,"dup":201,"inherits":602,"md5.js":607,"ripemd160":639,"sha.js":643}],528:[function(require,module,exports){
 arguments[4][202][0].apply(exports,arguments)
-},{"dup":202,"md5.js":605}],527:[function(require,module,exports){
+},{"dup":202,"md5.js":607}],529:[function(require,module,exports){
 arguments[4][203][0].apply(exports,arguments)
-},{"./legacy":528,"cipher-base":522,"create-hash/md5":526,"dup":203,"inherits":600,"ripemd160":637,"safe-buffer":638,"sha.js":641}],528:[function(require,module,exports){
+},{"./legacy":530,"cipher-base":524,"create-hash/md5":528,"dup":203,"inherits":602,"ripemd160":639,"safe-buffer":640,"sha.js":643}],530:[function(require,module,exports){
 arguments[4][204][0].apply(exports,arguments)
-},{"cipher-base":522,"dup":204,"inherits":600,"safe-buffer":638}],529:[function(require,module,exports){
+},{"cipher-base":524,"dup":204,"inherits":602,"safe-buffer":640}],531:[function(require,module,exports){
 arguments[4][205][0].apply(exports,arguments)
-},{"browserify-cipher":492,"browserify-sign":499,"browserify-sign/algos":496,"create-ecdh":523,"create-hash":525,"create-hmac":527,"diffie-hellman":536,"dup":205,"pbkdf2":617,"public-encrypt":624,"randombytes":635,"randomfill":636}],530:[function(require,module,exports){
+},{"browserify-cipher":494,"browserify-sign":501,"browserify-sign/algos":498,"create-ecdh":525,"create-hash":527,"create-hmac":529,"diffie-hellman":538,"dup":205,"pbkdf2":619,"public-encrypt":626,"randombytes":637,"randomfill":638}],532:[function(require,module,exports){
 arguments[4][207][0].apply(exports,arguments)
-},{"./des/cbc":531,"./des/cipher":532,"./des/des":533,"./des/ede":534,"./des/utils":535,"dup":207}],531:[function(require,module,exports){
+},{"./des/cbc":533,"./des/cipher":534,"./des/des":535,"./des/ede":536,"./des/utils":537,"dup":207}],533:[function(require,module,exports){
 arguments[4][208][0].apply(exports,arguments)
-},{"dup":208,"inherits":600,"minimalistic-assert":608}],532:[function(require,module,exports){
+},{"dup":208,"inherits":602,"minimalistic-assert":610}],534:[function(require,module,exports){
 arguments[4][209][0].apply(exports,arguments)
-},{"dup":209,"minimalistic-assert":608}],533:[function(require,module,exports){
+},{"dup":209,"minimalistic-assert":610}],535:[function(require,module,exports){
 arguments[4][210][0].apply(exports,arguments)
-},{"./cipher":532,"./utils":535,"dup":210,"inherits":600,"minimalistic-assert":608}],534:[function(require,module,exports){
+},{"./cipher":534,"./utils":537,"dup":210,"inherits":602,"minimalistic-assert":610}],536:[function(require,module,exports){
 arguments[4][211][0].apply(exports,arguments)
-},{"./cipher":532,"./des":533,"dup":211,"inherits":600,"minimalistic-assert":608}],535:[function(require,module,exports){
+},{"./cipher":534,"./des":535,"dup":211,"inherits":602,"minimalistic-assert":610}],537:[function(require,module,exports){
 arguments[4][212][0].apply(exports,arguments)
-},{"dup":212}],536:[function(require,module,exports){
+},{"dup":212}],538:[function(require,module,exports){
 arguments[4][213][0].apply(exports,arguments)
-},{"./lib/dh":537,"./lib/generatePrime":538,"./lib/primes.json":539,"buffer":518,"dup":213}],537:[function(require,module,exports){
+},{"./lib/dh":539,"./lib/generatePrime":540,"./lib/primes.json":541,"buffer":520,"dup":213}],539:[function(require,module,exports){
 arguments[4][214][0].apply(exports,arguments)
-},{"./generatePrime":538,"bn.js":540,"buffer":518,"dup":214,"miller-rabin":606,"randombytes":635}],538:[function(require,module,exports){
+},{"./generatePrime":540,"bn.js":542,"buffer":520,"dup":214,"miller-rabin":608,"randombytes":637}],540:[function(require,module,exports){
 arguments[4][215][0].apply(exports,arguments)
-},{"bn.js":540,"dup":215,"miller-rabin":606,"randombytes":635}],539:[function(require,module,exports){
+},{"bn.js":542,"dup":215,"miller-rabin":608,"randombytes":637}],541:[function(require,module,exports){
 arguments[4][216][0].apply(exports,arguments)
-},{"dup":216}],540:[function(require,module,exports){
+},{"dup":216}],542:[function(require,module,exports){
 arguments[4][152][0].apply(exports,arguments)
-},{"buffer":474,"dup":152}],541:[function(require,module,exports){
+},{"buffer":476,"dup":152}],543:[function(require,module,exports){
 arguments[4][217][0].apply(exports,arguments)
-},{"../package.json":557,"./elliptic/curve":544,"./elliptic/curves":547,"./elliptic/ec":548,"./elliptic/eddsa":551,"./elliptic/utils":555,"brorand":473,"dup":217}],542:[function(require,module,exports){
+},{"../package.json":559,"./elliptic/curve":546,"./elliptic/curves":549,"./elliptic/ec":550,"./elliptic/eddsa":553,"./elliptic/utils":557,"brorand":475,"dup":217}],544:[function(require,module,exports){
 arguments[4][218][0].apply(exports,arguments)
-},{"../utils":555,"bn.js":556,"dup":218}],543:[function(require,module,exports){
+},{"../utils":557,"bn.js":558,"dup":218}],545:[function(require,module,exports){
 arguments[4][219][0].apply(exports,arguments)
-},{"../utils":555,"./base":542,"bn.js":556,"dup":219,"inherits":600}],544:[function(require,module,exports){
+},{"../utils":557,"./base":544,"bn.js":558,"dup":219,"inherits":602}],546:[function(require,module,exports){
 arguments[4][220][0].apply(exports,arguments)
-},{"./base":542,"./edwards":543,"./mont":545,"./short":546,"dup":220}],545:[function(require,module,exports){
+},{"./base":544,"./edwards":545,"./mont":547,"./short":548,"dup":220}],547:[function(require,module,exports){
 arguments[4][221][0].apply(exports,arguments)
-},{"../utils":555,"./base":542,"bn.js":556,"dup":221,"inherits":600}],546:[function(require,module,exports){
+},{"../utils":557,"./base":544,"bn.js":558,"dup":221,"inherits":602}],548:[function(require,module,exports){
 arguments[4][222][0].apply(exports,arguments)
-},{"../utils":555,"./base":542,"bn.js":556,"dup":222,"inherits":600}],547:[function(require,module,exports){
+},{"../utils":557,"./base":544,"bn.js":558,"dup":222,"inherits":602}],549:[function(require,module,exports){
 arguments[4][223][0].apply(exports,arguments)
-},{"./curve":544,"./precomputed/secp256k1":554,"./utils":555,"dup":223,"hash.js":585}],548:[function(require,module,exports){
+},{"./curve":546,"./precomputed/secp256k1":556,"./utils":557,"dup":223,"hash.js":587}],550:[function(require,module,exports){
 arguments[4][224][0].apply(exports,arguments)
-},{"../curves":547,"../utils":555,"./key":549,"./signature":550,"bn.js":556,"brorand":473,"dup":224,"hmac-drbg":597}],549:[function(require,module,exports){
+},{"../curves":549,"../utils":557,"./key":551,"./signature":552,"bn.js":558,"brorand":475,"dup":224,"hmac-drbg":599}],551:[function(require,module,exports){
 arguments[4][225][0].apply(exports,arguments)
-},{"../utils":555,"bn.js":556,"dup":225}],550:[function(require,module,exports){
+},{"../utils":557,"bn.js":558,"dup":225}],552:[function(require,module,exports){
 arguments[4][226][0].apply(exports,arguments)
-},{"../utils":555,"bn.js":556,"dup":226}],551:[function(require,module,exports){
+},{"../utils":557,"bn.js":558,"dup":226}],553:[function(require,module,exports){
 arguments[4][227][0].apply(exports,arguments)
-},{"../curves":547,"../utils":555,"./key":552,"./signature":553,"dup":227,"hash.js":585}],552:[function(require,module,exports){
+},{"../curves":549,"../utils":557,"./key":554,"./signature":555,"dup":227,"hash.js":587}],554:[function(require,module,exports){
 arguments[4][228][0].apply(exports,arguments)
-},{"../utils":555,"dup":228}],553:[function(require,module,exports){
+},{"../utils":557,"dup":228}],555:[function(require,module,exports){
 arguments[4][229][0].apply(exports,arguments)
-},{"../utils":555,"bn.js":556,"dup":229}],554:[function(require,module,exports){
+},{"../utils":557,"bn.js":558,"dup":229}],556:[function(require,module,exports){
 arguments[4][230][0].apply(exports,arguments)
-},{"dup":230}],555:[function(require,module,exports){
+},{"dup":230}],557:[function(require,module,exports){
 arguments[4][231][0].apply(exports,arguments)
-},{"bn.js":556,"dup":231,"minimalistic-assert":608,"minimalistic-crypto-utils":609}],556:[function(require,module,exports){
+},{"bn.js":558,"dup":231,"minimalistic-assert":610,"minimalistic-crypto-utils":611}],558:[function(require,module,exports){
 arguments[4][152][0].apply(exports,arguments)
-},{"buffer":474,"dup":152}],557:[function(require,module,exports){
+},{"buffer":476,"dup":152}],559:[function(require,module,exports){
 module.exports={
   "_from": "elliptic@^6.5.3",
   "_id": "elliptic@6.5.4",
@@ -81994,7 +88357,7 @@ module.exports={
   "version": "6.5.4"
 }
 
-},{}],558:[function(require,module,exports){
+},{}],560:[function(require,module,exports){
 'use strict';
 
 var GetIntrinsic = require('get-intrinsic');
@@ -82011,7 +88374,7 @@ if ($gOPD) {
 
 module.exports = $gOPD;
 
-},{"get-intrinsic":564}],559:[function(require,module,exports){
+},{"get-intrinsic":566}],561:[function(require,module,exports){
 // Copyright Joyent, Inc. and other Node contributors.
 //
 // Permission is hereby granted, free of charge, to any person obtaining a
@@ -82510,9 +88873,9 @@ function eventTargetAgnosticAddListener(emitter, name, listener, flags) {
   }
 }
 
-},{}],560:[function(require,module,exports){
+},{}],562:[function(require,module,exports){
 arguments[4][261][0].apply(exports,arguments)
-},{"dup":261,"md5.js":605,"safe-buffer":638}],561:[function(require,module,exports){
+},{"dup":261,"md5.js":607,"safe-buffer":640}],563:[function(require,module,exports){
 
 var hasOwn = Object.prototype.hasOwnProperty;
 var toString = Object.prototype.toString;
@@ -82536,7 +88899,7 @@ module.exports = function forEach (obj, fn, ctx) {
 };
 
 
-},{}],562:[function(require,module,exports){
+},{}],564:[function(require,module,exports){
 'use strict';
 
 /* eslint no-invalid-this: 1 */
@@ -82590,14 +88953,14 @@ module.exports = function bind(that) {
     return bound;
 };
 
-},{}],563:[function(require,module,exports){
+},{}],565:[function(require,module,exports){
 'use strict';
 
 var implementation = require('./implementation');
 
 module.exports = Function.prototype.bind || implementation;
 
-},{"./implementation":562}],564:[function(require,module,exports){
+},{"./implementation":564}],566:[function(require,module,exports){
 'use strict';
 
 var undefined;
@@ -82929,7 +89292,7 @@ module.exports = function GetIntrinsic(name, allowMissing) {
 	return value;
 };
 
-},{"function-bind":563,"has":568,"has-symbols":565}],565:[function(require,module,exports){
+},{"function-bind":565,"has":570,"has-symbols":567}],567:[function(require,module,exports){
 'use strict';
 
 var origSymbol = typeof Symbol !== 'undefined' && Symbol;
@@ -82944,7 +89307,7 @@ module.exports = function hasNativeSymbols() {
 	return hasSymbolSham();
 };
 
-},{"./shams":566}],566:[function(require,module,exports){
+},{"./shams":568}],568:[function(require,module,exports){
 'use strict';
 
 /* eslint complexity: [2, 18], max-statements: [2, 33] */
@@ -82988,7 +89351,7 @@ module.exports = function hasSymbols() {
 	return true;
 };
 
-},{}],567:[function(require,module,exports){
+},{}],569:[function(require,module,exports){
 'use strict';
 
 var hasSymbols = require('has-symbols/shams');
@@ -82997,72 +89360,72 @@ module.exports = function hasToStringTagShams() {
 	return hasSymbols() && !!Symbol.toStringTag;
 };
 
-},{"has-symbols/shams":566}],568:[function(require,module,exports){
+},{"has-symbols/shams":568}],570:[function(require,module,exports){
 'use strict';
 
 var bind = require('function-bind');
 
 module.exports = bind.call(Function.call, Object.prototype.hasOwnProperty);
 
-},{"function-bind":563}],569:[function(require,module,exports){
+},{"function-bind":565}],571:[function(require,module,exports){
 arguments[4][263][0].apply(exports,arguments)
-},{"dup":263,"inherits":600,"readable-stream":584,"safe-buffer":638}],570:[function(require,module,exports){
+},{"dup":263,"inherits":602,"readable-stream":586,"safe-buffer":640}],572:[function(require,module,exports){
 arguments[4][339][0].apply(exports,arguments)
-},{"dup":339}],571:[function(require,module,exports){
+},{"dup":339}],573:[function(require,module,exports){
 arguments[4][340][0].apply(exports,arguments)
-},{"./_stream_readable":573,"./_stream_writable":575,"_process":623,"dup":340,"inherits":600}],572:[function(require,module,exports){
+},{"./_stream_readable":575,"./_stream_writable":577,"_process":625,"dup":340,"inherits":602}],574:[function(require,module,exports){
 arguments[4][341][0].apply(exports,arguments)
-},{"./_stream_transform":574,"dup":341,"inherits":600}],573:[function(require,module,exports){
+},{"./_stream_transform":576,"dup":341,"inherits":602}],575:[function(require,module,exports){
 arguments[4][342][0].apply(exports,arguments)
-},{"../errors":570,"./_stream_duplex":571,"./internal/streams/async_iterator":576,"./internal/streams/buffer_list":577,"./internal/streams/destroy":578,"./internal/streams/from":580,"./internal/streams/state":582,"./internal/streams/stream":583,"_process":623,"buffer":518,"dup":342,"events":559,"inherits":600,"string_decoder/":682,"util":474}],574:[function(require,module,exports){
+},{"../errors":572,"./_stream_duplex":573,"./internal/streams/async_iterator":578,"./internal/streams/buffer_list":579,"./internal/streams/destroy":580,"./internal/streams/from":582,"./internal/streams/state":584,"./internal/streams/stream":585,"_process":625,"buffer":520,"dup":342,"events":561,"inherits":602,"string_decoder/":684,"util":476}],576:[function(require,module,exports){
 arguments[4][343][0].apply(exports,arguments)
-},{"../errors":570,"./_stream_duplex":571,"dup":343,"inherits":600}],575:[function(require,module,exports){
+},{"../errors":572,"./_stream_duplex":573,"dup":343,"inherits":602}],577:[function(require,module,exports){
 arguments[4][344][0].apply(exports,arguments)
-},{"../errors":570,"./_stream_duplex":571,"./internal/streams/destroy":578,"./internal/streams/state":582,"./internal/streams/stream":583,"_process":623,"buffer":518,"dup":344,"inherits":600,"util-deprecate":686}],576:[function(require,module,exports){
+},{"../errors":572,"./_stream_duplex":573,"./internal/streams/destroy":580,"./internal/streams/state":584,"./internal/streams/stream":585,"_process":625,"buffer":520,"dup":344,"inherits":602,"util-deprecate":688}],578:[function(require,module,exports){
 arguments[4][345][0].apply(exports,arguments)
-},{"./end-of-stream":579,"_process":623,"dup":345}],577:[function(require,module,exports){
+},{"./end-of-stream":581,"_process":625,"dup":345}],579:[function(require,module,exports){
 arguments[4][346][0].apply(exports,arguments)
-},{"buffer":518,"dup":346,"util":474}],578:[function(require,module,exports){
+},{"buffer":520,"dup":346,"util":476}],580:[function(require,module,exports){
 arguments[4][347][0].apply(exports,arguments)
-},{"_process":623,"dup":347}],579:[function(require,module,exports){
+},{"_process":625,"dup":347}],581:[function(require,module,exports){
 arguments[4][348][0].apply(exports,arguments)
-},{"../../../errors":570,"dup":348}],580:[function(require,module,exports){
+},{"../../../errors":572,"dup":348}],582:[function(require,module,exports){
 arguments[4][349][0].apply(exports,arguments)
-},{"dup":349}],581:[function(require,module,exports){
+},{"dup":349}],583:[function(require,module,exports){
 arguments[4][350][0].apply(exports,arguments)
-},{"../../../errors":570,"./end-of-stream":579,"dup":350}],582:[function(require,module,exports){
+},{"../../../errors":572,"./end-of-stream":581,"dup":350}],584:[function(require,module,exports){
 arguments[4][351][0].apply(exports,arguments)
-},{"../../../errors":570,"dup":351}],583:[function(require,module,exports){
+},{"../../../errors":572,"dup":351}],585:[function(require,module,exports){
 arguments[4][352][0].apply(exports,arguments)
-},{"dup":352,"events":559}],584:[function(require,module,exports){
+},{"dup":352,"events":561}],586:[function(require,module,exports){
 arguments[4][353][0].apply(exports,arguments)
-},{"./lib/_stream_duplex.js":571,"./lib/_stream_passthrough.js":572,"./lib/_stream_readable.js":573,"./lib/_stream_transform.js":574,"./lib/_stream_writable.js":575,"./lib/internal/streams/end-of-stream.js":579,"./lib/internal/streams/pipeline.js":581,"dup":353}],585:[function(require,module,exports){
+},{"./lib/_stream_duplex.js":573,"./lib/_stream_passthrough.js":574,"./lib/_stream_readable.js":575,"./lib/_stream_transform.js":576,"./lib/_stream_writable.js":577,"./lib/internal/streams/end-of-stream.js":581,"./lib/internal/streams/pipeline.js":583,"dup":353}],587:[function(require,module,exports){
 arguments[4][264][0].apply(exports,arguments)
-},{"./hash/common":586,"./hash/hmac":587,"./hash/ripemd":588,"./hash/sha":589,"./hash/utils":596,"dup":264}],586:[function(require,module,exports){
+},{"./hash/common":588,"./hash/hmac":589,"./hash/ripemd":590,"./hash/sha":591,"./hash/utils":598,"dup":264}],588:[function(require,module,exports){
 arguments[4][265][0].apply(exports,arguments)
-},{"./utils":596,"dup":265,"minimalistic-assert":608}],587:[function(require,module,exports){
+},{"./utils":598,"dup":265,"minimalistic-assert":610}],589:[function(require,module,exports){
 arguments[4][266][0].apply(exports,arguments)
-},{"./utils":596,"dup":266,"minimalistic-assert":608}],588:[function(require,module,exports){
+},{"./utils":598,"dup":266,"minimalistic-assert":610}],590:[function(require,module,exports){
 arguments[4][267][0].apply(exports,arguments)
-},{"./common":586,"./utils":596,"dup":267}],589:[function(require,module,exports){
+},{"./common":588,"./utils":598,"dup":267}],591:[function(require,module,exports){
 arguments[4][268][0].apply(exports,arguments)
-},{"./sha/1":590,"./sha/224":591,"./sha/256":592,"./sha/384":593,"./sha/512":594,"dup":268}],590:[function(require,module,exports){
+},{"./sha/1":592,"./sha/224":593,"./sha/256":594,"./sha/384":595,"./sha/512":596,"dup":268}],592:[function(require,module,exports){
 arguments[4][269][0].apply(exports,arguments)
-},{"../common":586,"../utils":596,"./common":595,"dup":269}],591:[function(require,module,exports){
+},{"../common":588,"../utils":598,"./common":597,"dup":269}],593:[function(require,module,exports){
 arguments[4][270][0].apply(exports,arguments)
-},{"../utils":596,"./256":592,"dup":270}],592:[function(require,module,exports){
+},{"../utils":598,"./256":594,"dup":270}],594:[function(require,module,exports){
 arguments[4][271][0].apply(exports,arguments)
-},{"../common":586,"../utils":596,"./common":595,"dup":271,"minimalistic-assert":608}],593:[function(require,module,exports){
+},{"../common":588,"../utils":598,"./common":597,"dup":271,"minimalistic-assert":610}],595:[function(require,module,exports){
 arguments[4][272][0].apply(exports,arguments)
-},{"../utils":596,"./512":594,"dup":272}],594:[function(require,module,exports){
+},{"../utils":598,"./512":596,"dup":272}],596:[function(require,module,exports){
 arguments[4][273][0].apply(exports,arguments)
-},{"../common":586,"../utils":596,"dup":273,"minimalistic-assert":608}],595:[function(require,module,exports){
+},{"../common":588,"../utils":598,"dup":273,"minimalistic-assert":610}],597:[function(require,module,exports){
 arguments[4][274][0].apply(exports,arguments)
-},{"../utils":596,"dup":274}],596:[function(require,module,exports){
+},{"../utils":598,"dup":274}],598:[function(require,module,exports){
 arguments[4][275][0].apply(exports,arguments)
-},{"dup":275,"inherits":600,"minimalistic-assert":608}],597:[function(require,module,exports){
+},{"dup":275,"inherits":602,"minimalistic-assert":610}],599:[function(require,module,exports){
 arguments[4][276][0].apply(exports,arguments)
-},{"dup":276,"hash.js":585,"minimalistic-assert":608,"minimalistic-crypto-utils":609}],598:[function(require,module,exports){
+},{"dup":276,"hash.js":587,"minimalistic-assert":610,"minimalistic-crypto-utils":611}],600:[function(require,module,exports){
 var http = require('http')
 var url = require('url')
 
@@ -83095,7 +89458,7 @@ function validateParams (params) {
   return params
 }
 
-},{"http":663,"url":684}],599:[function(require,module,exports){
+},{"http":665,"url":686}],601:[function(require,module,exports){
 /*! ieee754. BSD-3-Clause License. Feross Aboukhadijeh <https://feross.org/opensource> */
 exports.read = function (buffer, offset, isLE, mLen, nBytes) {
   var e, m
@@ -83182,9 +89545,9 @@ exports.write = function (buffer, value, offset, isLE, mLen, nBytes) {
   buffer[offset + i - d] |= s * 128
 }
 
-},{}],600:[function(require,module,exports){
+},{}],602:[function(require,module,exports){
 arguments[4][279][0].apply(exports,arguments)
-},{"dup":279}],601:[function(require,module,exports){
+},{"dup":279}],603:[function(require,module,exports){
 'use strict';
 
 var hasToStringTag = require('has-tostringtag/shams')();
@@ -83219,7 +89582,7 @@ isStandardArguments.isLegacyArguments = isLegacyArguments; // for tests
 
 module.exports = supportsStandardArguments ? isStandardArguments : isLegacyArguments;
 
-},{"call-bind/callBound":520,"has-tostringtag/shams":567}],602:[function(require,module,exports){
+},{"call-bind/callBound":522,"has-tostringtag/shams":569}],604:[function(require,module,exports){
 /*!
  * Determine if an object is a Buffer
  *
@@ -83242,7 +89605,7 @@ function isSlowBuffer (obj) {
   return typeof obj.readFloatLE === 'function' && typeof obj.slice === 'function' && isBuffer(obj.slice(0, 0))
 }
 
-},{}],603:[function(require,module,exports){
+},{}],605:[function(require,module,exports){
 'use strict';
 
 var toStr = Object.prototype.toString;
@@ -83282,7 +89645,7 @@ module.exports = function isGeneratorFunction(fn) {
 	return getProto(fn) === GeneratorFunction;
 };
 
-},{"has-tostringtag/shams":567}],604:[function(require,module,exports){
+},{"has-tostringtag/shams":569}],606:[function(require,module,exports){
 (function (global){(function (){
 'use strict';
 
@@ -83346,19 +89709,19 @@ module.exports = function isTypedArray(value) {
 };
 
 }).call(this)}).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"available-typed-arrays":470,"call-bind/callBound":520,"es-abstract/helpers/getOwnPropertyDescriptor":558,"foreach":561,"has-tostringtag/shams":567}],605:[function(require,module,exports){
+},{"available-typed-arrays":472,"call-bind/callBound":522,"es-abstract/helpers/getOwnPropertyDescriptor":560,"foreach":563,"has-tostringtag/shams":569}],607:[function(require,module,exports){
 arguments[4][289][0].apply(exports,arguments)
-},{"dup":289,"hash-base":569,"inherits":600,"safe-buffer":638}],606:[function(require,module,exports){
+},{"dup":289,"hash-base":571,"inherits":602,"safe-buffer":640}],608:[function(require,module,exports){
 arguments[4][290][0].apply(exports,arguments)
-},{"bn.js":607,"brorand":473,"dup":290}],607:[function(require,module,exports){
+},{"bn.js":609,"brorand":475,"dup":290}],609:[function(require,module,exports){
 arguments[4][152][0].apply(exports,arguments)
-},{"buffer":474,"dup":152}],608:[function(require,module,exports){
+},{"buffer":476,"dup":152}],610:[function(require,module,exports){
 arguments[4][291][0].apply(exports,arguments)
-},{"dup":291}],609:[function(require,module,exports){
+},{"dup":291}],611:[function(require,module,exports){
 arguments[4][292][0].apply(exports,arguments)
-},{"dup":292}],610:[function(require,module,exports){
+},{"dup":292}],612:[function(require,module,exports){
 arguments[4][316][0].apply(exports,arguments)
-},{"dup":316}],611:[function(require,module,exports){
+},{"dup":316}],613:[function(require,module,exports){
 exports.endianness = function () { return 'LE' };
 
 exports.hostname = function () {
@@ -83409,29 +89772,29 @@ exports.homedir = function () {
 	return '/'
 };
 
-},{}],612:[function(require,module,exports){
+},{}],614:[function(require,module,exports){
 arguments[4][318][0].apply(exports,arguments)
-},{"dup":318}],613:[function(require,module,exports){
+},{"dup":318}],615:[function(require,module,exports){
 arguments[4][319][0].apply(exports,arguments)
-},{"./certificate":614,"asn1.js":451,"dup":319}],614:[function(require,module,exports){
+},{"./certificate":616,"asn1.js":453,"dup":319}],616:[function(require,module,exports){
 arguments[4][320][0].apply(exports,arguments)
-},{"asn1.js":451,"dup":320}],615:[function(require,module,exports){
+},{"asn1.js":453,"dup":320}],617:[function(require,module,exports){
 arguments[4][321][0].apply(exports,arguments)
-},{"browserify-aes":477,"dup":321,"evp_bytestokey":560,"safe-buffer":638}],616:[function(require,module,exports){
+},{"browserify-aes":479,"dup":321,"evp_bytestokey":562,"safe-buffer":640}],618:[function(require,module,exports){
 arguments[4][322][0].apply(exports,arguments)
-},{"./aesid.json":612,"./asn1":613,"./fixProc":615,"browserify-aes":477,"dup":322,"pbkdf2":617,"safe-buffer":638}],617:[function(require,module,exports){
+},{"./aesid.json":614,"./asn1":615,"./fixProc":617,"browserify-aes":479,"dup":322,"pbkdf2":619,"safe-buffer":640}],619:[function(require,module,exports){
 arguments[4][324][0].apply(exports,arguments)
-},{"./lib/async":618,"./lib/sync":621,"dup":324}],618:[function(require,module,exports){
+},{"./lib/async":620,"./lib/sync":623,"dup":324}],620:[function(require,module,exports){
 arguments[4][325][0].apply(exports,arguments)
-},{"./default-encoding":619,"./precondition":620,"./sync":621,"./to-buffer":622,"dup":325,"safe-buffer":638}],619:[function(require,module,exports){
+},{"./default-encoding":621,"./precondition":622,"./sync":623,"./to-buffer":624,"dup":325,"safe-buffer":640}],621:[function(require,module,exports){
 arguments[4][326][0].apply(exports,arguments)
-},{"_process":623,"dup":326}],620:[function(require,module,exports){
+},{"_process":625,"dup":326}],622:[function(require,module,exports){
 arguments[4][327][0].apply(exports,arguments)
-},{"dup":327}],621:[function(require,module,exports){
+},{"dup":327}],623:[function(require,module,exports){
 arguments[4][328][0].apply(exports,arguments)
-},{"./default-encoding":619,"./precondition":620,"./to-buffer":622,"create-hash/md5":526,"dup":328,"ripemd160":637,"safe-buffer":638,"sha.js":641}],622:[function(require,module,exports){
+},{"./default-encoding":621,"./precondition":622,"./to-buffer":624,"create-hash/md5":528,"dup":328,"ripemd160":639,"safe-buffer":640,"sha.js":643}],624:[function(require,module,exports){
 arguments[4][329][0].apply(exports,arguments)
-},{"dup":329,"safe-buffer":638}],623:[function(require,module,exports){
+},{"dup":329,"safe-buffer":640}],625:[function(require,module,exports){
 // shim for using process in browser
 var process = module.exports = {};
 
@@ -83617,21 +89980,21 @@ process.chdir = function (dir) {
 };
 process.umask = function() { return 0; };
 
-},{}],624:[function(require,module,exports){
+},{}],626:[function(require,module,exports){
 arguments[4][330][0].apply(exports,arguments)
-},{"./privateDecrypt":627,"./publicEncrypt":628,"dup":330}],625:[function(require,module,exports){
+},{"./privateDecrypt":629,"./publicEncrypt":630,"dup":330}],627:[function(require,module,exports){
 arguments[4][331][0].apply(exports,arguments)
-},{"create-hash":525,"dup":331,"safe-buffer":638}],626:[function(require,module,exports){
+},{"create-hash":527,"dup":331,"safe-buffer":640}],628:[function(require,module,exports){
 arguments[4][152][0].apply(exports,arguments)
-},{"buffer":474,"dup":152}],627:[function(require,module,exports){
+},{"buffer":476,"dup":152}],629:[function(require,module,exports){
 arguments[4][332][0].apply(exports,arguments)
-},{"./mgf":625,"./withPublic":629,"./xor":630,"bn.js":626,"browserify-rsa":495,"create-hash":525,"dup":332,"parse-asn1":616,"safe-buffer":638}],628:[function(require,module,exports){
+},{"./mgf":627,"./withPublic":631,"./xor":632,"bn.js":628,"browserify-rsa":497,"create-hash":527,"dup":332,"parse-asn1":618,"safe-buffer":640}],630:[function(require,module,exports){
 arguments[4][333][0].apply(exports,arguments)
-},{"./mgf":625,"./withPublic":629,"./xor":630,"bn.js":626,"browserify-rsa":495,"create-hash":525,"dup":333,"parse-asn1":616,"randombytes":635,"safe-buffer":638}],629:[function(require,module,exports){
+},{"./mgf":627,"./withPublic":631,"./xor":632,"bn.js":628,"browserify-rsa":497,"create-hash":527,"dup":333,"parse-asn1":618,"randombytes":637,"safe-buffer":640}],631:[function(require,module,exports){
 arguments[4][334][0].apply(exports,arguments)
-},{"bn.js":626,"dup":334,"safe-buffer":638}],630:[function(require,module,exports){
+},{"bn.js":628,"dup":334,"safe-buffer":640}],632:[function(require,module,exports){
 arguments[4][335][0].apply(exports,arguments)
-},{"dup":335}],631:[function(require,module,exports){
+},{"dup":335}],633:[function(require,module,exports){
 (function (global){(function (){
 /*! https://mths.be/punycode v1.4.1 by @mathias */
 ;(function(root) {
@@ -84168,7 +90531,7 @@ arguments[4][335][0].apply(exports,arguments)
 }(this));
 
 }).call(this)}).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{}],632:[function(require,module,exports){
+},{}],634:[function(require,module,exports){
 // Copyright Joyent, Inc. and other Node contributors.
 //
 // Permission is hereby granted, free of charge, to any person obtaining a
@@ -84254,7 +90617,7 @@ var isArray = Array.isArray || function (xs) {
   return Object.prototype.toString.call(xs) === '[object Array]';
 };
 
-},{}],633:[function(require,module,exports){
+},{}],635:[function(require,module,exports){
 // Copyright Joyent, Inc. and other Node contributors.
 //
 // Permission is hereby granted, free of charge, to any person obtaining a
@@ -84341,39 +90704,39 @@ var objectKeys = Object.keys || function (obj) {
   return res;
 };
 
-},{}],634:[function(require,module,exports){
+},{}],636:[function(require,module,exports){
 'use strict';
 
 exports.decode = exports.parse = require('./decode');
 exports.encode = exports.stringify = require('./encode');
 
-},{"./decode":632,"./encode":633}],635:[function(require,module,exports){
+},{"./decode":634,"./encode":635}],637:[function(require,module,exports){
 arguments[4][337][0].apply(exports,arguments)
-},{"_process":623,"dup":337,"safe-buffer":638}],636:[function(require,module,exports){
+},{"_process":625,"dup":337,"safe-buffer":640}],638:[function(require,module,exports){
 arguments[4][338][0].apply(exports,arguments)
-},{"_process":623,"dup":338,"randombytes":635,"safe-buffer":638}],637:[function(require,module,exports){
+},{"_process":625,"dup":338,"randombytes":637,"safe-buffer":640}],639:[function(require,module,exports){
 arguments[4][354][0].apply(exports,arguments)
-},{"buffer":518,"dup":354,"hash-base":569,"inherits":600}],638:[function(require,module,exports){
+},{"buffer":520,"dup":354,"hash-base":571,"inherits":602}],640:[function(require,module,exports){
 arguments[4][357][0].apply(exports,arguments)
-},{"buffer":518,"dup":357}],639:[function(require,module,exports){
+},{"buffer":520,"dup":357}],641:[function(require,module,exports){
 arguments[4][358][0].apply(exports,arguments)
-},{"_process":623,"buffer":518,"dup":358}],640:[function(require,module,exports){
+},{"_process":625,"buffer":520,"dup":358}],642:[function(require,module,exports){
 arguments[4][363][0].apply(exports,arguments)
-},{"dup":363,"safe-buffer":638}],641:[function(require,module,exports){
+},{"dup":363,"safe-buffer":640}],643:[function(require,module,exports){
 arguments[4][364][0].apply(exports,arguments)
-},{"./sha":642,"./sha1":643,"./sha224":644,"./sha256":645,"./sha384":646,"./sha512":647,"dup":364}],642:[function(require,module,exports){
+},{"./sha":644,"./sha1":645,"./sha224":646,"./sha256":647,"./sha384":648,"./sha512":649,"dup":364}],644:[function(require,module,exports){
 arguments[4][365][0].apply(exports,arguments)
-},{"./hash":640,"dup":365,"inherits":600,"safe-buffer":638}],643:[function(require,module,exports){
+},{"./hash":642,"dup":365,"inherits":602,"safe-buffer":640}],645:[function(require,module,exports){
 arguments[4][366][0].apply(exports,arguments)
-},{"./hash":640,"dup":366,"inherits":600,"safe-buffer":638}],644:[function(require,module,exports){
+},{"./hash":642,"dup":366,"inherits":602,"safe-buffer":640}],646:[function(require,module,exports){
 arguments[4][367][0].apply(exports,arguments)
-},{"./hash":640,"./sha256":645,"dup":367,"inherits":600,"safe-buffer":638}],645:[function(require,module,exports){
+},{"./hash":642,"./sha256":647,"dup":367,"inherits":602,"safe-buffer":640}],647:[function(require,module,exports){
 arguments[4][368][0].apply(exports,arguments)
-},{"./hash":640,"dup":368,"inherits":600,"safe-buffer":638}],646:[function(require,module,exports){
+},{"./hash":642,"dup":368,"inherits":602,"safe-buffer":640}],648:[function(require,module,exports){
 arguments[4][369][0].apply(exports,arguments)
-},{"./hash":640,"./sha512":647,"dup":369,"inherits":600,"safe-buffer":638}],647:[function(require,module,exports){
+},{"./hash":642,"./sha512":649,"dup":369,"inherits":602,"safe-buffer":640}],649:[function(require,module,exports){
 arguments[4][370][0].apply(exports,arguments)
-},{"./hash":640,"dup":370,"inherits":600,"safe-buffer":638}],648:[function(require,module,exports){
+},{"./hash":642,"dup":370,"inherits":602,"safe-buffer":640}],650:[function(require,module,exports){
 // Copyright Joyent, Inc. and other Node contributors.
 //
 // Permission is hereby granted, free of charge, to any person obtaining a
@@ -84504,35 +90867,35 @@ Stream.prototype.pipe = function(dest, options) {
   return dest;
 };
 
-},{"events":559,"inherits":600,"readable-stream/lib/_stream_duplex.js":650,"readable-stream/lib/_stream_passthrough.js":651,"readable-stream/lib/_stream_readable.js":652,"readable-stream/lib/_stream_transform.js":653,"readable-stream/lib/_stream_writable.js":654,"readable-stream/lib/internal/streams/end-of-stream.js":658,"readable-stream/lib/internal/streams/pipeline.js":660}],649:[function(require,module,exports){
+},{"events":561,"inherits":602,"readable-stream/lib/_stream_duplex.js":652,"readable-stream/lib/_stream_passthrough.js":653,"readable-stream/lib/_stream_readable.js":654,"readable-stream/lib/_stream_transform.js":655,"readable-stream/lib/_stream_writable.js":656,"readable-stream/lib/internal/streams/end-of-stream.js":660,"readable-stream/lib/internal/streams/pipeline.js":662}],651:[function(require,module,exports){
 arguments[4][339][0].apply(exports,arguments)
-},{"dup":339}],650:[function(require,module,exports){
+},{"dup":339}],652:[function(require,module,exports){
 arguments[4][340][0].apply(exports,arguments)
-},{"./_stream_readable":652,"./_stream_writable":654,"_process":623,"dup":340,"inherits":600}],651:[function(require,module,exports){
+},{"./_stream_readable":654,"./_stream_writable":656,"_process":625,"dup":340,"inherits":602}],653:[function(require,module,exports){
 arguments[4][341][0].apply(exports,arguments)
-},{"./_stream_transform":653,"dup":341,"inherits":600}],652:[function(require,module,exports){
+},{"./_stream_transform":655,"dup":341,"inherits":602}],654:[function(require,module,exports){
 arguments[4][342][0].apply(exports,arguments)
-},{"../errors":649,"./_stream_duplex":650,"./internal/streams/async_iterator":655,"./internal/streams/buffer_list":656,"./internal/streams/destroy":657,"./internal/streams/from":659,"./internal/streams/state":661,"./internal/streams/stream":662,"_process":623,"buffer":518,"dup":342,"events":559,"inherits":600,"string_decoder/":682,"util":474}],653:[function(require,module,exports){
+},{"../errors":651,"./_stream_duplex":652,"./internal/streams/async_iterator":657,"./internal/streams/buffer_list":658,"./internal/streams/destroy":659,"./internal/streams/from":661,"./internal/streams/state":663,"./internal/streams/stream":664,"_process":625,"buffer":520,"dup":342,"events":561,"inherits":602,"string_decoder/":684,"util":476}],655:[function(require,module,exports){
 arguments[4][343][0].apply(exports,arguments)
-},{"../errors":649,"./_stream_duplex":650,"dup":343,"inherits":600}],654:[function(require,module,exports){
+},{"../errors":651,"./_stream_duplex":652,"dup":343,"inherits":602}],656:[function(require,module,exports){
 arguments[4][344][0].apply(exports,arguments)
-},{"../errors":649,"./_stream_duplex":650,"./internal/streams/destroy":657,"./internal/streams/state":661,"./internal/streams/stream":662,"_process":623,"buffer":518,"dup":344,"inherits":600,"util-deprecate":686}],655:[function(require,module,exports){
+},{"../errors":651,"./_stream_duplex":652,"./internal/streams/destroy":659,"./internal/streams/state":663,"./internal/streams/stream":664,"_process":625,"buffer":520,"dup":344,"inherits":602,"util-deprecate":688}],657:[function(require,module,exports){
 arguments[4][345][0].apply(exports,arguments)
-},{"./end-of-stream":658,"_process":623,"dup":345}],656:[function(require,module,exports){
+},{"./end-of-stream":660,"_process":625,"dup":345}],658:[function(require,module,exports){
 arguments[4][346][0].apply(exports,arguments)
-},{"buffer":518,"dup":346,"util":474}],657:[function(require,module,exports){
+},{"buffer":520,"dup":346,"util":476}],659:[function(require,module,exports){
 arguments[4][347][0].apply(exports,arguments)
-},{"_process":623,"dup":347}],658:[function(require,module,exports){
+},{"_process":625,"dup":347}],660:[function(require,module,exports){
 arguments[4][348][0].apply(exports,arguments)
-},{"../../../errors":649,"dup":348}],659:[function(require,module,exports){
+},{"../../../errors":651,"dup":348}],661:[function(require,module,exports){
 arguments[4][349][0].apply(exports,arguments)
-},{"dup":349}],660:[function(require,module,exports){
+},{"dup":349}],662:[function(require,module,exports){
 arguments[4][350][0].apply(exports,arguments)
-},{"../../../errors":649,"./end-of-stream":658,"dup":350}],661:[function(require,module,exports){
+},{"../../../errors":651,"./end-of-stream":660,"dup":350}],663:[function(require,module,exports){
 arguments[4][351][0].apply(exports,arguments)
-},{"../../../errors":649,"dup":351}],662:[function(require,module,exports){
+},{"../../../errors":651,"dup":351}],664:[function(require,module,exports){
 arguments[4][352][0].apply(exports,arguments)
-},{"dup":352,"events":559}],663:[function(require,module,exports){
+},{"dup":352,"events":561}],665:[function(require,module,exports){
 (function (global){(function (){
 var ClientRequest = require('./lib/request')
 var response = require('./lib/response')
@@ -84620,7 +90983,7 @@ http.METHODS = [
 	'UNSUBSCRIBE'
 ]
 }).call(this)}).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"./lib/request":665,"./lib/response":666,"builtin-status-codes":519,"url":684,"xtend":691}],664:[function(require,module,exports){
+},{"./lib/request":667,"./lib/response":668,"builtin-status-codes":521,"url":686,"xtend":693}],666:[function(require,module,exports){
 (function (global){(function (){
 exports.fetch = isFunction(global.fetch) && isFunction(global.ReadableStream)
 
@@ -84683,7 +91046,7 @@ function isFunction (value) {
 xhr = null // Help gc
 
 }).call(this)}).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{}],665:[function(require,module,exports){
+},{}],667:[function(require,module,exports){
 (function (process,global,Buffer){(function (){
 var capability = require('./capability')
 var inherits = require('inherits')
@@ -85039,7 +91402,7 @@ var unsafeHeaders = [
 ]
 
 }).call(this)}).call(this,require('_process'),typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {},require("buffer").Buffer)
-},{"./capability":664,"./response":666,"_process":623,"buffer":518,"inherits":600,"readable-stream":681}],666:[function(require,module,exports){
+},{"./capability":666,"./response":668,"_process":625,"buffer":520,"inherits":602,"readable-stream":683}],668:[function(require,module,exports){
 (function (process,global,Buffer){(function (){
 var capability = require('./capability')
 var inherits = require('inherits')
@@ -85254,39 +91617,39 @@ IncomingMessage.prototype._onXHRProgress = function (resetTimers) {
 }
 
 }).call(this)}).call(this,require('_process'),typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {},require("buffer").Buffer)
-},{"./capability":664,"_process":623,"buffer":518,"inherits":600,"readable-stream":681}],667:[function(require,module,exports){
+},{"./capability":666,"_process":625,"buffer":520,"inherits":602,"readable-stream":683}],669:[function(require,module,exports){
 arguments[4][339][0].apply(exports,arguments)
-},{"dup":339}],668:[function(require,module,exports){
+},{"dup":339}],670:[function(require,module,exports){
 arguments[4][340][0].apply(exports,arguments)
-},{"./_stream_readable":670,"./_stream_writable":672,"_process":623,"dup":340,"inherits":600}],669:[function(require,module,exports){
+},{"./_stream_readable":672,"./_stream_writable":674,"_process":625,"dup":340,"inherits":602}],671:[function(require,module,exports){
 arguments[4][341][0].apply(exports,arguments)
-},{"./_stream_transform":671,"dup":341,"inherits":600}],670:[function(require,module,exports){
+},{"./_stream_transform":673,"dup":341,"inherits":602}],672:[function(require,module,exports){
 arguments[4][342][0].apply(exports,arguments)
-},{"../errors":667,"./_stream_duplex":668,"./internal/streams/async_iterator":673,"./internal/streams/buffer_list":674,"./internal/streams/destroy":675,"./internal/streams/from":677,"./internal/streams/state":679,"./internal/streams/stream":680,"_process":623,"buffer":518,"dup":342,"events":559,"inherits":600,"string_decoder/":682,"util":474}],671:[function(require,module,exports){
+},{"../errors":669,"./_stream_duplex":670,"./internal/streams/async_iterator":675,"./internal/streams/buffer_list":676,"./internal/streams/destroy":677,"./internal/streams/from":679,"./internal/streams/state":681,"./internal/streams/stream":682,"_process":625,"buffer":520,"dup":342,"events":561,"inherits":602,"string_decoder/":684,"util":476}],673:[function(require,module,exports){
 arguments[4][343][0].apply(exports,arguments)
-},{"../errors":667,"./_stream_duplex":668,"dup":343,"inherits":600}],672:[function(require,module,exports){
+},{"../errors":669,"./_stream_duplex":670,"dup":343,"inherits":602}],674:[function(require,module,exports){
 arguments[4][344][0].apply(exports,arguments)
-},{"../errors":667,"./_stream_duplex":668,"./internal/streams/destroy":675,"./internal/streams/state":679,"./internal/streams/stream":680,"_process":623,"buffer":518,"dup":344,"inherits":600,"util-deprecate":686}],673:[function(require,module,exports){
+},{"../errors":669,"./_stream_duplex":670,"./internal/streams/destroy":677,"./internal/streams/state":681,"./internal/streams/stream":682,"_process":625,"buffer":520,"dup":344,"inherits":602,"util-deprecate":688}],675:[function(require,module,exports){
 arguments[4][345][0].apply(exports,arguments)
-},{"./end-of-stream":676,"_process":623,"dup":345}],674:[function(require,module,exports){
+},{"./end-of-stream":678,"_process":625,"dup":345}],676:[function(require,module,exports){
 arguments[4][346][0].apply(exports,arguments)
-},{"buffer":518,"dup":346,"util":474}],675:[function(require,module,exports){
+},{"buffer":520,"dup":346,"util":476}],677:[function(require,module,exports){
 arguments[4][347][0].apply(exports,arguments)
-},{"_process":623,"dup":347}],676:[function(require,module,exports){
+},{"_process":625,"dup":347}],678:[function(require,module,exports){
 arguments[4][348][0].apply(exports,arguments)
-},{"../../../errors":667,"dup":348}],677:[function(require,module,exports){
+},{"../../../errors":669,"dup":348}],679:[function(require,module,exports){
 arguments[4][349][0].apply(exports,arguments)
-},{"dup":349}],678:[function(require,module,exports){
+},{"dup":349}],680:[function(require,module,exports){
 arguments[4][350][0].apply(exports,arguments)
-},{"../../../errors":667,"./end-of-stream":676,"dup":350}],679:[function(require,module,exports){
+},{"../../../errors":669,"./end-of-stream":678,"dup":350}],681:[function(require,module,exports){
 arguments[4][351][0].apply(exports,arguments)
-},{"../../../errors":667,"dup":351}],680:[function(require,module,exports){
+},{"../../../errors":669,"dup":351}],682:[function(require,module,exports){
 arguments[4][352][0].apply(exports,arguments)
-},{"dup":352,"events":559}],681:[function(require,module,exports){
+},{"dup":352,"events":561}],683:[function(require,module,exports){
 arguments[4][353][0].apply(exports,arguments)
-},{"./lib/_stream_duplex.js":668,"./lib/_stream_passthrough.js":669,"./lib/_stream_readable.js":670,"./lib/_stream_transform.js":671,"./lib/_stream_writable.js":672,"./lib/internal/streams/end-of-stream.js":676,"./lib/internal/streams/pipeline.js":678,"dup":353}],682:[function(require,module,exports){
+},{"./lib/_stream_duplex.js":670,"./lib/_stream_passthrough.js":671,"./lib/_stream_readable.js":672,"./lib/_stream_transform.js":673,"./lib/_stream_writable.js":674,"./lib/internal/streams/end-of-stream.js":678,"./lib/internal/streams/pipeline.js":680,"dup":353}],684:[function(require,module,exports){
 arguments[4][372][0].apply(exports,arguments)
-},{"dup":372,"safe-buffer":638}],683:[function(require,module,exports){
+},{"dup":372,"safe-buffer":640}],685:[function(require,module,exports){
 (function (setImmediate,clearImmediate){(function (){
 var nextTick = require('process/browser.js').nextTick;
 var apply = Function.prototype.apply;
@@ -85365,7 +91728,7 @@ exports.clearImmediate = typeof clearImmediate === "function" ? clearImmediate :
   delete immediateIds[id];
 };
 }).call(this)}).call(this,require("timers").setImmediate,require("timers").clearImmediate)
-},{"process/browser.js":623,"timers":683}],684:[function(require,module,exports){
+},{"process/browser.js":625,"timers":685}],686:[function(require,module,exports){
 // Copyright Joyent, Inc. and other Node contributors.
 //
 // Permission is hereby granted, free of charge, to any person obtaining a
@@ -86099,7 +92462,7 @@ Url.prototype.parseHost = function() {
   if (host) this.hostname = host;
 };
 
-},{"./util":685,"punycode":631,"querystring":634}],685:[function(require,module,exports){
+},{"./util":687,"punycode":633,"querystring":636}],687:[function(require,module,exports){
 'use strict';
 
 module.exports = {
@@ -86117,11 +92480,11 @@ module.exports = {
   }
 };
 
-},{}],686:[function(require,module,exports){
-arguments[4][380][0].apply(exports,arguments)
-},{"dup":380}],687:[function(require,module,exports){
-arguments[4][468][0].apply(exports,arguments)
-},{"dup":468}],688:[function(require,module,exports){
+},{}],688:[function(require,module,exports){
+arguments[4][382][0].apply(exports,arguments)
+},{"dup":382}],689:[function(require,module,exports){
+arguments[4][470][0].apply(exports,arguments)
+},{"dup":470}],690:[function(require,module,exports){
 // Currently in sync with Node.js lib/internal/util/types.js
 // https://github.com/nodejs/node/commit/112cc7c27551254aa2b17098fb774867f05ed0d9
 
@@ -86457,7 +92820,7 @@ exports.isAnyArrayBuffer = isAnyArrayBuffer;
   });
 });
 
-},{"is-arguments":601,"is-generator-function":603,"is-typed-array":604,"which-typed-array":690}],689:[function(require,module,exports){
+},{"is-arguments":603,"is-generator-function":605,"is-typed-array":606,"which-typed-array":692}],691:[function(require,module,exports){
 (function (process){(function (){
 // Copyright Joyent, Inc. and other Node contributors.
 //
@@ -87176,7 +93539,7 @@ function callbackify(original) {
 exports.callbackify = callbackify;
 
 }).call(this)}).call(this,require('_process'))
-},{"./support/isBuffer":687,"./support/types":688,"_process":623,"inherits":600}],690:[function(require,module,exports){
+},{"./support/isBuffer":689,"./support/types":690,"_process":625,"inherits":602}],692:[function(require,module,exports){
 (function (global){(function (){
 'use strict';
 
@@ -87235,7 +93598,7 @@ module.exports = function whichTypedArray(value) {
 };
 
 }).call(this)}).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"available-typed-arrays":470,"call-bind/callBound":520,"es-abstract/helpers/getOwnPropertyDescriptor":558,"foreach":561,"has-tostringtag/shams":567,"is-typed-array":604}],691:[function(require,module,exports){
-arguments[4][450][0].apply(exports,arguments)
-},{"dup":450}]},{},[1])(1)
+},{"available-typed-arrays":472,"call-bind/callBound":522,"es-abstract/helpers/getOwnPropertyDescriptor":560,"foreach":563,"has-tostringtag/shams":569,"is-typed-array":606}],693:[function(require,module,exports){
+arguments[4][452][0].apply(exports,arguments)
+},{"dup":452}]},{},[1])(1)
 });

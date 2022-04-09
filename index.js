@@ -4,6 +4,7 @@ const HsnResolver = '0x925da8387c81e1b1d8aaBE4CfDb1BD0b873ba278'
 const Web3 = require('web3')
 const rpc = 'https://ethercluster.com/etc'
 const axios = require('axios')
+const { isConfusing, confusables, rectifyConfusion } = require('unicode-confusables')
 
 function hex_to_ascii(str1) {
   let hex = str1.toString()
@@ -35,8 +36,9 @@ module.exports = {
           }, 'latest']
         }).then(async (res) => {
           let tt = web3.eth.abi.decodeLog(['bytes'],res)
-          let name = hex_to_ascii(tt[0])
-          if (JSON.stringify(name).indexOf('u0000') != -1) {
+          let name = web3.utils.hexToString(tt[0])
+          if (isConfusing(name)) {
+            name = hex_to_ascii(tt[0])
             name = JSON.stringify(name)
             name = name.split('u0000')[1]
             name = name.split('"')[0]
@@ -61,8 +63,9 @@ module.exports = {
         })
         try {
           let tt = web3.eth.abi.decodeLog(['bytes'],res.data.result)
-          let name = hex_to_ascii(tt[0])
-          if (JSON.stringify(name).indexOf('u0000') != -1) {
+          let name = web3.utils.hexToString(tt[0])
+          if (isConfusing(name)) {
+            name = hex_to_ascii(tt[0])
             name = JSON.stringify(name)
             name = name.split('u0000')[1]
             name = name.split('"')[0]
